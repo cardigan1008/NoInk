@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.databinding.FragmentHomeBinding
 import android.content.Intent
+import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 
 
 class HomeFragment : Fragment() {
@@ -21,8 +23,12 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     companion object {
-        private const val PICK_IMAGE_REQUEST_CODE = 100
+        private const val PICK_IMAGES_REQUEST_CODE = 101 // 更改请求码，以便处理多个图片选择
     }
+
+    // 用于存储选择的多个图片的 Uri 列表
+    private val selectedImageUris = mutableListOf<Uri>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,31 +50,49 @@ class HomeFragment : Fragment() {
 
         // Set OnClickListener for the image
         imageView.setOnClickListener {
-            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
+            val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+            galleryIntent.type = "image/*"
+            galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // 允许多选图片
+            startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
         }
-
-
-        // Customize your bar as needed
-        // bar.visibility = View.VISIBLE
-        // ...
 
         return root
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
-            // 处理从系统图片上传接口返回的结果
-            val selectedImageUri = data?.data
-            // 在这里，你可以显示所选图像或执行其他操作
-            // 例如，将所选图像设置到 imageView 中显示
-            selectedImageUri?.let {
-                binding.clickableImage.setImageURI(it)
+
+        if (requestCode == PICK_IMAGES_REQUEST_CODE && resultCode == RESULT_OK) {
+            // 清空已选图片列表，以便重新添加选择的图片
+            selectedImageUris.clear()
+
+            // 获取从系统图片选择器返回的所有 Uri
+            val clipData = data?.clipData
+            if (clipData != null) {
+                for (i in 0 until clipData.itemCount) {
+                    val uri = clipData.getItemAt(i).uri
+                    selectedImageUris.add(uri) // 将选择的图片 Uri 添加到列表中
+                }
+            } else {
+                // 单选图片时处理
+                val uri = data?.data
+                uri?.let { selectedImageUris.add(it) }
+            }
+
+            // 处理多个图片的逻辑
+            // 在此处你可以循环遍历 selectedImageUris 列表，处理每个图片的上传或其他操作
+
+            for (imageUri in selectedImageUris) {
+                Log.d("SelectedImage", "Image URI: $imageUri")
+                // 这里可以添加上传图片的逻辑
+                // 也可以进行其他操作，比如显示选择的图片等
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+

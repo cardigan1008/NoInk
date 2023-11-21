@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.databinding.FragmentHomeBinding
 import android.content.Intent
+import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 
 
 class HomeFragment : Fragment() {
@@ -60,10 +62,26 @@ class HomeFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             // 处理从系统图片上传接口返回的结果
             val selectedImageUri = data?.data
-            // 在这里，你可以显示所选图像或执行其他操作
-            // 例如，将所选图像设置到 imageView 中显示
+
             selectedImageUri?.let {
-                binding.clickableImage.setImageURI(it)
+
+                // 获取 SharedPreferences 实例
+                val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", 0)
+
+                // 使用 SharedPreferences.Editor 保存图像 URI
+                val editor = sharedPreferences.edit()
+                editor.putString("imageUri", it.toString())
+                editor.apply() // 应用更改
+            }
+
+            // 从 SharedPreferences 中检索图像 URI
+            val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", 0)
+            val savedImageUri = sharedPreferences.getString("imageUri", null)
+
+            // 检查 URI 是否存在并加载图像
+            savedImageUri?.let {
+                val imageUri = Uri.parse(savedImageUri)
+                binding.clickableImage.setImageURI(imageUri)
             }
         }
     }

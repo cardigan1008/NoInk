@@ -1,4 +1,4 @@
-package com.bagel.noink.ui.viewholder
+package com.bagel.noink.viewholder
 
 import android.view.View
 import android.widget.ImageView

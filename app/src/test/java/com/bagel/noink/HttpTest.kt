@@ -1,5 +1,4 @@
 package com.bagel.noink
-import com.bagel.noink.utils.GetRequest
 import org.junit.Test
 
 import org.junit.Assert.*

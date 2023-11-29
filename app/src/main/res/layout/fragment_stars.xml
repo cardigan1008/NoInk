@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.stars.StarsFragment">
 
     <TextView
         android:id="@+id/text_gallery"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.107" />
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="387dp"
         android:layout_height="228dp"
         android:orientation="vertical"
@@ -75,5 +75,5 @@
             app:show_more="true"
             tools:ignore="MissingConstraints" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

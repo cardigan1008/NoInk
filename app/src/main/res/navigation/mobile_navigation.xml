@@ -19,15 +19,15 @@
 
     <fragment
         android:id="@+id/nav_stars"
-        android:name="com.bagel.noink.ui.gallery.GalleryFragment"
+        android:name="com.bagel.noink.ui.stars.StarsFragment"
         android:label="@string/menu_stars"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_stars" />
 
     <fragment
         android:id="@+id/nav_personal_account"
-        android:name="com.bagel.noink.ui.slideshow.SlideshowFragment"
+        android:name="com.bagel.noink.ui.account.AccountFragment"
         android:label="@string/menu_personal_account"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_account" />
 
     <fragment
         android:id="@+id/nav_textGen"
@@ -35,4 +35,9 @@
         android:label="Text Generation"
         tools:layout="@layout/fragment_textgeneration" />
 
+    <fragment
+        android:id="@+id/nav_textEdit"
+        android:name="com.bagel.noink.ui.home.TextEditFragment"
+        android:label="Text Edit"
+        tools:layout="@layout/fragment_textedit"/>
 </navigation>

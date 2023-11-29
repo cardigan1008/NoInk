@@ -1,84 +1,58 @@
 package com.bagel.noink.ui.home
-
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
-import com.bagel.noink.databinding.FragmentTextgenerationBinding
+import com.bagel.noink.databinding.FragmentTexteditBinding
 import com.bumptech.glide.Glide
 
-class TextGenerationFragment : Fragment() {
-
-    private var _binding: FragmentTextgenerationBinding? = null
+class TextEditFragment : Fragment() {
+    private var _binding: FragmentTexteditBinding? = null
     private val binding get() = _binding!!
-    private lateinit var homeViewModel: HomeViewModel
 
+    private lateinit var editText: EditText
+    private lateinit var textHome: TextView
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101
         private const val ARG_SELECTED_IMAGE_URIS = "selected_image_uris"
 
-        fun newInstance(selectedImageUris: MutableList<Uri>): TextGenerationFragment {
-            val fragment = TextGenerationFragment()
+        fun newInstance(selectedImageUris: MutableList<Uri>): TextEditFragment {
+            val fragment = TextEditFragment()
             val args = Bundle()
             args.putParcelableArrayList(ARG_SELECTED_IMAGE_URIS, ArrayList(selectedImageUris))
             fragment.arguments = args
             return fragment
         }
     }
-
     private var selectedImageUris = mutableListOf<Uri>()
-
     @SuppressLint("DiscouragedApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val navController = findNavController()
-        _binding = FragmentTextgenerationBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_textedit, container, false)
+        _binding = FragmentTexteditBinding.inflate(inflater, container, false)
+        // Find views by their IDs
+        editText = view.findViewById(R.id.editText)
         val gridLayout: GridLayout = binding.gridLayout
-        val bar: View = binding.bottomBar
+        val args = arguments
+        selectedImageUris = args?.getParcelableArrayList<Uri>(ARG_SELECTED_IMAGE_URIS)!!
 
-        val penView: ImageView = binding.penView
-
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
-
-
-        val imageResource = resources.getIdentifier(
-            "ic_button_ink_bottle",
-            "mipmap",
-            requireActivity().packageName
-        )
-        if (imageResource != 0) {
-            val imageView = ImageView(requireContext())
-            val params = GridLayout.LayoutParams()
-            params.width = 300
-            params.height = 300
-            imageView.layoutParams = params
-            imageView.setImageResource(imageResource)
-            gridLayout.addView(imageView)
-        } else {
-            Log.e("ImageView", "PNG image resource not found")
+        if (!selectedImageUris.isNullOrEmpty()) {
+            handleSelectedImages(selectedImageUris)
         }
 
         gridLayout.setOnClickListener {
@@ -88,22 +62,10 @@ class TextGenerationFragment : Fragment() {
             startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
         }
 
-        // 获取传递的参数
-        val args = arguments
-        selectedImageUris = args?.getParcelableArrayList<Uri>(ARG_SELECTED_IMAGE_URIS)!!
-
-        if (!selectedImageUris.isNullOrEmpty()) {
-            handleSelectedImages(selectedImageUris)
-        }
-        // 按笔尖跳转
-        penView.setOnClickListener {
-            val textEditFragment = TextEditFragment.newInstance(selectedImageUris)
-            navController.navigate(R.id.nav_textEdit, textEditFragment.arguments)
-        }
-        return root
+        return binding.root
     }
-
     private fun handleSelectedImages(imageUris: List<Uri>) {
+
         val gridLayout: GridLayout = binding.gridLayout
         gridLayout.removeAllViews()
 
@@ -149,3 +111,5 @@ class TextGenerationFragment : Fragment() {
         _binding = null
     }
 }
+
+

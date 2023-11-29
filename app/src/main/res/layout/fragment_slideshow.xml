@@ -6,17 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".ui.slideshow.SlideshowFragment">
 
-    <TextView
-        android:id="@+id/text_slideshow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+    <LinearLayout
+        android:layout_width="387dp"
+        android:layout_height="228dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.bagel.noink.ui.PersonalItemView
+            android:id="@+id/item_username"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#fff"
+            app:icon="@drawable/ic_history"
+            app:name="昵称"
+            app:show_line="true"
+            app:show_more="true"
+            tools:ignore="MissingConstraints" />
+
+        <com.bagel.noink.ui.PersonalItemView
+            android:id="@+id/item_gender"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#fff"
+            app:icon="@drawable/ic_history"
+            app:name="性别"
+            app:show_line="true"
+            app:show_more="true"
+            tools:ignore="MissingConstraints" />
+
+        <com.bagel.noink.ui.PersonalItemView
+            android:id="@+id/item_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#fff"
+            app:icon="@drawable/ic_history"
+            app:name="出生年月"
+            app:show_line="true"
+            app:show_more="true"
+            tools:ignore="MissingConstraints" />
+
+        <com.bagel.noink.ui.PersonalItemView
+            android:id="@+id/item_wechat"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#fff"
+            app:icon="@drawable/ic_history"
+            app:name="绑定微信"
+            app:show_line="true"
+            app:show_more="true"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="387dp"
+        android:layout_height="98dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.372"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.864">
+
+        <com.bagel.noink.ui.PersonalItemView
+            android:id="@+id/item_uid"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#fff"
+            app:icon="@drawable/ic_history"
+            app:name="UID"
+            app:show_line="true"
+            app:show_more="false"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

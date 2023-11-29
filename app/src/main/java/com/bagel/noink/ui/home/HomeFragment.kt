@@ -1,5 +1,6 @@
 package com.bagel.noink.ui.home
 
+import kotlin.random.Random
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
@@ -88,6 +89,13 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    fun generateRandomString(length: Int): String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9') // 允许的字符集合
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -108,10 +116,8 @@ class HomeFragment : Fragment() {
                             val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
                             filePath = it.getString(columnIndex)
                             // filePath 变量包含实际的本地文件路径
-                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test");
+                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
                             if(aliyunOSSUrl != null){
-                                Log.i("114514","success")
-                                Log.i("114514",aliyunOSSUrl)
                                 selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                             }
                             // 将选择的图片 Uri 添加到列表中

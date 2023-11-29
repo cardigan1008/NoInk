@@ -20,7 +20,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.getSystemService
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentTexteditBinding
+import com.bagel.noink.utils.TextGenHttpRequest
 import com.bumptech.glide.Glide
+import org.json.JSONObject
 
 class TextEditFragment : Fragment() {
     private var _binding: FragmentTexteditBinding? = null
@@ -29,7 +31,7 @@ class TextEditFragment : Fragment() {
     private lateinit var editText: EditText
     private lateinit var scrollView:ScrollView
     private val selectedImageUris = mutableListOf<Uri>()
-
+    private lateinit var textGenHttpRequest:TextGenHttpRequest
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101
         private const val ARG_SELECTED_IMAGE_URIS = "selected_image_uris"
@@ -61,7 +63,6 @@ class TextEditFragment : Fragment() {
         editText = binding.editText
         val gridLayout: GridLayout = binding.gridLayout
 
-
         val args = arguments
         selectedImageUris.addAll(args?.getParcelableArrayList<Uri>(ARG_SELECTED_IMAGE_URIS) ?: emptyList())
 
@@ -69,6 +70,29 @@ class TextEditFragment : Fragment() {
             handleSelectedImages(selectedImageUris)
         }
 
+        // 实例化TextGenHttpRequest类
+        textGenHttpRequest = TextGenHttpRequest()
+
+        // 调用sendTextRequest方法发送请求
+        textGenHttpRequest.sendTextRequest(
+            length = 100,
+            imageUrls = selectedImageUris,
+            type = "企业",
+            originText = "企业被查出安全问题",
+            style = "愤怒",
+            callbackListener = object : TextGenHttpRequest.TextGenCallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    // 处理请求成功的响应JSON对象
+                    // 在这里使用responseJson
+                    editText.setText(responseJson.toString())
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    // 处理请求失败
+                    println("Request failed: $errorMessage")
+                }
+            }
+        )
 
 
         gridLayout.setOnClickListener {
@@ -77,6 +101,8 @@ class TextEditFragment : Fragment() {
             galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
         }
+
+
     }
 
     private fun hideKeyboard() {
@@ -103,7 +129,9 @@ class TextEditFragment : Fragment() {
             gridLayout.addView(imageView)
         }
     }
+    private fun generateText(imageUris: List<Uri>){
 
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

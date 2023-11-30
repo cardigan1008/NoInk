@@ -27,6 +27,8 @@ class DetailsActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.textView).text = text
         findViewById<ViewPager>(R.id.viewPager).adapter = imageURI?.let { ImagePagerAdapter(it) }
+
+        binding.back.setOnClickListener { finish() }
     }
 
     private inner class ImagePagerAdapter(private val imageUri: Uri) : PagerAdapter() {

@@ -54,7 +54,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         var fakeList = ArrayList<ListItemBean>()
 
         for (i in 0 until 10) {
-            fakeList.add(ListItemBean("this is a title", "this is a new text", Uri.parse("fake")))
+            fakeList.add(ListItemBean(i, "this is a title", "this is a new text", Uri.parse("fake")))
         }
 
         return fakeList

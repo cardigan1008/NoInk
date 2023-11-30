@@ -43,12 +43,13 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private fun addRecycleView(view: View) {
         recyclerView = view.findViewById(R.id.history_recycle)
-        adapter = HistoryAdapter(createFakeHistory())
+        adapter = HistoryAdapter(getHistory())
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun createFakeHistory(): ArrayList<HistoryItemBean> {
+    private fun getHistory(): ArrayList<HistoryItemBean> {
+        // TODO: use backend api
         var fakeList = ArrayList<HistoryItemBean>()
 
         for (i in 0 until 10) {

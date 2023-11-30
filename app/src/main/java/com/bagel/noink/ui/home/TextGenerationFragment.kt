@@ -9,11 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentTextgenerationBinding
@@ -46,21 +45,21 @@ class TextGenerationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
         val navController = findNavController()
         _binding = FragmentTextgenerationBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
 
         val gridLayout: GridLayout = binding.gridLayout
         val bar: View = binding.bottomBar
 
         val penView: ImageView = binding.penView
+        var edit_length:EditText = binding.editLength
+        var edit_category: EditText = binding.editCategory
+        var edit_original: EditText = binding.editOriginal
+        var edit_style: EditText = binding.editStyle
 
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
 
 
 
@@ -97,9 +96,14 @@ class TextGenerationFragment : Fragment() {
         }
         // 按笔尖跳转
         penView.setOnClickListener {
-            val textEditFragment = TextEditFragment.newInstance(selectedImageUris)
+            val length = edit_length.text.toString()
+            val type = edit_category.text.toString()
+            val originText = edit_original.text.toString()
+            val style = edit_style.text.toString()
+            val textEditFragment = TextEditFragment.newInstance(selectedImageUris,length,type, originText,style)
             navController.navigate(R.id.nav_textEdit, textEditFragment.arguments)
         }
+
         return root
     }
 

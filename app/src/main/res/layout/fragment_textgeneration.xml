@@ -48,26 +48,73 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:src="@mipmap/ic_button_ink_bottle"
-        app:layout_constraintBottom_toTopOf="@id/text_home"
+        app:layout_constraintBottom_toTopOf="@id/edit_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.17"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/penView" />
 
-    <TextView
-        android:id="@+id/text_home"
+    <EditText
+        android:id="@+id/edit_length"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:hint="请输入长度"
+        android:textSize="16sp"
+        android:inputType="number"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/edit_category"
+        app:layout_constraintHorizontal_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/edit_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="请输入内容类别"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@id/edit_length"
+        app:layout_constraintEnd_toStartOf="@id/edit_original"
+        app:layout_constraintHorizontal_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/edit_original"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:hint="请输入原始内容"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@id/edit_category"
+        app:layout_constraintEnd_toStartOf="@id/edit_style"
+        app:layout_constraintHorizontal_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/edit_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:hint="请输入内容风格"
+        android:layout_marginEnd="16dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@id/edit_original"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottomBar" />
+        app:layout_constraintHorizontal_chainStyle="packed" />
 
 
 

@@ -116,7 +116,8 @@ class HomeFragment : Fragment() {
                             val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
                             filePath = it.getString(columnIndex)
                             // filePath 变量包含实际的本地文件路径
-                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
+//                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
+                            val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
                             if(aliyunOSSUrl != null){
                                 selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                             }
@@ -135,10 +136,10 @@ class HomeFragment : Fragment() {
                         val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
                         filePath = it.getString(columnIndex)
                         // filePath 变量包含实际的本地文件路径
-                        val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test");
+
+//                        val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test");
+                        val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
                         if(aliyunOSSUrl != null){
-                            Log.i("114514","success")
-                            Log.i("114514",aliyunOSSUrl)
                             selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                         }
                         // 将选择的图片 Uri 添加到列表中

@@ -51,15 +51,11 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     implementation ("androidx.constraintlayout:constraintlayout:2.1.1")
-
     implementation ("com.aliyun.dpa:oss-android-sdk:+")
-
     implementation ("com.squareup.okio:okio:1.9.0")
-
-    // okHttp所需依赖
+    implementation ("com.github.JakeWharton:ViewPagerIndicator:2.4.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
 }

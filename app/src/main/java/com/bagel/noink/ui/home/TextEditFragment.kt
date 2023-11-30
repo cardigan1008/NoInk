@@ -1,28 +1,37 @@
 package com.bagel.noink.ui.home
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentTexteditBinding
+import com.bagel.noink.utils.TextGenHttpRequest
 import com.bumptech.glide.Glide
+import org.json.JSONObject
 
 class TextEditFragment : Fragment() {
     private var _binding: FragmentTexteditBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var editText: EditText
-    private lateinit var textHome: TextView
+    private lateinit var scrollView:ScrollView
+    private val selectedImageUris = mutableListOf<Uri>()
+    private lateinit var textGenHttpRequest:TextGenHttpRequest
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101
         private const val ARG_SELECTED_IMAGE_URIS = "selected_image_uris"
@@ -35,25 +44,56 @@ class TextEditFragment : Fragment() {
             return fragment
         }
     }
-    private var selectedImageUris = mutableListOf<Uri>()
-    @SuppressLint("DiscouragedApi")
+
+    @SuppressLint("DiscouragedApi", "ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_textedit, container, false)
+    ): View {
         _binding = FragmentTexteditBinding.inflate(inflater, container, false)
-        // Find views by their IDs
-        editText = view.findViewById(R.id.editText)
-        val gridLayout: GridLayout = binding.gridLayout
-        val args = arguments
-        selectedImageUris = args?.getParcelableArrayList<Uri>(ARG_SELECTED_IMAGE_URIS)!!
+        scrollView = binding.scrollView
+        return binding.root
+    }
 
-        if (!selectedImageUris.isNullOrEmpty()) {
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        editText = binding.editText
+        val gridLayout: GridLayout = binding.gridLayout
+
+        val args = arguments
+        selectedImageUris.addAll(args?.getParcelableArrayList<Uri>(ARG_SELECTED_IMAGE_URIS) ?: emptyList())
+
+        if (selectedImageUris.isNotEmpty()) {
             handleSelectedImages(selectedImageUris)
         }
+
+        // 实例化TextGenHttpRequest类
+        textGenHttpRequest = TextGenHttpRequest()
+
+        // 调用sendTextRequest方法发送请求
+        textGenHttpRequest.sendTextRequest(
+            length = 100,
+            imageUrls = selectedImageUris,
+            type = "企业",
+            originText = "企业被查出安全问题",
+            style = "愤怒",
+            callbackListener = object : TextGenHttpRequest.TextGenCallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    // 处理请求成功的响应JSON对象
+                    // 在这里使用responseJson
+                    editText.setText(responseJson.toString())
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    // 处理请求失败
+                    println("Request failed: $errorMessage")
+                }
+            }
+        )
+
 
         gridLayout.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
@@ -62,10 +102,15 @@ class TextEditFragment : Fragment() {
             startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
         }
 
-        return binding.root
-    }
-    private fun handleSelectedImages(imageUris: List<Uri>) {
 
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(scrollView.windowToken, 0)
+    }
+
+    private fun handleSelectedImages(imageUris: List<Uri>) {
         val gridLayout: GridLayout = binding.gridLayout
         gridLayout.removeAllViews()
 
@@ -84,7 +129,9 @@ class TextEditFragment : Fragment() {
             gridLayout.addView(imageView)
         }
     }
+    private fun generateText(imageUris: List<Uri>){
 
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -111,5 +158,3 @@ class TextEditFragment : Fragment() {
         _binding = null
     }
 }
-
-

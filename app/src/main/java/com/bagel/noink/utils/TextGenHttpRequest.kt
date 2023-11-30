@@ -1,9 +1,13 @@
 package com.bagel.noink.utils
+
 import android.net.Uri
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
+
 
 class TextGenHttpRequest {
 
@@ -22,7 +26,7 @@ class TextGenHttpRequest {
         style: String,
         callbackListener: TextGenCallbackListener
     ) {
-        val url = "http://localhost:8080/api/request/Text" // Replace with your server address
+        val url = "http://10.0.2.2:8080/api/request/Text" // Replace with your server address
         // uri to string
         val stringList = mutableListOf<String>()
         for (uri in imageUrls) {
@@ -39,6 +43,7 @@ class TextGenHttpRequest {
 
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody = jsonBody.toString().toRequestBody(mediaType)
+
 
         httpRequest.post(url, requestBody, object : HttpRequest.CallbackListener {
             override fun onSuccess(responseJson: JSONObject) {

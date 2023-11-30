@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
-import com.bagel.noink.bean.HistoryItemBean
+import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.viewholder.HistoryViewHolder
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
-    private val historyList: List<HistoryItemBean>
+    private val historyList: List<ListItemBean>
 
-    constructor(historyList: List<HistoryItemBean>) {
+    constructor(historyList: List<ListItemBean>) {
         this.historyList = historyList
     }
 

@@ -21,13 +21,13 @@
         app:layout_constraintTop_toBottomOf="@id/viewPager"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <com.viewpagerindicator.IconPageIndicator
+<!--    <com.viewpagerindicator.IconPageIndicator
         android:id="@+id/indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/viewPager"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

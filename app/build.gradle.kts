@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.bagel.noink"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.bagel.noink"
@@ -55,6 +55,7 @@ dependencies {
     implementation ("com.squareup.okio:okio:1.9.0")
     implementation ("com.github.JakeWharton:ViewPagerIndicator:2.4.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation("androidx.core:core-ktx:+")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

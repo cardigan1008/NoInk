@@ -1,5 +1,6 @@
 package com.bagel.noink.ui.home
 
+import kotlin.random.Random
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
@@ -12,12 +13,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.databinding.FragmentHomeBinding
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.GridLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
+import com.bagel.noink.utils.AliyunOSSManager
 
 
 class HomeFragment : Fragment() {
@@ -27,7 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
 
     private lateinit var navController: NavController
-
+    private lateinit var aliyunOSSManager: AliyunOSSManager
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101 // 更改请求码，以便处理多个图片选择
     }
@@ -42,6 +46,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        aliyunOSSManager = AliyunOSSManager(requireContext())
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -83,6 +89,13 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    fun generateRandomString(length: Int): String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9') // 允许的字符集合
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -95,12 +108,43 @@ class HomeFragment : Fragment() {
             if (clipData != null) {
                 for (i in 0 until clipData.itemCount) {
                     val uri = clipData.getItemAt(i).uri
-                    selectedImageUris.add(uri) // 将选择的图片 Uri 添加到列表中
+                    val projection = arrayOf(MediaStore.Images.Media.DATA)
+                    val cursor: Cursor? = requireActivity().contentResolver.query(uri, projection, null, null, null)
+                    var filePath: String
+                    cursor?.use {
+                        if (it.moveToFirst()) {
+                            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                            filePath = it.getString(columnIndex)
+                            // filePath 变量包含实际的本地文件路径
+//                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
+                            val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
+                            if(aliyunOSSUrl != null){
+                                selectedImageUris.add(Uri.parse(aliyunOSSUrl))
+                            }
+                            // 将选择的图片 Uri 添加到列表中
+                        }
+                    }
                 }
             } else {
                 // 单选图片时处理
-                val uri = data?.data
-                uri?.let { selectedImageUris.add(it) }
+                val uri = data?.data!!
+                val projection = arrayOf(MediaStore.Images.Media.DATA)
+                val cursor: Cursor? = requireActivity().contentResolver.query(uri, projection, null, null, null)
+                var filePath: String
+                cursor?.use {
+                    if (it.moveToFirst()) {
+                        val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                        filePath = it.getString(columnIndex)
+                        // filePath 变量包含实际的本地文件路径
+
+//                        val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test");
+                        val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
+                        if(aliyunOSSUrl != null){
+                            selectedImageUris.add(Uri.parse(aliyunOSSUrl))
+                        }
+                        // 将选择的图片 Uri 添加到列表中
+                    }
+                }
             }
 
             val textGenerationFragment = TextGenerationFragment.newInstance(selectedImageUris)

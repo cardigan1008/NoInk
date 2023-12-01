@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.adapter.HistoryAdapter
-import com.bagel.noink.bean.HistoryItemBean
+import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
@@ -32,6 +32,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     ): View? {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        addRecycleView(root)
 
         return root
     }
@@ -43,16 +44,17 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private fun addRecycleView(view: View) {
         recyclerView = view.findViewById(R.id.history_recycle)
-        adapter = HistoryAdapter(createFakeHistory())
+        adapter = HistoryAdapter(getHistory())
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun createFakeHistory(): ArrayList<HistoryItemBean> {
-        var fakeList = ArrayList<HistoryItemBean>()
+    private fun getHistory(): ArrayList<ListItemBean> {
+        // TODO: use backend api
+        var fakeList = ArrayList<ListItemBean>()
 
         for (i in 0 until 10) {
-            fakeList.add(HistoryItemBean("this is a title", "this is a new text", Uri.parse("fake")))
+            fakeList.add(ListItemBean(i, "this is a title", "this is a new text", Uri.parse("fake")))
         }
 
         return fakeList

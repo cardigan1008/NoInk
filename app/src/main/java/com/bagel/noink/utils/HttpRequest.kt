@@ -1,5 +1,6 @@
 package com.bagel.noink.utils
 
+import android.util.Log
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -16,7 +17,7 @@ class HttpRequest {
         fun onFailure(errorMessage: String)
     }
 
-    private val client = OkHttpClient.Builder().readTimeout(5, TimeUnit.SECONDS).build()
+    private val client = OkHttpClient.Builder().readTimeout(30, TimeUnit.SECONDS).build()
 
     fun get(url: String, callbackListener: CallbackListener) {
         val request = Request.Builder().url(url).build()
@@ -41,7 +42,7 @@ class HttpRequest {
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 val errorMessage = "Failed to connect to the backend"
-                callbackListener.onFailure(errorMessage)
+                e.message?.let { Log.e("114514", it) }
             }
 
             override fun onResponse(call: Call, response: Response) {

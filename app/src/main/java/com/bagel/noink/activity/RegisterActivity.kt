@@ -15,6 +15,7 @@ class RegisterActivity : AppCompatActivity() {
     var usernameText: EditText? = null
     var passwdText: EditText? = null
     var passwdText2: EditText? = null
+    var emailText: EditText? = null
     var registerButton: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         usernameText = findViewById(R.id.username)
         passwdText = findViewById(R.id.Password)
         passwdText2 = findViewById(R.id.Password2)
+        emailText = findViewById(R.id.email)
         registerButton = findViewById(R.id.registerButton)
 
         // 点击注册按钮
@@ -33,15 +35,8 @@ class RegisterActivity : AppCompatActivity() {
             val name = usernameText?.text.toString().trim { it <= ' ' }
             val passwd = passwdText?.text.toString().trim { it <= ' ' }
             val passwd2 = passwdText2?.text.toString().trim { it <= ' ' }
+            val email = emailText?.text.toString().trim { it <= ' ' }
 
-            // 判断用户是否已经存在
-//            if (isUserExist(name)) {
-//                Toast.makeText(this, "该用户名已经存在", Toast.LENGTH_LONG).show()
-//            } else if (passwd != passwd2) {
-//                Toast.makeText(this, "两次输入的密码不一致", Toast.LENGTH_LONG).show()
-//            } else {
-//                // TODO: connect to backend
-//            }
         }
     }
 

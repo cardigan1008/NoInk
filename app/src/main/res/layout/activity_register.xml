@@ -4,25 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--  浅蓝色标题区  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#87cefa"
-            android:gravity="bottom|center"
-            android:paddingBottom="15dp"
-            android:text="注册"
-            android:textColor="#fffffb"
-            android:textSize="26sp" />
-
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +21,8 @@
             android:hint="请输入用户名"
             android:inputType="text"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:paddingRight="20dp"
+            android:autofillHints="username" />
 
         <!-- 密码输入框 -->
         <EditText
@@ -63,22 +45,80 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
             android:ems="10"
             android:hint="请确认密码"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
             android:paddingRight="20dp" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18dp"
+                android:text="性别" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/btnMan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="男" />
+
+                <RadioButton
+                    android:id="@+id/btnWoman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="女" />
+            </RadioGroup>
+        </LinearLayout>
+
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/editText_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="请输入您的生日"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/wechatId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:hint="请输入邮箱"
+            android:hint="请输入绑定的微信号"
             android:inputType="text"
             android:paddingLeft="20dp"
             android:paddingRight="20dp" />
@@ -94,11 +134,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:layout_marginTop="50dp"
-            android:background="#4FBEF1"
+            android:layout_marginRight="30dp"
+            android:background="#FF9800"
             android:text="注 册"
             android:textColor="#FFFFFB"
             android:textSize="18sp" />
+
     </LinearLayout>
 </LinearLayout>

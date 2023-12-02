@@ -20,14 +20,20 @@ class RegisterHttpRequest {
     fun registerRequest(
         username: String,
         password: String,
-        email: String,
+        gender: Boolean,
+        age: Int,
+        wechatId: String,
+        birthday: String,
         callbackListener: RegisterCallbackListener
     ) {
         val url = Contants.SERVER_ADDRESS + "/api/user/register"
         val jsonBody = JSONObject().apply {
             put("username", username)
             put("password", password)
-            put("email", email)
+            put("gender", gender)
+            put("age", age)
+            put("wechatId", wechatId)
+            put("birthday", birthday)
         }
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody = jsonBody.toString().toRequestBody(mediaType)

@@ -1,22 +1,31 @@
 package com.bagel.noink.activity
 
-import android.content.ContentValues
-import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
+import com.bagel.noink.utils.InformationCalc.Companion.calculateAge
+import com.bagel.noink.utils.InformationCalc.Companion.convertDateFormat
+import com.bagel.noink.utils.RegisterHttpRequest
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     // 声明组件
     var usernameText: EditText? = null
     var passwdText: EditText? = null
     var passwdText2: EditText? = null
-    var emailText: EditText? = null
+    var wechatId: EditText? = null
     var registerButton: Button? = null
+    var birthdayText: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +35,18 @@ class RegisterActivity : AppCompatActivity() {
         usernameText = findViewById(R.id.username)
         passwdText = findViewById(R.id.Password)
         passwdText2 = findViewById(R.id.Password2)
-        emailText = findViewById(R.id.email)
+        wechatId = findViewById(R.id.wechatId)
         registerButton = findViewById(R.id.registerButton)
+        birthdayText = findViewById(R.id.editText_birthday)
+        val genderRadioGroup: RadioGroup? = findViewById(R.id.radioGroup)
+
+        // 从单选框中获得性别信息
+        var gender = true
+        genderRadioGroup?.setOnCheckedChangeListener { _, checkedId ->
+            val radbtn = findViewById<View>(checkedId) as RadioButton
+            gender = radbtn.text.equals("男")
+        }
+
 
         // 点击注册按钮
         registerButton!!.setOnClickListener {
@@ -35,8 +54,33 @@ class RegisterActivity : AppCompatActivity() {
             val name = usernameText?.text.toString().trim { it <= ' ' }
             val passwd = passwdText?.text.toString().trim { it <= ' ' }
             val passwd2 = passwdText2?.text.toString().trim { it <= ' ' }
-            val email = emailText?.text.toString().trim { it <= ' ' }
+            val wechatId = wechatId?.text.toString().trim { it <= ' ' }
+            val birthday = birthdayText?.text.toString().trim { it <= ' ' }
 
+            // 计算年龄
+            val age = calculateAge(birthday)
+            val registerHttpRequest = RegisterHttpRequest()
+
+            // 调用sendTextRequest方法发送请求
+            registerHttpRequest.registerRequest(
+                username = name,
+                password = passwd,
+                gender = gender,
+                age = age,
+                wechatId = wechatId,
+                birthday = convertDateFormat(birthday),
+                callbackListener = object : RegisterHttpRequest.RegisterCallbackListener {
+                    override fun onSuccess(responseJson: JSONObject) {
+                        // TODO:
+                        println("Success")
+                    }
+
+                    override fun onFailure(errorMessage: String) {
+                        // TODO:
+                        println("Failure")
+                    }
+                }
+            )
         }
     }
 

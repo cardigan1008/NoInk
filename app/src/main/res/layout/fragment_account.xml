@@ -7,13 +7,20 @@
     tools:context=".ui.account.AccountFragment">
 
     <LinearLayout
-        android:layout_width="387dp"
-        android:layout_height="228dp"
+        android:layout_width="390dp"
+        android:layout_height="263dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/testButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="注册测试按钮" />
 
         <com.bagel.noink.ui.PersonalItemView
             android:id="@+id/item_username"
@@ -83,4 +90,5 @@
             app:show_more="false"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
+import com.bagel.noink.utils.InformationCalc
+import com.bagel.noink.utils.UserHttpRequest
+import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
     // 声明组件对象
@@ -35,17 +38,22 @@ class LoginActivity : AppCompatActivity() {
             val username = usernameText!!.text.toString()
             val passwd = passwdText!!.text.toString()
 
+            val userHttpRequest = UserHttpRequest()
+            userHttpRequest.loginRequest(
+                username = username,
+                password = passwd,
+                callbackListener = object : UserHttpRequest.UserCallbackListener {
+                    override fun onSuccess(responseJson: JSONObject) {
+                        // TODO:
+                        println("Success")
+                    }
 
-
-            // 用户名与密码匹配
-//            if (validLogin) {
-//                MainActivity.username = username
-//                MainActivity.loginState = true
-//                Toast.makeText(applicationContext, "登录成功", Toast.LENGTH_SHORT)!!.show()
-//                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-//            } else {
-//                Toast.makeText(applicationContext, "用户名或密码错误", Toast.LENGTH_SHORT)!!.show()
-//            }
+                    override fun onFailure(errorMessage: String) {
+                        // TODO:
+                        println("Failure")
+                    }
+                }
+            )
         }
 
     }

@@ -1,22 +1,17 @@
 package com.bagel.noink.activity
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
 import com.bagel.noink.utils.InformationCalc.Companion.calculateAge
 import com.bagel.noink.utils.InformationCalc.Companion.convertDateFormat
-import com.bagel.noink.utils.RegisterHttpRequest
+import com.bagel.noink.utils.UserHttpRequest
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     // 声明组件
@@ -59,17 +54,17 @@ class RegisterActivity : AppCompatActivity() {
 
             // 计算年龄
             val age = calculateAge(birthday)
-            val registerHttpRequest = RegisterHttpRequest()
+            val userHttpRequest = UserHttpRequest()
 
             // 调用sendTextRequest方法发送请求
-            registerHttpRequest.registerRequest(
+            userHttpRequest.registerRequest(
                 username = name,
                 password = passwd,
                 gender = gender,
                 age = age,
                 wechatId = wechatId,
                 birthday = convertDateFormat(birthday),
-                callbackListener = object : RegisterHttpRequest.RegisterCallbackListener {
+                callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
                         // TODO:
                         println("Success")

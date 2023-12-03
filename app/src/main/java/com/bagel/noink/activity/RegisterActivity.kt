@@ -1,11 +1,14 @@
 package com.bagel.noink.activity
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
 import com.bagel.noink.utils.InformationCalc.Companion.calculateAge
@@ -21,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
     var wechatId: EditText? = null
     var registerButton: Button? = null
     var birthdayText: EditText? = null
-
+    var passwordRepErrMsg: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -33,6 +36,7 @@ class RegisterActivity : AppCompatActivity() {
         wechatId = findViewById(R.id.wechatId)
         registerButton = findViewById(R.id.registerButton)
         birthdayText = findViewById(R.id.editText_birthday)
+        passwordRepErrMsg = findViewById(R.id.passwordRepErrMsg)
         val genderRadioGroup: RadioGroup? = findViewById(R.id.radioGroup)
 
         // 从单选框中获得性别信息
@@ -41,6 +45,22 @@ class RegisterActivity : AppCompatActivity() {
             val radbtn = findViewById<View>(checkedId) as RadioButton
             gender = radbtn.text.equals("男")
         }
+
+
+        // 验证两次输入的密码是否一致
+        passwdText2?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No action needed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validatePassword()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // No action needed
+            }
+        })
 
 
         // 点击注册按钮
@@ -78,5 +98,17 @@ class RegisterActivity : AppCompatActivity() {
             )
         }
     }
+    private fun validatePassword() {
+        val password = passwdText?.text.toString().trim { it <= ' ' }
+        val confirmPassword = passwdText2?.text.toString().trim { it <= ' ' }
+
+        if (password == confirmPassword) {
+            passwordRepErrMsg?.visibility = View.GONE
+        } else {
+            passwordRepErrMsg?.visibility = View.VISIBLE
+            passwordRepErrMsg?.text = "两次输入的密码不一致"
+        }
+    }
+
 
 }

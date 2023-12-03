@@ -53,6 +53,19 @@
             android:paddingRight="20dp" />
 
 
+        <TextView
+            android:id="@+id/passwordRepErrMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="#FF0000"
+            android:visibility="gone"
+            android:text="两次输入的密码不一致" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

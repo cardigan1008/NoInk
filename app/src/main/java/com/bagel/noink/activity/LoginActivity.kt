@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
@@ -23,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         // 点击注册按钮，跳转到注册界面
-        findViewById<Button>(R.id.registerButton)
+        findViewById<TextView>(R.id.registerPrompt)
             .setOnClickListener {
                 startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
             }

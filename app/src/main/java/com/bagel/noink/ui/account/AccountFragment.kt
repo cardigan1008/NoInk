@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.R
+import com.bagel.noink.activity.LoginActivity
 import com.bagel.noink.activity.RegisterActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -44,10 +45,17 @@ class AccountFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // 上传新闻按钮
+
+        // TODO: 删去测试按钮代码
         activity?.findViewById<Button>(R.id.testButton)
             ?.setOnClickListener {
                 startActivity(Intent(this.context, RegisterActivity::class.java))
             }
+
+        activity?.findViewById<Button>(R.id.loginButton)
+            ?.setOnClickListener {
+                startActivity(Intent(this.context, LoginActivity::class.java))
+            }
+
     }
 }

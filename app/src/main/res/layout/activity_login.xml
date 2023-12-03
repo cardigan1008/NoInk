@@ -4,29 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--  浅蓝色标题区  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#87cefa"
-            android:gravity="bottom|center"
-            android:paddingBottom="15dp"
-            android:text="登录"
-            android:textColor="#fffffb"
-            android:textSize="26sp" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="60dp">
         <!-- 用户名输入框 -->
         <EditText
             android:id="@+id/username"
@@ -36,7 +19,6 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/edittext_border"
             android:ems="10"
             android:hint="请输入用户名"
             android:inputType="text"
@@ -85,15 +67,39 @@
             android:textColor="#FFFFFB"
             android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/registerPrompt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="新用户？立即注册" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="100dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:background="#4FBEF1"
-            android:text="注 册"
-            android:textColor="#FFFFFB"
-            android:textSize="18sp" />
+            android:background="#CCCCCC" />
+
+        <TextView
+            android:id="@+id/third"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="第三方账号登录" />
+
+        <View
+            android:id="@+id/wechatLogo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/ic_wechat" />
     </LinearLayout>
 </LinearLayout>

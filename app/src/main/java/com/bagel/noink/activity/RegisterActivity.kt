@@ -25,6 +25,8 @@ class RegisterActivity : AppCompatActivity() {
     var registerButton: Button? = null
     var birthdayText: EditText? = null
     var passwordRepErrMsg: TextView? = null
+    var backToLoginPrompt: TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -37,6 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.registerButton)
         birthdayText = findViewById(R.id.editText_birthday)
         passwordRepErrMsg = findViewById(R.id.passwordRepErrMsg)
+        backToLoginPrompt = findViewById(R.id.backToLoginPrompt)
         val genderRadioGroup: RadioGroup? = findViewById(R.id.radioGroup)
 
         // 从单选框中获得性别信息
@@ -97,7 +100,11 @@ class RegisterActivity : AppCompatActivity() {
                 }
             )
         }
+
+        // 返回登录页面
+        backToLoginPrompt!!.setOnClickListener { finish() }
     }
+
     private fun validatePassword() {
         val password = passwdText?.text.toString().trim { it <= ' ' }
         val confirmPassword = passwdText2?.text.toString().trim { it <= ' ' }

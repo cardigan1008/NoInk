@@ -41,6 +41,11 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".activity.EditInformationActivity"
+            android:exported="true">
+        </activity>
+
         <activity android:name=".activity.DetailsActivity" />
 
     </application>

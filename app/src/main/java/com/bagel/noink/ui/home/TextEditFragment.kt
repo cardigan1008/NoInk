@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +19,16 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getSystemService
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentTexteditBinding
 import com.bagel.noink.utils.TextGenHttpRequest
 import com.bumptech.glide.Glide
 import org.json.JSONObject
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class TextEditFragment : Fragment() {
     private var _binding: FragmentTexteditBinding? = null
@@ -32,6 +38,13 @@ class TextEditFragment : Fragment() {
     private lateinit var scrollView:ScrollView
     private val selectedImageUris = mutableListOf<Uri>()
     private lateinit var textGenHttpRequest:TextGenHttpRequest
+
+    private lateinit var createdAt: String
+    private lateinit var updatedAt: String
+    private lateinit var originText: String
+    private lateinit var generatedText: String
+    private lateinit var type: String
+
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101
         private const val ARG_SELECTED_IMAGE_URIS = "selected_image_uris"
@@ -70,6 +83,7 @@ class TextEditFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,7 +91,7 @@ class TextEditFragment : Fragment() {
         editText = binding.editText
         val gridLayout: GridLayout = binding.gridLayout
         val buttonRegenerate:Button = binding.buttonRegenerate
-        val buttonModify:Button = binding.buttonModify
+        val buttonSave:Button = binding.buttonSave
         val buttonPublish:Button = binding.buttonPublish
 
         val args = arguments
@@ -87,7 +101,7 @@ class TextEditFragment : Fragment() {
         val type = args?.getString(ARG_TYPE)!!
         val originText = args?.getString(ARG_ORIGIN_TEXT)!!
         val style = args?.getString(ARG_STYLE)!!
-
+        textGenHttpRequest = TextGenHttpRequest()
         if (selectedImageUris.isNotEmpty()) {
             handleSelectedImages(selectedImageUris)
         }
@@ -95,7 +109,9 @@ class TextEditFragment : Fragment() {
         buttonRegenerate.setOnClickListener {
             generateText(length, type, originText, style)
         }
-
+        buttonSave.setOnClickListener {
+            saveText(selectedImageUris, style)
+        }
         gridLayout.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
             galleryIntent.type = "image/*"
@@ -105,22 +121,58 @@ class TextEditFragment : Fragment() {
         generateText(length,type,originText,style)
 
     }
-    private fun generateText(length: String,type: String,originText: String,style: String) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getCurrentTime(): String {
+        val currentTime = ZonedDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")
+        return currentTime.format(formatter)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun saveText(imageUris: List<Uri>, labels: String){
+        textGenHttpRequest.sendSaveRequest(
+            createdAt = createdAt,
+            updatedAt = getCurrentTime(),
+            originText = originText,
+            imageUrls = imageUris,
+            labels = labels,
+            generatedText = generatedText,
+            type = type,
+            callbackListener = object : TextGenHttpRequest.TextGenCallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    // 处理请求成功的响应JSON对象
+                    // 在这里使用responseJson
+                    Log.i("save succuss", responseJson.getString("code"));
+              }
+                override fun onFailure(errorMessage: String) {
+                    // 处理请求失败
+                    println("Request failed: $errorMessage")
+                }
+            }
+        )
+
+
+    }
+    private fun generateText(length: String,typeStr: String,origintext: String,style: String) {
         // 实例化TextGenHttpRequest类
-        textGenHttpRequest = TextGenHttpRequest()
 
         // 调用sendTextRequest方法发送请求
         textGenHttpRequest.sendTextRequest(
             length = length.toInt(),
             imageUrls = selectedImageUris,
-            type = type,
-            originText = originText,
+            type = typeStr,
+            originText = origintext,
             style = style,
             callbackListener = object : TextGenHttpRequest.TextGenCallbackListener {
                 override fun onSuccess(responseJson: JSONObject) {
                     // 处理请求成功的响应JSON对象
                     // 在这里使用responseJson
                     editText.setText(responseJson.getString("generatedText"))
+                    createdAt = responseJson.getString("createdAt")
+                    updatedAt = responseJson.getString("updatedAt")
+                    originText = responseJson.getString("originText")
+                    generatedText = responseJson.getString("generatedText");
+                    type = responseJson.getString("type");
                 }
                 override fun onFailure(errorMessage: String) {
                     // 处理请求失败
@@ -129,6 +181,7 @@ class TextEditFragment : Fragment() {
             }
         )
     }
+
     private fun hideKeyboard() {
         val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(scrollView.windowToken, 0)
@@ -181,4 +234,6 @@ class TextEditFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

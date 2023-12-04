@@ -54,12 +54,12 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/buttonModify"
+        android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="20dp"
-        android:text="修改"
+        android:text="保存"
         app:layout_constraintStart_toStartOf="@+id/scrollView"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 

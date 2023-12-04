@@ -1,7 +1,9 @@
 package com.bagel.noink.ui.account
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import com.bagel.noink.activity.LoginActivity
 import com.bagel.noink.activity.RegisterActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
 import com.bagel.noink.ui.PersonalItemView
+import java.util.Locale
 
 class AccountFragment : Fragment() {
 
@@ -30,6 +33,7 @@ class AccountFragment : Fragment() {
     var itemBirthday: PersonalItemView? = null
 
     var newGender: Boolean = true
+    var newBirthday: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,19 +90,41 @@ class AccountFragment : Fragment() {
                 tempGender = selectedGender == "男"
             }
 
-            builder.setPositiveButton("确定") { dialog, which ->
-                // 点击 "确定" 按钮后关闭对话框
+            // 点击 "确定" 按钮关闭对话框
+            builder.setPositiveButton("确定") { dialog, _ ->
                 newGender = tempGender
                 dialog.dismiss()
             }
 
-            builder.setNegativeButton("取消") { dialog, which ->
-                // 点击 "取消" 按钮后关闭对话框
+            // 点击 "取消" 按钮关闭对话框
+            builder.setNegativeButton("取消") { dialog, _ ->
                 dialog.dismiss()
             }
 
             val dialog = builder.create()
             dialog.show()
+        }
+
+        itemBirthday?.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog =
+                DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+                    // 处理用户选择的日期
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(selectedYear, selectedMonth, selectedDay)
+
+                    newBirthday = "$selectedYear-$selectedMonth-$selectedDay"
+
+                }, year, month, day)
+
+            // 设置最大日期
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+            // 显示日期选择对话框
+            datePickerDialog.show()
         }
 
 

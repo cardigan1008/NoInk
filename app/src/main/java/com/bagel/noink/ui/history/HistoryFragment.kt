@@ -1,5 +1,6 @@
 package com.bagel.noink.ui.history
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.bagel.noink.databinding.FragmentHistoryBinding
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.HttpRequest
 import org.json.JSONObject
+import java.net.URI
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
@@ -69,7 +71,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             }
 
             override fun onFailure(errorMessage: String) {
-                TODO("Not yet implemented")
+                print(errorMessage)
             }
         }
 

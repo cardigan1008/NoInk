@@ -1,20 +1,23 @@
 package com.bagel.noink.ui.account
 
+import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.R
+import com.bagel.noink.activity.EditInformationActivity
 import com.bagel.noink.activity.LoginActivity
 import com.bagel.noink.activity.RegisterActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.bagel.noink.ui.PersonalItemView
+import java.util.Locale
 
 class AccountFragment : Fragment() {
 
@@ -23,6 +26,14 @@ class AccountFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    var itemUsername: PersonalItemView? = null
+    var itemWechatId: PersonalItemView? = null
+    var itemGender: PersonalItemView? = null
+    var itemBirthday: PersonalItemView? = null
+
+    var newGender: Boolean = true
+    var newBirthday: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,10 +57,83 @@ class AccountFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // 绑定相关组件
+        itemUsername = activity?.findViewById(R.id.item_username)
+        itemWechatId = activity?.findViewById(R.id.item_wechat)
+        itemGender = activity?.findViewById(R.id.item_gender)
+        itemBirthday = activity?.findViewById(R.id.item_birthday)
+
+        // 跳转到修改用户名界面
+        itemUsername?.setOnClickListener {
+            val intent = Intent(this.context, EditInformationActivity::class.java)
+            intent.putExtra("type", "username")
+            startActivity(intent)
+        }
+
+        // 跳转到修改微信账号界面
+        itemWechatId?.setOnClickListener {
+            val intent = Intent(this.context, EditInformationActivity::class.java)
+            intent.putExtra("type", "wechat")
+            startActivity(intent)
+        }
+
+        // 弹出修改性别弹窗
+        itemGender?.setOnClickListener {
+            val genderOptions = arrayOf("男", "女")
+            val checkedItem = 0
+            var tempGender = true
+            val builder = AlertDialog.Builder(this.activity)
+            builder.setTitle("修改性别")
+            builder.setSingleChoiceItems(genderOptions, checkedItem) { dialog, which ->
+                // 处理选中的性别
+                val selectedGender = genderOptions[which]
+                tempGender = selectedGender == "男"
+            }
+
+            // 点击 "确定" 按钮关闭对话框
+            builder.setPositiveButton("确定") { dialog, _ ->
+                newGender = tempGender
+                dialog.dismiss()
+            }
+
+            // 点击 "取消" 按钮关闭对话框
+            builder.setNegativeButton("取消") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+        }
+
+        itemBirthday?.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog =
+                DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+                    // 处理用户选择的日期
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(selectedYear, selectedMonth, selectedDay)
+
+                    newBirthday = "$selectedYear-$selectedMonth-$selectedDay"
+
+                }, year, month, day)
+
+            // 设置最大日期
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+            // 显示日期选择对话框
+            datePickerDialog.show()
+        }
+
+
         // TODO: 删去测试按钮代码
+        // 登录按钮和注册按钮的跳转响应
         activity?.findViewById<Button>(R.id.testButton)
             ?.setOnClickListener {
-                startActivity(Intent(this.context, RegisterActivity::class.java))
+                val intent = Intent(this.context, RegisterActivity::class.java)
+                startActivity(intent)
             }
 
         activity?.findViewById<Button>(R.id.loginButton)

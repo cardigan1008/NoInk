@@ -1,10 +1,10 @@
 package com.bagel.noink.ui.history
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +12,9 @@ import com.bagel.noink.R
 import com.bagel.noink.adapter.HistoryAdapter
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentHistoryBinding
+import com.bagel.noink.utils.Contants
+import com.bagel.noink.utils.HttpRequest
+import org.json.JSONObject
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
@@ -50,13 +53,29 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     }
 
     private fun getHistory(): ArrayList<ListItemBean> {
-        // TODO: use backend api
-        var fakeList = ArrayList<ListItemBean>()
+        val historyList = ArrayList<ListItemBean>()
 
-        for (i in 0 until 10) {
-            fakeList.add(ListItemBean(i, "this is a title", "this is a new text", Uri.parse("fake")))
+        val callbackListener = object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                val items = responseJson.getJSONArray("data")
+
+                for (i in 0 until items.length()) {
+                    val item = items.getJSONObject(i)
+                    val historyItem = ListItemBean(item.getString("id").toInt(),
+                        item.getString("originText"), item.getString("generatedText"),
+                        item.getString("imageUrl").toUri())
+                    historyList.add(historyItem)
+                }
+            }
+
+            override fun onFailure(errorMessage: String) {
+                TODO("Not yet implemented")
+            }
         }
 
-        return fakeList
+        val httpRequest = HttpRequest()
+        httpRequest.get(Contants.SERVER_ADDRESS + "/api/record/allRecord", callbackListener)
+
+        return historyList
     }
 }

@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#fff"
-            app:icon="@drawable/ic_history"
+            app:icon="@drawable/ic_wechat"
             app:name="绑定微信"
             app:show_line="true"
             app:show_more="true"

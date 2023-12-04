@@ -23,12 +23,12 @@ class PersonalItemView(ctx: Context, attrs: AttributeSet) : RelativeLayout(ctx, 
         val name: TextView? = findViewById(R.id.name)
         data = findViewById(R.id.data)
         icon?.setImageDrawable(typedArray.getDrawable(R.styleable.PersonaltemView_icon))
-        name?.setText(typedArray.getText(R.styleable.PersonaltemView_name))
+        name?.text = typedArray.getText(R.styleable.PersonaltemView_name)
         if (typedArray.getBoolean(R.styleable.PersonaltemView_show_more, false)) {
-            more?.setVisibility(VISIBLE);
+            more?.visibility = VISIBLE;
         }
         if (typedArray.getBoolean(R.styleable.PersonaltemView_show_line, false)) {
-            line?.setVisibility(VISIBLE);
+            line?.visibility = VISIBLE;
         }
         typedArray.recycle()
     }

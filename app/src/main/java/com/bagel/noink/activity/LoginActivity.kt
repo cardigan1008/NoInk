@@ -3,6 +3,7 @@ package com.bagel.noink.activity
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -46,12 +47,14 @@ class LoginActivity : AppCompatActivity() {
                 password = passwd,
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
-                        AccountViewModel.token = responseJson.get("token") as String?
-                        val data = responseJson.getJSONObject("data")
+                        val data = responseJson.getJSONObject("data").getJSONObject("data")
                         AccountViewModel.updateUserInfoByJson(data)
 
+
+
+                        Log.i("Login1441",data.toString())
                         // 登录成功，返回上一个Activity
-                        Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
                         finish()
                     }
 

@@ -34,6 +34,6 @@ class PersonalItemView(ctx: Context, attrs: AttributeSet) : RelativeLayout(ctx, 
     }
 
     fun setData(data: String) {
-        this.data?.setText(data)
+        this.data?.text = data
     }
 }

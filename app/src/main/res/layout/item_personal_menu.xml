@@ -26,8 +26,8 @@
 
     <ImageView
         android:id="@+id/more"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_more"
@@ -47,8 +47,8 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#c2c2c2"
+        android:background="#E1E1E1"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 
 </RelativeLayout>

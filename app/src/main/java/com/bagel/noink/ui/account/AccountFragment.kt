@@ -17,7 +17,6 @@ import com.bagel.noink.activity.LoginActivity
 import com.bagel.noink.activity.RegisterActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
 import com.bagel.noink.ui.PersonalItemView
-import java.util.Locale
 
 class AccountFragment : Fragment() {
 
@@ -31,6 +30,8 @@ class AccountFragment : Fragment() {
     var itemWechatId: PersonalItemView? = null
     var itemGender: PersonalItemView? = null
     var itemBirthday: PersonalItemView? = null
+    var itemUid: PersonalItemView? = null
+    var itemUpdatePassword: PersonalItemView? = null
 
     var newGender: Boolean = true
     var newBirthday: String? = null
@@ -62,6 +63,19 @@ class AccountFragment : Fragment() {
         itemWechatId = activity?.findViewById(R.id.item_wechat)
         itemGender = activity?.findViewById(R.id.item_gender)
         itemBirthday = activity?.findViewById(R.id.item_birthday)
+        itemUid = activity?.findViewById(R.id.item_uid)
+        itemUpdatePassword = activity?.findViewById(R.id.item_update_password)
+
+        // 显示用户信息
+        AccountViewModel.userInfo?.let { itemUsername?.setData(it.username) }
+        AccountViewModel.userInfo?.let { itemWechatId?.setData(it.wechatId) }
+        AccountViewModel.userInfo?.let {
+            itemGender?.setData(
+                if (it.gender) "男" else "女"
+            )
+        }
+        AccountViewModel.userInfo?.let { itemBirthday?.setData(it.birthday) }
+        // AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
 
         // 跳转到修改用户名界面
         itemUsername?.setOnClickListener {
@@ -105,6 +119,7 @@ class AccountFragment : Fragment() {
             dialog.show()
         }
 
+        // 修改生日弹窗
         itemBirthday?.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
@@ -128,8 +143,14 @@ class AccountFragment : Fragment() {
         }
 
 
-        // TODO: 删去测试按钮代码
-        // 登录按钮和注册按钮的跳转响应
+        // 跳转到修改用户密码界面
+        itemWechatId?.setOnClickListener {
+            val intent = Intent(this.context, EditInformationActivity::class.java)
+            intent.putExtra("type", "password")
+            startActivity(intent)
+        }
+
+        // TODO: 删去测试按钮代码，登录按钮和注册按钮的跳转响应
         activity?.findViewById<Button>(R.id.testButton)
             ?.setOnClickListener {
                 val intent = Intent(this.context, RegisterActivity::class.java)

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F3F3F3"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".ui.account.AccountFragment">
 
+    <!--  测试用的按钮  -->
     <LinearLayout
-        android:layout_width="396dp"
-        android:layout_height="351dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="380dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/loginButton"
@@ -28,11 +30,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="注册测试按钮" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="220dp"
+        android:gravity="center"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
 
         <com.bagel.noink.ui.PersonalItemView
             android:id="@+id/item_username"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             app:icon="@drawable/ic_history"
             app:name="昵称"
@@ -44,6 +56,7 @@
             android:id="@+id/item_gender"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             app:icon="@drawable/ic_history"
             app:name="性别"
@@ -55,6 +68,7 @@
             android:id="@+id/item_birthday"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             app:icon="@drawable/ic_history"
             app:name="出生年月"
@@ -66,6 +80,7 @@
             android:id="@+id/item_wechat"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             app:icon="@drawable/ic_wechat"
             app:name="绑定微信"
@@ -76,26 +91,35 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="387dp"
-        android:layout_height="98dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.372"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.864">
+        android:layout_width="380dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="15dp"
+        android:background="#ffffff"
+        android:orientation="vertical">
 
         <com.bagel.noink.ui.PersonalItemView
             android:id="@+id/item_uid"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             app:icon="@drawable/ic_history"
             app:name="UID"
             app:show_line="true"
             app:show_more="false"
             tools:ignore="MissingConstraints" />
+
+        <com.bagel.noink.ui.PersonalItemView
+            android:id="@+id/item_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="#fff"
+            app:icon="@drawable/ic_history"
+            app:name="修改密码"
+            app:show_line="true"
+            app:show_more="true"
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

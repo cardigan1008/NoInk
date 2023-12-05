@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
                         AccountViewModel.updateUserInfoByJson(data)
 
                         // 登录成功，返回上一个Activity
+                        Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
                         finish()
                     }
 

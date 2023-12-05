@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bagel.noink.bean.UserInfoBean
 
 class AccountViewModel : ViewModel() {
 
@@ -11,5 +12,12 @@ class AccountViewModel : ViewModel() {
         value = "This is slideshow Fragment"
     }
     val text: LiveData<String> = _text
+
+    companion object {
+        var token : String ?= null
+
+        // 用户信息
+        var userInfo : UserInfoBean ?= null
+    }
 
 }

@@ -55,5 +55,54 @@ class TextGenHttpRequest {
             }
         })
     }
+    fun formatUrlList(urlList: List<String>): String {
+        var formattedString = ""
+        for (url in urlList) {
+            if (formattedString.isNotEmpty()) {
+                formattedString += ","
+            }
+            formattedString += "http://$url"
+        }
+        return formattedString
+    }
+    fun sendSaveRequest(
+        createdAt: String,
+        updatedAt: String,
+        originText: String,
+        imageUrls: List<Uri>,
+        labels: String,
+        generatedText: String,
+        type: String,
+        callbackListener: TextGenCallbackListener
+    ){
+        val url = "http://10.0.2.2:8080/api/record/save" // Replace with your server address
+        // uri to string
+        val stringList = mutableListOf<String>()
+        for (uri in imageUrls) {
+            val uriString = uri.toString()
+            stringList.add(uriString)
+        }
+        val imageString = formatUrlList(stringList);
+        val jsonBody = JSONObject().apply {
+            put("createdAt", createdAt)
+            put("updatedAt", updatedAt)
+            put("originText", originText)
+            put("imageUrl", imageString)
+            put("labels", labels)
+            put("generatedText",generatedText)
+            put("type", type)
+        }
+
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = jsonBody.toString().toRequestBody(mediaType)
+        httpRequest.post(url, requestBody, object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                callbackListener.onSuccess(responseJson)
+            }
+            override fun onFailure(errorMessage: String) {
+                callbackListener.onFailure(errorMessage)
+            }
+        })
+    }
 }
 

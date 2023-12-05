@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
+import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.InformationCalc
 import com.bagel.noink.utils.UserHttpRequest
 import org.json.JSONObject
@@ -45,7 +46,8 @@ class LoginActivity : AppCompatActivity() {
                 password = passwd,
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
-                        // TODO:
+                        AccountViewModel.token = responseJson.get("token") as String?
+
                         println("Success")
                     }
 

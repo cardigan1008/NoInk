@@ -144,7 +144,7 @@ class AccountFragment : Fragment() {
 
 
         // 跳转到修改用户密码界面
-        itemWechatId?.setOnClickListener {
+        itemUpdatePassword?.setOnClickListener {
             val intent = Intent(this.context, EditInformationActivity::class.java)
             intent.putExtra("type", "password")
             startActivity(intent)

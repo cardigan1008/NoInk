@@ -1,5 +1,6 @@
 package com.bagel.noink.utils
 
+import android.util.Log
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -63,10 +64,12 @@ class UserHttpRequest {
         val requestBody = jsonBody.toString().toRequestBody(mediaType)
         httpRequest.post(url, requestBody, object : HttpRequest.CallbackListener {
             override fun onSuccess(responseJson: JSONObject) {
+                Log.i("check1441",responseJson.getJSONObject("data").toString())
                 callbackListener.onSuccess(responseJson)
             }
 
             override fun onFailure(errorMessage: String) {
+                Log.i("check1441",errorMessage)
                 callbackListener.onFailure(errorMessage)
             }
         })

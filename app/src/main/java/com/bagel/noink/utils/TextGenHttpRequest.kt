@@ -1,6 +1,8 @@
 package com.bagel.noink.utils
 
+import android.accounts.Account
 import android.net.Uri
+import com.bagel.noink.ui.account.AccountViewModel
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
@@ -92,10 +94,11 @@ class TextGenHttpRequest {
             put("generatedText",generatedText)
             put("type", type)
         }
-
+        val headerName = "satoken";
+        val headerValue = AccountViewModel.token!!;
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody = jsonBody.toString().toRequestBody(mediaType)
-        httpRequest.post(url, requestBody, object : HttpRequest.CallbackListener {
+        httpRequest.post(url, requestBody, headerName, headerValue, object : HttpRequest.CallbackListener {
             override fun onSuccess(responseJson: JSONObject) {
                 callbackListener.onSuccess(responseJson)
             }
@@ -103,6 +106,7 @@ class TextGenHttpRequest {
                 callbackListener.onFailure(errorMessage)
             }
         })
+
     }
 }
 

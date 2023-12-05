@@ -29,12 +29,13 @@ class AccountViewModel : ViewModel() {
             )
 
         fun updateUserInfoByJson(data: JSONObject) {
-            userInfo?.id = data.getInt("id")
-            userInfo?.age = data.getInt("age")
-            userInfo?.gender = data.getBoolean("gender")
-            userInfo?.username = data.getString("username")
-            userInfo?.password = data.getString("password")
-            userInfo?.birthday = data.getString("birthday")
+//            userInfo?.id = data.getInt("id")
+//            userInfo?.age = data.getInt("age")
+//            userInfo?.gender = data.getBoolean("gender")
+//            userInfo?.username = data.getString("username")
+//            userInfo?.password = data.getString("password")
+//            userInfo?.birthday = data.getString("birthday")
+            token = data.getString("tokenValue")
         }
     }
 

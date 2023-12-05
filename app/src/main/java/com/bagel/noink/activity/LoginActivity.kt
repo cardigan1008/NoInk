@@ -47,8 +47,12 @@ class LoginActivity : AppCompatActivity() {
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
                         AccountViewModel.token = responseJson.get("token") as String?
+                        val data = responseJson.getJSONObject("data")
+                        AccountViewModel.updateUserInfoByJson(data)
 
-                        println("Success")
+                        // 登录成功，返回上一个Activity
+                        Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
+                        finish()
                     }
 
                     override fun onFailure(errorMessage: String) {

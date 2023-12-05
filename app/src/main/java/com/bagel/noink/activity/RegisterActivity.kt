@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
 import com.bagel.noink.utils.InformationCalc.Companion.calculateAge
@@ -90,7 +91,10 @@ class RegisterActivity : AppCompatActivity() {
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
                         // TODO:
-                        println("Success")
+                        if (responseJson.getString("desc").equals("Success")) {
+                            Toast.makeText(this@RegisterActivity, "注册成功", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
                     }
 
                     override fun onFailure(errorMessage: String) {

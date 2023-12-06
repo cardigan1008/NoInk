@@ -22,7 +22,10 @@
             android:inputType="text"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:autofillHints="username" />
+            android:autofillHints="username"
+            android:drawableStart="@drawable/ic_contacts_nickname"
+            android:drawablePadding="10dp"
+            />
 
         <!-- 密码输入框 -->
         <EditText
@@ -36,7 +39,10 @@
             android:hint="请输入密码"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:paddingRight="20dp"
+            android:drawableStart="@drawable/ic_screenshot_penshape"
+            android:drawablePadding="10dp"
+            />
 
         <!-- 确认密码输入框 -->
         <EditText
@@ -50,7 +56,10 @@
             android:hint="请确认密码"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:paddingRight="20dp"
+            android:drawableStart="@drawable/ic_screenshot_penshape"
+            android:drawablePadding="10dp"
+            />
 
 
         <TextView
@@ -77,13 +86,16 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="18dp"
-                android:text="性别" />
+                android:text="性别"
+                android:drawableStart="@drawable/ic_public_contacts"
+                android:drawablePadding="10dp"
+                />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -121,7 +133,10 @@
             android:layout_marginBottom="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:inputType="date" />
+            android:inputType="date"
+            android:drawableStart="@drawable/ic_contacts_birthday"
+            android:drawablePadding="10dp"
+            />
 
         <EditText
             android:id="@+id/wechatId"
@@ -134,7 +149,10 @@
             android:hint="请输入绑定的微信号"
             android:inputType="text"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:paddingRight="20dp"
+            android:drawableStart="@drawable/icons8_wechat_black"
+            android:drawablePadding="10dp"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -149,7 +167,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="50dp"
             android:layout_marginRight="30dp"
-            android:background="#FF9800"
+            android:background="@drawable/round_button"
             android:text="注 册"
             android:textColor="#FFFFFB"
             android:textSize="18sp" />

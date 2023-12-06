@@ -6,5 +6,6 @@ data class ListItemBean (
     val id: Int,
     val title: String?,
     val text: String?,
-    val imageUri: Uri,
+    val coverUri: Uri,
+    val imagesUri: List<Uri>
 )

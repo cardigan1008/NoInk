@@ -1,17 +1,14 @@
 package com.bagel.noink.activity
 
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
-import com.bagel.noink.R
 import com.bagel.noink.databinding.ActivityDetailsBinding
+import com.bumptech.glide.Glide
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -23,30 +20,39 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val text = intent.getStringExtra("text")
-        val imageURI = intent.getParcelableExtra<Uri>("image")
+        val imageURIs = convertToUriList(intent.getStringArrayListExtra("imageUris"))
 
-        findViewById<TextView>(R.id.textView).text = text
-        findViewById<ViewPager>(R.id.viewPager).adapter = imageURI?.let { ImagePagerAdapter(it) }
+        binding.textView.text = text
+        binding.viewPager.adapter = imageURIs?.let { ImagePagerAdapter(it) }
 
         binding.back.setOnClickListener { finish() }
     }
 
-    private inner class ImagePagerAdapter(private val imageUri: Uri) : PagerAdapter() {
+    private fun convertToUriList(imageURIs: List<String>?): List<Uri>? {
+        return imageURIs?.map { Uri.parse(it) }
+    }
+
+    private inner class ImagePagerAdapter(private val imageURIs: List<Uri>) : PagerAdapter() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val imageView = ImageView(container.context)
-            imageView.setImageURI(imageUri)
+            Glide.with(container)
+                .load(imageURIs[position])
+                .into(imageView)
             container.addView(imageView)
             return imageView
         }
 
         override fun getCount(): Int {
-            return 1
+            return imageURIs.size
         }
 
         override fun isViewFromObject(view: View, `object`: Any): Boolean {
             return view == `object`
         }
 
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as View)
+        }
     }
 }

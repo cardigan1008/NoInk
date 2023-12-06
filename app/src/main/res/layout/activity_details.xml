@@ -32,21 +32,12 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="363dp"
-        android:layout_height="13dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Your Text"
         app:layout_constraintTop_toBottomOf="@id/viewPager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteX="20dp" />
-
-<!--    <com.viewpagerindicator.IconPageIndicator
-        android:id="@+id/indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/viewPager"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

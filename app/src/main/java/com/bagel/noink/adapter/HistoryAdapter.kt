@@ -40,7 +40,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
             holder.tvText.text = it
         }
 
-        historyItemBean.imageUri?.let {
+        historyItemBean.coverUri?.let {
             Glide.with(holder.itemView.context)
                 .load(it)
                 .into(holder.ivImage)
@@ -49,8 +49,12 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailsActivity::class.java)
             intent.putExtra("id", historyItemBean.id)
-            // TODO: delete these info when backend is ready
-            intent.putExtra("image", historyItemBean.imageUri)
+            val imageUris = historyItemBean.imagesUri
+            val uriList = ArrayList<String>()
+            for (uri in imageUris) {
+                uriList.add(uri.toString())
+            }
+            intent.putStringArrayListExtra("imageUris", uriList)
             intent.putExtra("text", historyItemBean.text)
 
             holder.itemView.context.startActivity(intent)

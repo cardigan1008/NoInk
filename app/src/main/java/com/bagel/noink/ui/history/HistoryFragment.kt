@@ -2,6 +2,7 @@ package com.bagel.noink.ui.history
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,7 +73,8 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                     historyList.add(ListItemBean(item.getInt("id"),
                         item.getString("originText"),
                         item.getString("generatedText"),
-                        uriList[0]
+                        uriList[0],
+                        uriList
                     ))
                 }
             }

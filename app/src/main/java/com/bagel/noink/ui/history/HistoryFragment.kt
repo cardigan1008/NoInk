@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +12,10 @@ import com.bagel.noink.R
 import com.bagel.noink.adapter.HistoryAdapter
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentHistoryBinding
+import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.HttpRequest
 import org.json.JSONObject
-import java.net.URI
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
@@ -63,10 +62,18 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
                 for (i in 0 until items.length()) {
                     val item = items.getJSONObject(i)
-                    val historyItem = ListItemBean(item.getString("id").toInt(),
-                        item.getString("originText"), item.getString("generatedText"),
-                        item.getString("imageUrl").toUri())
-                    historyList.add(historyItem)
+                    val uriStrList : List<String> = item.getString("imageUrl").split(",")
+                    val uriList: ArrayList<Uri> = ArrayList()
+
+                    for (uriStr in uriStrList) {
+                        val uri = Uri.parse(uriStr)
+                        uriList.add(uri)
+                    }
+                    historyList.add(ListItemBean(item.getInt("id"),
+                        item.getString("originText"),
+                        item.getString("generatedText"),
+                        uriList[0]
+                    ))
                 }
             }
 
@@ -76,7 +83,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         }
 
         val httpRequest = HttpRequest()
-        httpRequest.get(Contants.SERVER_ADDRESS + "/api/record/allRecord", callbackListener)
+        httpRequest.get(Contants.SERVER_ADDRESS + "/api/record/allRecord", "satoken", AccountViewModel.token!!,callbackListener)
 
         return historyList
     }

@@ -1,6 +1,7 @@
 package com.bagel.noink.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.bagel.noink.R
 import com.bagel.noink.activity.DetailsActivity
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.viewholder.HistoryViewHolder
+import com.bumptech.glide.Glide
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
     private val historyList: List<ListItemBean>
@@ -39,7 +41,9 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
         }
 
         historyItemBean.imageUri?.let {
-            holder.ivImage.setImageURI(it)
+            Glide.with(holder.itemView.context)
+                .load(it)
+                .into(holder.ivImage)
         }
 
         holder.itemView.setOnClickListener {

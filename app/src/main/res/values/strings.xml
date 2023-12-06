@@ -13,4 +13,6 @@
     <string name="menu_personal_account">账号设置</string>
     <string name="menu_about">关于没墨水</string>
     <string name="register">注册</string>
+    <string name="new_user_register">新用户？立即注册</string>
+    <string name="forget_password">忘记密码</string>
 </resources>

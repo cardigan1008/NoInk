@@ -1,6 +1,8 @@
 package com.bagel.noink.utils
 
 import android.util.Log
+import androidx.core.net.toUri
+import com.bagel.noink.bean.ListItemBean
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -109,5 +111,20 @@ class UserHttpRequest {
         })
     }
 
+    fun isUsernameExist(username: String, callback: (Boolean) -> Unit) {
+        val url = Contants.SERVER_ADDRESS + "/api/user/name" + "?username=" + username
 
+        val callbackListener = object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                val data = responseJson.getBoolean("data")
+                callback(data)
+            }
+
+            override fun onFailure(errorMessage: String) {
+            }
+        }
+
+        val httpRequest = HttpRequest()
+        httpRequest.get(url, callbackListener)
+    }
 }

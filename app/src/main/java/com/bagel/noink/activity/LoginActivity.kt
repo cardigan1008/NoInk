@@ -47,14 +47,10 @@ class LoginActivity : AppCompatActivity() {
                 password = passwd,
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
-                        val data = responseJson.getJSONObject("data").getJSONObject("data")
+                        val data = responseJson.getJSONObject("data")
                         AccountViewModel.updateUserInfoByJson(data)
-
-
-
-                        Log.i("Login1441",data.toString())
+                        AccountViewModel.saveToken(this@LoginActivity)
                         // 登录成功，返回上一个Activity
-//                        Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
                         finish()
                     }
 

@@ -63,10 +63,11 @@ class TextGenHttpRequest {
             if (formattedString.isNotEmpty()) {
                 formattedString += ","
             }
-            formattedString += "http://$url"
+            formattedString += "$url"
         }
         return formattedString
     }
+
     fun sendSaveRequest(
         createdAt: String,
         updatedAt: String,

@@ -14,7 +14,7 @@
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="30dp"
@@ -23,20 +23,26 @@
             android:hint="请输入用户名"
             android:inputType="text"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:paddingRight="20dp"
+            android:drawableStart="@drawable/ic_contacts_nickname"
+            android:drawablePadding="10dp"
+            />
 
         <!-- 密码输入框 -->
         <EditText
             android:id="@+id/Password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:ems="10"
             android:hint="请输入密码"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:paddingRight="20dp"
+            android:drawableStart="@drawable/ic_screenshot_penshape"
+            android:drawablePadding="10dp"
+        />
 
 
         <TextView
@@ -45,8 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="25dp"
-            android:text="忘记密码" />
+            android:layout_marginEnd="25dp"
+            android:text="@string/forget_password" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,10 +68,11 @@
             android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="20dp"
-            android:background="#4FBEF1"
+            android:background="@drawable/round_button"
             android:text="登 录"
             android:textColor="#FFFFFB"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+        />
 
         <TextView
             android:id="@+id/registerPrompt"
@@ -73,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="新用户？立即注册" />
+            android:text="@string/new_user_register" />
 
         <View
             android:id="@+id/divider"

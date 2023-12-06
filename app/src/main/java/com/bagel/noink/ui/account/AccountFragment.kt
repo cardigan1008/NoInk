@@ -43,7 +43,7 @@ class AccountFragment : Fragment() {
     ): View {
         val slideshowViewModel =
             ViewModelProvider(this).get(AccountViewModel::class.java)
-
+        AccountViewModel.instance = slideshowViewModel
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -56,7 +56,20 @@ class AccountFragment : Fragment() {
             )
         }
         AccountViewModel.userInfo?.let { itemBirthday?.setData(it.birthday) }
+
         // AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
+
+        // 实时更新用户信息显示
+        slideshowViewModel.userInformation.observe(viewLifecycleOwner) { newData ->
+            // 更新 UI
+            itemUsername?.setData(newData.username)
+            itemWechatId?.setData(newData.wechatId)
+            itemBirthday?.setData(newData.birthday)
+            itemGender?.setData(
+                if (newData.gender) "男" else "女"
+            )
+        }
+
         return root
     }
 

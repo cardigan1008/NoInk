@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.bean.UserInfoBean
 import org.json.JSONObject
 
@@ -16,8 +17,12 @@ class AccountViewModel : ViewModel() {
     }
     val text: LiveData<String> = _text
 
+    val _userInformation = MutableLiveData<UserInfoBean>()
+    val userInformation: LiveData<UserInfoBean> = _userInformation
+
     companion object {
         var token: String? = null
+        var instance: AccountViewModel? = null
 
         // 用户信息
         var userInfo: UserInfoBean? = UserInfoBean(
@@ -28,16 +33,17 @@ class AccountViewModel : ViewModel() {
             18,
             "13989884399",
             "2005-8-31"
-            )
+        )
 
         fun updateUserInfoByJson(data: JSONObject) {
-            userInfo?.id = data.getInt("id")
+            userInfo?.id = data.getLong("id")
             userInfo?.age = data.getInt("age")
             userInfo?.gender = data.getBoolean("gender")
             userInfo?.username = data.getString("username")
             userInfo?.password = data.getString("password")
             userInfo?.birthday = data.getString("birthday")
             token = data.getString("tokenValue")
+            instance?._userInformation?.value = userInfo
         }
 
         fun saveToken(activity: AppCompatActivity) {

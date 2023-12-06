@@ -47,6 +47,16 @@ class AccountFragment : Fragment() {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // 显示用户信息
+        AccountViewModel.userInfo?.let { itemUsername?.setData(it.username) }
+        AccountViewModel.userInfo?.let { itemWechatId?.setData(it.wechatId) }
+        AccountViewModel.userInfo?.let {
+            itemGender?.setData(
+                if (it.gender) "男" else "女"
+            )
+        }
+        AccountViewModel.userInfo?.let { itemBirthday?.setData(it.birthday) }
+        // AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
         return root
     }
 
@@ -66,16 +76,7 @@ class AccountFragment : Fragment() {
         itemUid = activity?.findViewById(R.id.item_uid)
         itemUpdatePassword = activity?.findViewById(R.id.item_update_password)
 
-        // 显示用户信息
-        AccountViewModel.userInfo?.let { itemUsername?.setData(it.username) }
-        AccountViewModel.userInfo?.let { itemWechatId?.setData(it.wechatId) }
-        AccountViewModel.userInfo?.let {
-            itemGender?.setData(
-                if (it.gender) "男" else "女"
-            )
-        }
-        AccountViewModel.userInfo?.let { itemBirthday?.setData(it.birthday) }
-        // AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
+
 
         // 跳转到修改用户名界面
         itemUsername?.setOnClickListener {

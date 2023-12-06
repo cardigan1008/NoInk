@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="register">注册</string>
+    <string name="new_user_register">新用户？立即注册</string>
+    <string name="forget_password">忘记密码</string>
 </resources>

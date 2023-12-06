@@ -47,10 +47,9 @@ class LoginActivity : AppCompatActivity() {
                 password = passwd,
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
-                        AccountViewModel.token = responseJson.get("token") as String?
                         val data = responseJson.getJSONObject("data")
                         AccountViewModel.updateUserInfoByJson(data)
-
+                        AccountViewModel.saveToken(this@LoginActivity)
                         // 登录成功，返回上一个Activity
                         finish()
                     }

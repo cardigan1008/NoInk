@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(errorMessage: String) {
-                val intent = Intent(this@MainActivity, RegisterActivity::class.java)
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
 

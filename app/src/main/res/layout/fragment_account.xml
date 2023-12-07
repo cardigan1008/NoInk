@@ -9,28 +9,17 @@
     android:orientation="vertical"
     tools:context=".ui.account.AccountFragment">
 
-    <!--  测试用的按钮  -->
-    <LinearLayout
-        android:layout_width="380dp"
-        android:layout_height="100dp"
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/nav_header_desc"
         android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="登录测试按钮" />
-
-        <Button
-            android:id="@+id/testButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="注册测试按钮" />
-    </LinearLayout>
+        android:background="@drawable/full_circle_background"
+        android:src="@mipmap/ic_cat"
+        android:scaleType="center"
+        />
 
     <LinearLayout
         android:layout_width="380dp"
@@ -122,4 +111,27 @@
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
+    <!--  测试用的按钮  -->
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="登录测试按钮" />
+
+        <Button
+            android:id="@+id/testButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:text="注册测试按钮" />
+    </LinearLayout>
 </LinearLayout>

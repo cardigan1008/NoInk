@@ -100,12 +100,7 @@ class TextGenerationFragment : Fragment() {
 
         // 按笔尖跳转
         penView.setOnClickListener {
-            val length = edit_length.text.toString()
-            val type = edit_category.text.toString()
-            val originText = edit_original.text.toString()
-            val style = edit_style.text.toString()
-            val textEditFragment = TextEditFragment.newInstance(selectedImageUris,length,type, originText,style)
-            navController.navigate(R.id.nav_textEdit, textEditFragment.arguments)
+            navController.navigate(R.id.nav_textEdit)
         }
 
         return root

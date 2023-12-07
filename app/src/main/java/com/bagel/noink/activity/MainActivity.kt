@@ -1,5 +1,6 @@
 package com.bagel.noink.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.snackbar.Snackbar
@@ -13,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
 import com.bagel.noink.databinding.ActivityMainBinding
+import com.bagel.noink.ui.account.AccountViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // 进入主界面进行的操作
+        val sharedPreferences = this@MainActivity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        AccountViewModel.token = sharedPreferences.getString("token", "")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

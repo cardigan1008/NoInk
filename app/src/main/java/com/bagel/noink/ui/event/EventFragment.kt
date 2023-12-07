@@ -65,7 +65,7 @@ class EventFragment : Fragment() {
         val navButton: Button = binding.button
         navButton.setOnClickListener{
             val navController = findNavController()
-            navController.navigate(R.id.nav_textEdit)
+            navController.navigate(R.id.nav_length)
         }
     }
     override fun onDestroyView() {

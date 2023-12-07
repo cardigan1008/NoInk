@@ -14,11 +14,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bagel.noink.R
 import com.bagel.noink.databinding.ActivityMainBinding
 import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.HttpRequest
 import com.bagel.noink.utils.UserHttpRequest
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
@@ -60,8 +62,10 @@ class MainActivity : AppCompatActivity() {
         userHttpRequest.getUserInfo(callbackListener = object : HttpRequest.CallbackListener {
             override fun onSuccess(responseJson: JSONObject) {
                 val data = responseJson.getJSONObject("data")
-                AccountViewModel.updateUserInfoByJson(data)
-                AccountViewModel.saveToken(this@MainActivity)
+                lifecycleScope.launch {
+                    AccountViewModel.updateUserInfoByJson(data)
+                    AccountViewModel.saveToken(this@MainActivity)
+                }
             }
 
             override fun onFailure(errorMessage: String) {

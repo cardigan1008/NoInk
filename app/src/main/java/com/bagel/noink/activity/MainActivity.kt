@@ -1,8 +1,10 @@
 package com.bagel.noink.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -15,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.R
 import com.bagel.noink.databinding.ActivityMainBinding
 import com.bagel.noink.ui.account.AccountViewModel
+import com.bagel.noink.utils.HttpRequest
+import com.bagel.noink.utils.UserHttpRequest
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,8 +52,24 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         // 进入主界面进行的操作
-        val sharedPreferences = this@MainActivity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            this@MainActivity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         AccountViewModel.token = sharedPreferences.getString("token", "")
+
+        val userHttpRequest = UserHttpRequest()
+        userHttpRequest.getUserInfo(callbackListener = object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                val data = responseJson.getJSONObject("data")
+                AccountViewModel.updateUserInfoByJson(data)
+                AccountViewModel.saveToken(this@MainActivity)
+            }
+
+            override fun onFailure(errorMessage: String) {
+                val intent = Intent(this@MainActivity, RegisterActivity::class.java)
+                startActivity(intent)
+            }
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

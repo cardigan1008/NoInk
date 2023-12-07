@@ -3,6 +3,7 @@ package com.bagel.noink.utils
 import android.util.Log
 import androidx.core.net.toUri
 import com.bagel.noink.bean.ListItemBean
+import com.bagel.noink.ui.account.AccountViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -111,6 +112,9 @@ class UserHttpRequest {
         })
     }
 
+    /**
+     * 判断用户名是否存在请求
+     */
     fun isUsernameExist(username: String, callback: (Boolean) -> Unit) {
         val url = Contants.SERVER_ADDRESS + "/api/user/name" + "?username=" + username
 
@@ -126,5 +130,10 @@ class UserHttpRequest {
 
         val httpRequest = HttpRequest()
         httpRequest.get(url, callbackListener)
+    }
+
+    fun getUserInfo(callbackListener: HttpRequest.CallbackListener) {
+        val url = Contants.SERVER_ADDRESS + "/api/user/userInfo"
+        httpRequest.get(url, "satoken", AccountViewModel.token!!, callbackListener)
     }
 }

@@ -21,7 +21,7 @@ class AccountViewModel : ViewModel() {
     val userInformation: LiveData<UserInfoBean> = _userInformation
 
     companion object {
-        var token: String? = null
+        var token: String? = "token"
         var instance: AccountViewModel? = null
 
         // 用户信息

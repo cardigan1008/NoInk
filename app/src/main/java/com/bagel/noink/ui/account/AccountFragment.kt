@@ -60,7 +60,7 @@ class AccountFragment : Fragment() {
         // AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
 
         // 实时更新用户信息显示
-        slideshowViewModel.userInformation.observe(viewLifecycleOwner) { newData ->
+        slideshowViewModel._userInformation.observe(viewLifecycleOwner) { newData ->
             // 更新 UI
             itemUsername?.setData(newData.username)
             itemWechatId?.setData(newData.wechatId)

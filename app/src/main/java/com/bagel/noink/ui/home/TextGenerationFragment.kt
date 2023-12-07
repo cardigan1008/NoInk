@@ -14,7 +14,10 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
+import com.bagel.noink.adapter.ImageAdapter
 import com.bagel.noink.databinding.FragmentTextgenerationBinding
 import com.bumptech.glide.Glide
 
@@ -51,8 +54,7 @@ class TextGenerationFragment : Fragment() {
         val root: View = binding.root
 
 
-        val gridLayout: GridLayout = binding.gridLayout
-        val bar: View = binding.bottomBar
+        val gridLayout: RecyclerView = binding.recyclerView
 
         val penView: ImageView = binding.penView
         var edit_length:EditText = binding.editLength
@@ -75,10 +77,11 @@ class TextGenerationFragment : Fragment() {
             params.height = 300
             imageView.layoutParams = params
             imageView.setImageResource(imageResource)
-            gridLayout.addView(imageView)
         } else {
             Log.e("ImageView", "PNG image resource not found")
         }
+
+
 
         gridLayout.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
@@ -94,6 +97,7 @@ class TextGenerationFragment : Fragment() {
         if (!selectedImageUris.isNullOrEmpty()) {
             handleSelectedImages(selectedImageUris)
         }
+
         // 按笔尖跳转
         penView.setOnClickListener {
             val length = edit_length.text.toString()
@@ -108,23 +112,13 @@ class TextGenerationFragment : Fragment() {
     }
 
     private fun handleSelectedImages(imageUris: List<Uri>) {
-        val gridLayout: GridLayout = binding.gridLayout
-        gridLayout.removeAllViews()
+        val recyclerView: RecyclerView = binding.recyclerView
 
-        for (imageUri in imageUris) {
-            val imageView = ImageView(requireContext())
-            val params = GridLayout.LayoutParams()
-            params.width = 250
-            params.height = 250
-            imageView.layoutParams = params
+        val adapter = ImageAdapter(imageUris)
+        recyclerView.adapter = adapter
 
-            Glide.with(this)
-                .load(imageUri)
-                .centerCrop()
-                .into(imageView)
-
-            gridLayout.addView(imageView)
-        }
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = layoutManager
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <GridLayout
+    android:id="@+id/mood_gridlayout"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     app:layout_constraintEnd_toEndOf="parent"
@@ -22,6 +23,7 @@
         android:gravity="center"
         >
         <TextView
+            android:id="@+id/happy"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
@@ -39,6 +41,7 @@
         android:gravity="center"
         >
         <TextView
+            android:id="@+id/calm"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
@@ -56,6 +59,7 @@
         android:gravity="center"
         >
         <TextView
+            android:id="@+id/angry"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
@@ -73,6 +77,7 @@
         android:gravity="center"
         >
         <TextView
+            android:id="@+id/bored"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
@@ -90,6 +95,7 @@
         android:gravity="center"
         >
         <TextView
+            android:id="@+id/awful"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
@@ -107,6 +113,7 @@
         android:gravity="center"
         >
         <TextView
+            android:id="@+id/depressed"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
@@ -124,6 +131,7 @@
         android:gravity="center"
         >
         <TextView
+            android:id="@+id/disappointed"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
@@ -141,6 +149,7 @@
         android:gravity="center"
         >
         <TextView
+            android:id="@+id/lonely"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"

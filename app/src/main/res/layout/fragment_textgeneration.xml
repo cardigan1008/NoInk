@@ -7,53 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.TextGenerationFragment">
 
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:columnCount="3"
-        android:rowCount="3"
-        app:layout_constraintBottom_toTopOf="@id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.38"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:overScrollMode="always"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/penView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/penView"
         android:layout_width="166dp"
         android:layout_height="63dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="72dp"
         android:src="@mipmap/ic_button_pen_nib"
-        app:layout_constraintBottom_toTopOf="@id/imageView"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintTop_toBottomOf="@id/gridLayout" />
+        app:layout_constraintBottom_toTopOf="@id/imageView" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:src="@mipmap/ic_button_ink_bottle"
-        app:layout_constraintBottom_toTopOf="@id/edit_category"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.17"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/penView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/penView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHeight_percent="0.17" />
 
     <EditText
         android:id="@+id/edit_length"
@@ -92,8 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
-        android:hint="请输入原始内容"
         android:layout_marginEnd="8dp"
+        android:hint="请输入原始内容"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -107,16 +99,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:hint="请输入内容风格"
         android:layout_marginEnd="16dp"
+        android:hint="请输入内容风格"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@id/edit_original"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed" />
-
-
 
     <View
         android:id="@+id/bottomBar"

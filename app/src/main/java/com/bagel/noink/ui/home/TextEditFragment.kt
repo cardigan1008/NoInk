@@ -21,7 +21,10 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
+import com.bagel.noink.adapter.ImageAdapter
 import com.bagel.noink.databinding.FragmentTexteditBinding
 import com.bagel.noink.utils.TextGenHttpRequest
 import com.bumptech.glide.Glide
@@ -89,7 +92,7 @@ class TextEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         editText = binding.editText
-        val gridLayout: GridLayout = binding.gridLayout
+        val gridLayout: RecyclerView = binding.recyclerView
         val buttonRegenerate:Button = binding.buttonRegenerate
         val buttonSave:Button = binding.buttonSave
         val buttonPublish:Button = binding.buttonPublish
@@ -188,24 +191,16 @@ class TextEditFragment : Fragment() {
     }
 
     private fun handleSelectedImages(imageUris: List<Uri>) {
-        val gridLayout: GridLayout = binding.gridLayout
-        gridLayout.removeAllViews()
+        val recyclerView: RecyclerView = binding.recyclerView
 
-        for (imageUri in imageUris) {
-            val imageView = ImageView(requireContext())
-            val params = GridLayout.LayoutParams()
-            params.width = 250
-            params.height = 250
-            imageView.layoutParams = params
+        val adapter = ImageAdapter(imageUris)
+        recyclerView.adapter = adapter
 
-            Glide.with(this)
-                .load(imageUri)
-                .centerCrop()
-                .into(imageView)
-
-            gridLayout.addView(imageView)
-        }
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = layoutManager
     }
+
+
     private fun generateText(imageUris: List<Uri>){
 
     }

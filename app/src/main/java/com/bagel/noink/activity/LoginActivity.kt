@@ -9,10 +9,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bagel.noink.R
 import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.InformationCalc
 import com.bagel.noink.utils.UserHttpRequest
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
@@ -48,10 +50,15 @@ class LoginActivity : AppCompatActivity() {
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
                         val data = responseJson.getJSONObject("data")
-                        AccountViewModel.updateUserInfoByJson(data)
-                        AccountViewModel.saveToken(this@LoginActivity)
-                        // 登录成功，返回上一个Activity
-                        finish()
+
+                        lifecycleScope.launch {
+                            // 在主线程中安全地更新 ViewModel
+                            AccountViewModel.updateUserInfoByJson(data)
+                            AccountViewModel.saveToken(this@LoginActivity)
+
+                            // 登录成功，返回上一个Activity
+                            finish()
+                        }
                     }
 
                     override fun onFailure(errorMessage: String) {

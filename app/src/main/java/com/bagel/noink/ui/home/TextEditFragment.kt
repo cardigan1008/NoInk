@@ -55,24 +55,6 @@ class TextEditFragment : Fragment() {
         private const val ARG_TYPE = "type"
         private const val ARG_ORIGIN_TEXT = "origin_text"
         private const val ARG_STYLE = "style"
-
-        fun newInstance(
-            selectedImageUris: MutableList<Uri>,
-            length: String,
-            type: String,
-            originText: String,
-            style: String
-        ): TextEditFragment {
-            val fragment = TextEditFragment()
-            val args = Bundle()
-            args.putParcelableArrayList(ARG_SELECTED_IMAGE_URIS, ArrayList(selectedImageUris))
-            args.putString(ARG_LENGTH, length)
-            args.putString(ARG_TYPE, type)
-            args.putString(ARG_ORIGIN_TEXT, originText)
-            args.putString(ARG_STYLE, style)
-            fragment.arguments = args
-            return fragment
-        }
     }
 
     @SuppressLint("DiscouragedApi", "ClickableViewAccessibility")
@@ -100,10 +82,11 @@ class TextEditFragment : Fragment() {
         val args = arguments
         selectedImageUris.addAll(args?.getParcelableArrayList<Uri>(ARG_SELECTED_IMAGE_URIS) ?: emptyList())
 
-        val length = args?.getString(ARG_LENGTH)!!
-        val type = args?.getString(ARG_TYPE)!!
-        val originText = args?.getString(ARG_ORIGIN_TEXT)!!
-        val style = args?.getString(ARG_STYLE)!!
+        val length = TextGenViewModel.getLength()!!
+        val type = TextGenViewModel.getType()!!
+        val originText = TextGenViewModel.getOriginText()!!
+        val style = TextGenViewModel.getStyle()!!
+
         textGenHttpRequest = TextGenHttpRequest()
         if (selectedImageUris.isNotEmpty()) {
             handleSelectedImages(selectedImageUris)
@@ -124,6 +107,8 @@ class TextEditFragment : Fragment() {
         generateText(length,type,originText,style)
 
     }
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
         val currentTime = ZonedDateTime.now()

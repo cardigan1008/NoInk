@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.GridLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -41,17 +43,20 @@ class EventFragment : Fragment() {
     private fun setClickListener() {
         val includedLayout: EventBinding = binding.includedLayout
         // 遍历 includedLayout 中的所有子视图
-        for (i in 0 until includedLayout.root.childCount) {
-            val childView: View = includedLayout.root.getChildAt(i)
-            // 检查子视图是否是 TextView
-            if (childView is TextView) {
-                // 在这里可以对每个 TextView 进行操作
-                val textView: TextView = childView
-                // 执行您的逻辑，例如设置文本或添加点击监听器等
-                textView.setOnClickListener {
-                    val text:String = textView.text.toString()
-                    TextGenViewModel.updateType(text)
-                    // 增加跳转逻辑，跳转到另一个fragment中
+        val root = includedLayout.root
+        // 遍历 GridLayout 中的每个 RelativeLayout，并获取其中的 TextView 引用
+        val gridLayout = root.findViewById<GridLayout>(R.id.event_gridlayout) // 替换为您的 GridLayout ID
+        for (i in 0 until gridLayout.childCount) {
+            val child = gridLayout.getChildAt(i)
+            if (child is RelativeLayout) {
+                for(j in 0 until child.childCount){
+                    val textView = child.getChildAt(j)
+                    if(textView is TextView) {
+                        textView.setOnClickListener {
+                            val text:String = textView.text.toString()
+                            TextGenViewModel.updateType(text)
+                        }
+                    }
                 }
             }
         }

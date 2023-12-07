@@ -17,16 +17,18 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Button
 import android.widget.GridLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
+import com.bagel.noink.databinding.FragmentHomeCatBinding
 import com.bagel.noink.utils.AliyunOSSManager
 
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentHomeCatBinding? = null
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
 
@@ -49,13 +51,14 @@ class HomeFragment : Fragment() {
 
         aliyunOSSManager = AliyunOSSManager(requireContext())
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeCatBinding.inflate(inflater, container, false)
         val root: View = binding.root
         navController = findNavController()
 
         val textView: TextView = binding.textHome
-        val bar: View = binding.bottomBar
+        //val bar: View = binding.bottomBar
         val imageView: ImageView = binding.imageView
+        val button: Button = binding.uploadButton
         // Set text from ViewModel
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
@@ -79,7 +82,14 @@ class HomeFragment : Fragment() {
 
         // Set OnClickListener for the image
 
-        imageView.setOnClickListener {
+//        imageView.setOnClickListener {
+//            val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+//            galleryIntent.type = "image/*"
+//            galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // 允许多选图片
+//            startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
+//        }
+
+        button.setOnClickListener{
             val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
             galleryIntent.type = "image/*"
             galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // 允许多选图片

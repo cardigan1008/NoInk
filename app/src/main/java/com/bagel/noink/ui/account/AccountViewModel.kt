@@ -43,7 +43,7 @@ class AccountViewModel : ViewModel() {
             userInfo?.password = data.getString("password")
             userInfo?.birthday = data.getString("birthday")
             token = data.getString("tokenValue")
-            instance?._userInformation?.value = userInfo
+//            instance?._userInformation?.value = userInfo
         }
 
         fun saveToken(activity: AppCompatActivity) {

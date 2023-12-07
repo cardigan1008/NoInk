@@ -59,41 +59,36 @@ class HomeFragment : Fragment() {
         //val bar: View = binding.bottomBar
         val imageView: ImageView = binding.imageView
         val button: Button = binding.uploadButton
+
+
         // Set text from ViewModel
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
-        val imageResource = resources.getIdentifier("ic_button_ink_bottle", "mipmap", requireActivity().packageName)
-        if (imageResource != 0) { // 检查资源是否存在
-            val imageView = ImageView(requireContext())
-            val params = GridLayout.LayoutParams()
-            params.width = 200 // 设置图片宽度
-            params.height = 200 // 设置图片高度
-            imageView.layoutParams = params
 
-            // 设置 ImageView 的图片资源
-            imageView.setImageResource(imageResource)
+//        val imageResource = resources.getIdentifier("ic_button_ink_bottle", "mipmap", requireActivity().packageName)
+//        if (imageResource != 0) { // 检查资源是否存在
+//            val imageView = ImageView(requireContext())
+//            val params = GridLayout.LayoutParams()
+//            params.width = 200 // 设置图片宽度
+//            params.height = 200 // 设置图片高度
+//            imageView.layoutParams = params
+//
+//            // 设置 ImageView 的图片资源
+//            imageView.setImageResource(imageResource)
+//
+//        } else {
+//            // 如果资源不存在，进行相应的处理，如打印日志或其他操作
+//            Log.e("ImageView", "PNG image resource not found")
+//        }
 
-        } else {
-            // 如果资源不存在，进行相应的处理，如打印日志或其他操作
-            Log.e("ImageView", "PNG image resource not found")
-        }
+        button.setOnClickListener{
+            navController.navigate(R.id.nav_mood)
 
-
-        // Set OnClickListener for the image
-
-//        imageView.setOnClickListener {
 //            val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
 //            galleryIntent.type = "image/*"
 //            galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // 允许多选图片
 //            startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
-//        }
-
-        button.setOnClickListener{
-            val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
-            galleryIntent.type = "image/*"
-            galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // 允许多选图片
-            startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
         }
 
         return root

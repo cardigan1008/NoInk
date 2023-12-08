@@ -47,29 +47,19 @@ class AccountFragment : Fragment() {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // 显示用户信息
-        AccountViewModel.userInfo?.let { itemUsername?.setData(it.username) }
-        AccountViewModel.userInfo?.let { itemWechatId?.setData(it.wechatId) }
-        AccountViewModel.userInfo?.let {
-            itemGender?.setData(
-                if (it.gender) "男" else "女"
-            )
+        // 实时更新用户信息显示UI
+        slideshowViewModel._username.observe(viewLifecycleOwner) { newData ->
+            itemUsername?.setData(newData)
         }
-        AccountViewModel.userInfo?.let { itemBirthday?.setData(it.birthday) }
-
-        // AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
-
-        // 实时更新用户信息显示
-        slideshowViewModel._userInformation.observe(viewLifecycleOwner) { newData ->
-            // 更新 UI
-            itemUsername?.setData(newData.username)
-            itemWechatId?.setData(newData.wechatId)
-            itemBirthday?.setData(newData.birthday)
-            itemGender?.setData(
-                if (newData.gender) "男" else "女"
-            )
+        slideshowViewModel._wechatId.observe(viewLifecycleOwner) { newData ->
+            itemWechatId?.setData(newData)
         }
-
+        slideshowViewModel._birthday.observe(viewLifecycleOwner) { newData ->
+            itemBirthday?.setData(newData)
+        }
+        slideshowViewModel._gender.observe(viewLifecycleOwner) { newData ->
+            itemGender?.setData(if (newData) "男" else "女")
+        }
         return root
     }
 
@@ -78,6 +68,7 @@ class AccountFragment : Fragment() {
         _binding = null
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -89,7 +80,16 @@ class AccountFragment : Fragment() {
         itemUid = activity?.findViewById(R.id.item_uid)
         itemUpdatePassword = activity?.findViewById(R.id.item_update_password)
 
-
+        // 显示用户信息
+        AccountViewModel.userInfo?.let { itemUsername?.setData(it.username) }
+        AccountViewModel.userInfo?.let { itemWechatId?.setData(it.wechatId) }
+        AccountViewModel.userInfo?.let {
+            itemGender?.setData(
+                if (it.gender) "男" else "女"
+            )
+        }
+        AccountViewModel.userInfo?.let { itemBirthday?.setData(it.birthday) }
+        // AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
 
         // 跳转到修改用户名界面
         itemUsername?.setOnClickListener {
@@ -175,6 +175,5 @@ class AccountFragment : Fragment() {
             ?.setOnClickListener {
                 startActivity(Intent(this.context, LoginActivity::class.java))
             }
-
     }
 }

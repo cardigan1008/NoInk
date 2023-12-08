@@ -90,11 +90,7 @@ class RegisterActivity : AppCompatActivity() {
                 birthday = convertDateFormat(birthday),
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
                     override fun onSuccess(responseJson: JSONObject) {
-                        // TODO:
-                        if (responseJson.getString("desc").equals("Success")) {
-                            Toast.makeText(this@RegisterActivity, "注册成功", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
+                        finish()
                     }
 
                     override fun onFailure(errorMessage: String) {

@@ -20,6 +20,12 @@ class AccountViewModel : ViewModel() {
     val text: LiveData<String> = _text
 
     val _userInformation = MutableLiveData<UserInfoBean>()
+    val _username = MutableLiveData<String>()
+    val _gender = MutableLiveData<Boolean>()
+    val _birthday = MutableLiveData<String>()
+    val _wechatId = MutableLiveData<String>()
+    val _uid = MutableLiveData<Long>()
+
 
     companion object {
         var token: String? = "token"
@@ -44,9 +50,16 @@ class AccountViewModel : ViewModel() {
             userInfo?.username = data.getString("username")
             userInfo?.password = data.getString("password")
             userInfo?.birthday = data.getString("birthday")
+            userInfo?.wechatId = data.getString("wechatId")
+
             token = data.getString("tokenValue")
             if (instance != null) {
                 instance!!._userInformation.value = userInfo
+                instance!!._username.value = userInfo?.username
+                instance!!._gender.value = userInfo?.gender
+                instance!!._birthday.value = userInfo?.birthday
+                instance!!._wechatId.value = userInfo?.wechatId
+                instance!!._uid.value = userInfo?.id
             }
         }
 

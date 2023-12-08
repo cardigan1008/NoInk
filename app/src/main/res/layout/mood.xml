@@ -24,7 +24,7 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:id="@+id/happy"
             android:layout_width="120dp"
             android:layout_height="50dp"
@@ -32,7 +32,10 @@
             android:padding="@dimen/defaultPadding"
             android:text="开心"
             android:drawableStart="@drawable/happy"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="开心"
+            android:textOff="开心"
             />
     </RelativeLayout>
 
@@ -43,7 +46,7 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:id="@+id/calm"
             android:layout_width="120dp"
             android:layout_height="50dp"
@@ -51,7 +54,10 @@
             android:padding="@dimen/defaultPadding"
             android:text="平静"
             android:drawableStart="@drawable/calm"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="平静"
+            android:textOff="平静"
             />
     </RelativeLayout>
 
@@ -62,7 +68,7 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:id="@+id/angry"
             android:layout_width="120dp"
             android:layout_height="50dp"
@@ -70,7 +76,10 @@
             android:padding="@dimen/defaultPadding"
             android:text="生气"
             android:drawableStart="@drawable/angry"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="生气"
+            android:textOff="生气"
             />
     </RelativeLayout>
 
@@ -81,7 +90,7 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:id="@+id/bored"
             android:layout_width="120dp"
             android:layout_height="50dp"
@@ -89,7 +98,10 @@
             android:padding="@dimen/defaultPadding"
             android:text="无聊"
             android:drawableStart="@drawable/bored"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="无聊"
+            android:textOff="无聊"
             />
     </RelativeLayout>
 
@@ -100,7 +112,7 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:id="@+id/awful"
             android:layout_width="120dp"
             android:layout_height="50dp"
@@ -108,7 +120,10 @@
             android:padding="@dimen/defaultPadding"
             android:text="恶心"
             android:drawableStart="@drawable/awful"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="恶心"
+            android:textOff="恶心"
             />
     </RelativeLayout>
 
@@ -119,7 +134,7 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:id="@+id/depressed"
             android:layout_width="120dp"
             android:layout_height="50dp"
@@ -127,7 +142,10 @@
             android:padding="@dimen/defaultPadding"
             android:text="委屈"
             android:drawableStart="@drawable/depressed"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="委屈"
+            android:textOff="委屈"
             />
     </RelativeLayout>
 
@@ -138,7 +156,7 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:id="@+id/disappointed"
             android:layout_width="120dp"
             android:layout_height="50dp"
@@ -146,7 +164,10 @@
             android:padding="@dimen/defaultPadding"
             android:text="难过"
             android:drawableStart="@drawable/disappointed"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="难过"
+            android:textOff="难过"
             />
     </RelativeLayout>
 
@@ -157,7 +178,7 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:id="@+id/lonely"
             android:layout_width="120dp"
             android:layout_height="50dp"
@@ -165,7 +186,10 @@
             android:padding="@dimen/defaultPadding"
             android:text="孤独"
             android:drawableStart="@drawable/lonely"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="孤独"
+            android:textOff="孤独"
             />
     </RelativeLayout>
 
@@ -176,14 +200,17 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
             android:padding="@dimen/defaultPadding"
             android:text="不知道"
             android:drawableStart="@drawable/neutral"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="不知道"
+            android:textOff="不知道"
             />
     </RelativeLayout>
 
@@ -194,14 +221,17 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
             android:padding="@dimen/defaultPadding"
             android:text="压力"
             android:drawableStart="@drawable/tense"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="压力"
+            android:textOff="压力"
             />
     </RelativeLayout>
 
@@ -212,14 +242,17 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
             android:padding="@dimen/defaultPadding"
             android:text="惊讶"
             android:drawableStart="@drawable/surprised"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="惊讶"
+            android:textOff="惊讶"
             />
     </RelativeLayout>
 
@@ -230,14 +263,17 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
             android:padding="@dimen/defaultPadding"
             android:text="惊喜"
             android:drawableStart="@drawable/suspicious"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="惊喜"
+            android:textOff="惊喜"
             />
     </RelativeLayout>
 
@@ -248,14 +284,17 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
             android:padding="14dp"
             android:text="神秘"
             android:drawableStart="@drawable/mysterious"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="神秘"
+            android:textOff="神秘"
             />
     </RelativeLayout>
 
@@ -266,14 +305,17 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
             android:padding="14dp"
             android:text="甜蜜"
             android:drawableStart="@drawable/romantic"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="甜蜜"
+            android:textOff="甜蜜"
             />
     </RelativeLayout>
 
@@ -285,14 +327,17 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/fab_margin"
         >
-        <TextView
+        <ToggleButton
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textAlignment="center"
             android:padding="14dp"
             android:text="烦躁"
             android:drawableStart="@drawable/shameful"
+            android:background="@drawable/default_background"
             android:drawablePadding="5dp"
+            android:textOn="烦躁"
+            android:textOff="烦躁"
             />
     </RelativeLayout>
 

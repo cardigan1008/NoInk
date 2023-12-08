@@ -22,12 +22,15 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
+                android:background="@drawable/default_background"
                 android:padding="@dimen/defaultPadding"
                 android:text="自定义"
+                android:textOn="自定义"
+                android:textOff="自定义"
                 android:drawablePadding="5dp"
                 />
         </RelativeLayout>
@@ -38,13 +41,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="电影"
+                android:textOn="电影"
+                android:textOff="电影"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -54,13 +60,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="游戏"
+                android:textOn="游戏"
+                android:textOff="游戏"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -70,13 +79,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="家庭"
+                android:textOn="家庭"
+                android:textOff="家庭"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -86,13 +98,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="旅游"
+                android:textOn="旅游"
+                android:textOff="旅游"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -102,13 +117,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="关系"
+                android:textOn="关系"
+                android:textOff="关系"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -118,13 +136,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="食物"
+                android:textOn="食物"
+                android:textOff="食物"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -134,13 +155,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="音乐"
+                android:textOn="音乐"
+                android:textOff="音乐"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -150,13 +174,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="工作"
+                android:textOn="工作"
+                android:textOff="工作"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -166,13 +193,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="休息"
+                android:textOn="休息"
+                android:textOff="休息"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -182,13 +212,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="爱情"
+                android:textOn="爱情"
+                android:textOff="爱情"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -198,13 +231,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="逛街"
+                android:textOn="逛街"
+                android:textOff="逛街"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -214,13 +250,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="冒险"
+                android:textOn="冒险"
+                android:textOff="冒险"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -230,13 +269,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="脑洞"
+                android:textOn="脑洞"
+                android:textOff="脑洞"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -246,13 +288,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="学习"
+                android:textOn="学习"
+                android:textOff="学习"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -262,13 +307,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="阅读"
+                android:textOn="阅读"
+                android:textOff="阅读"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -278,13 +326,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="运动"
+                android:textOn="运动"
+                android:textOff="运动"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -294,13 +345,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="整理"
+                android:textOn="整理"
+                android:textOff="整理"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -310,13 +364,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="健身"
+                android:textOn="健身"
+                android:textOff="健身"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -326,13 +383,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="生病"
+                android:textOn="生病"
+                android:textOff="生病"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -342,13 +402,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="爱豆"
+                android:textOn="爱豆"
+                android:textOff="爱豆"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -358,13 +421,16 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="宠物"
+                android:textOn="宠物"
+                android:textOff="宠物"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
@@ -374,47 +440,19 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             >
-            <TextView
+            <ToggleButton
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:padding="@dimen/defaultPadding"
                 android:text="追剧"
+                android:textOn="追剧"
+                android:textOff="追剧"
                 android:drawablePadding="5dp"
+                android:background="@drawable/default_background"
                 />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:textAlignment="center"
-                android:padding="@dimen/defaultPadding"
-                android:text="动漫"
-                android:drawablePadding="5dp"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:textAlignment="center"
-                android:padding="@dimen/defaultPadding"
-                android:text="上网"
-                android:drawablePadding="5dp"
-                />
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -432,21 +470,7 @@
                 />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:textAlignment="center"
-                android:padding="@dimen/defaultPadding"
-                android:text="吃瓜"
-                android:drawablePadding="5dp"
-                />
-        </RelativeLayout>
+
 
 <!--        <RelativeLayout-->
 <!--            android:layout_width="0dp"-->

@@ -1,5 +1,8 @@
 package com.bagel.noink.activity
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +14,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.bagel.noink.R
 import com.bagel.noink.utils.InformationCalc.Companion.calculateAge
 import com.bagel.noink.utils.InformationCalc.Companion.convertDateFormat
@@ -28,6 +32,8 @@ class RegisterActivity : AppCompatActivity() {
     var passwordRepErrMsg: TextView? = null
     var backToLoginPrompt: TextView? = null
 
+    var birthday: String = ""
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -66,6 +72,25 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+        birthdayText!!.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog =
+                DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+                    // 处理用户选择的日期
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(selectedYear, selectedMonth + 1, selectedDay)
+                    birthday = "$selectedYear-${selectedMonth + 1}-$selectedDay"
+                    birthdayText!!.setText("$selectedYear.${selectedMonth + 1}.$selectedDay")
+                }, year, month, day)
+            // 设置最大日期
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+            // 显示日期选择对话框
+            datePickerDialog.show()
+        }
 
         // 点击注册按钮
         registerButton!!.setOnClickListener {
@@ -74,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
             val passwd = passwdText?.text.toString().trim { it <= ' ' }
             val passwd2 = passwdText2?.text.toString().trim { it <= ' ' }
             val wechatId = wechatId?.text.toString().trim { it <= ' ' }
-            val birthday = birthdayText?.text.toString().trim { it <= ' ' }
+            val birthday = birthdayText?.text.toString().trim {it <= ' ' }
 
             // 计算年龄
             val age = calculateAge(birthday)

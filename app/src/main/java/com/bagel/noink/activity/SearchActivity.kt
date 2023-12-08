@@ -81,6 +81,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun performSearch(query: String, moodTags: ArrayList<String>, eventTags: ArrayList<String>) {
         Log.i("SearchActivity", "Search query: $query, event tags: $eventTags, mood tags: $moodTags")
+        // TODO: backend api
     }
 
     private fun resetSelection() {

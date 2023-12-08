@@ -9,13 +9,14 @@
         android:id="@+id/nav_home"
         android:name="com.bagel.noink.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home_cat" />
 
     <fragment
         android:id="@+id/nav_history"
         android:name="com.bagel.noink.ui.history.HistoryFragment"
         android:label="@string/menu_history"
         tools:layout="@layout/fragment_history" />
+
 
     <fragment
         android:id="@+id/nav_personal_account"
@@ -31,7 +32,24 @@
 
     <fragment
         android:id="@+id/nav_textEdit"
-        android:name="com.bagel.noink.ui.home.TextEditFragment"
+        android:name="com.bagel.noink.ui.textedit.TextEditFragment"
         android:label="Text Edit"
         tools:layout="@layout/fragment_textedit"/>
+
+    <fragment
+        android:id="@+id/nav_mood"
+        android:name="com.bagel.noink.ui.mood.MoodFragment"
+        android:label="Mood"
+        tools:layout="@layout/fragment_mood"/>
+
+    <fragment
+        android:id="@+id/nav_event"
+        android:name="com.bagel.noink.ui.event.EventFragment"
+        android:label="Event"
+        tools:layout="@layout/fragment_event"/>
+    <fragment
+        android:id="@+id/nav_length"
+        android:name="com.bagel.noink.ui.length.LengthFragment"
+        android:label="Length"
+        tools:layout="@layout/length" />
 </navigation>

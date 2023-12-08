@@ -15,4 +15,6 @@
     <string name="register">注册</string>
     <string name="new_user_register">新用户？立即注册</string>
     <string name="forget_password">忘记密码</string>
+    <string name="title">标题</string>
+    <string name="tag">标记</string>
 </resources>

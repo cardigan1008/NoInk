@@ -55,7 +55,7 @@ dependencies {
     implementation ("androidx.compose.ui:ui:1.4.6")
     implementation ("androidx.compose.ui:ui-tooling-preview:1.4.6")
     implementation ("androidx.compose.material3:material3:1.2.0-alpha08")
-
+    implementation ("io.github.ShawnLin013:number-picker:2.4.13")
 
     implementation ("androidx.constraintlayout:constraintlayout:2.1.1")
     implementation ("com.aliyun.dpa:oss-android-sdk:+")

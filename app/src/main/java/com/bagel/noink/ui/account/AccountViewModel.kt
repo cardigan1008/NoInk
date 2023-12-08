@@ -2,6 +2,8 @@ package com.bagel.noink.ui.account
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,11 +20,11 @@ class AccountViewModel : ViewModel() {
     val text: LiveData<String> = _text
 
     val _userInformation = MutableLiveData<UserInfoBean>()
-    val userInformation: LiveData<UserInfoBean> = _userInformation
 
     companion object {
-        var token: String? = null
+        var token: String? = "token"
         var instance: AccountViewModel? = null
+
 
         // 用户信息
         var userInfo: UserInfoBean? = UserInfoBean(
@@ -43,9 +45,16 @@ class AccountViewModel : ViewModel() {
             userInfo?.password = data.getString("password")
             userInfo?.birthday = data.getString("birthday")
             token = data.getString("tokenValue")
-/*
-            instance?._userInformation?.value = userInfo
-*/
+            if (instance != null) {
+                instance!!._userInformation.value = userInfo
+            }
+        }
+
+        fun updateUserInfo(newInfo: UserInfoBean) {
+            userInfo = newInfo
+            if (instance != null) {
+                instance!!._userInformation.value = userInfo
+            }
         }
 
         fun saveToken(activity: AppCompatActivity) {

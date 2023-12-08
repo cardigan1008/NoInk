@@ -6,21 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.TextEditFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:overScrollMode="always"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/scrollView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toTopOf="@id/linearLayout" />
 
+        <ImageView
+            android:id="@id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@mipmap/ic_img_upload"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/recyclerView"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:overScrollMode="always"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/linearLayout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.0" />
+    />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -37,6 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:hint="@string/title" />
 
         <EditText
@@ -44,6 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:hint="@string/tag" />
 
     </LinearLayout>
@@ -67,8 +92,10 @@
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:background="@drawable/edittext_border"
-                android:hint="输入文本"
+                android:hint="请你输入原始文本哦"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -78,12 +105,12 @@
 
 
     <Button
-        android:id="@+id/buttonSave"
+        android:id="@+id/buttonRegenerate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="20dp"
-        android:text="保存"
+        android:text="生成文案"
         app:layout_constraintStart_toStartOf="@+id/scrollView"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
@@ -95,12 +122,12 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <Button
-        android:id="@+id/buttonRegenerate"
+        android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginTop="20dp"
-        android:text="重新生成"
+        android:text="保存"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 

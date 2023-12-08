@@ -51,10 +51,6 @@ class TextEditFragment : Fragment() {
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101
         private const val ARG_SELECTED_IMAGE_URIS = "selected_image_uris"
-        private const val ARG_LENGTH = "length"
-        private const val ARG_TYPE = "type"
-        private const val ARG_ORIGIN_TEXT = "origin_text"
-        private const val ARG_STYLE = "style"
     }
 
     @SuppressLint("DiscouragedApi", "ClickableViewAccessibility")

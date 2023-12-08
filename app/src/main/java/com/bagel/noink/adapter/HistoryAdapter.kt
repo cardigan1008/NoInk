@@ -13,9 +13,13 @@ import com.bagel.noink.viewholder.HistoryViewHolder
 import com.bumptech.glide.Glide
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
-    private val historyList: List<ListItemBean>
+    private var historyList: List<ListItemBean>
 
     constructor(historyList: List<ListItemBean>) {
+        this.historyList = historyList
+    }
+
+    private fun setHistoryList(historyList: List<ListItemBean>) {
         this.historyList = historyList
     }
 
@@ -59,8 +63,6 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
 
             holder.itemView.context.startActivity(intent)
         }
-
-
     }
 
 

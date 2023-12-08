@@ -11,9 +11,10 @@ class TextGenViewModel {
         // 用户信息
         var textGenInfo: TextGenInfoBean? = TextGenInfoBean(
             null,
+            "test",
             null,
             null,
-            null,
+            "50",
         )
         fun updateInfoUrls(imageUrl: List<Uri>){
             textGenInfo?.imageUrls = imageUrl
@@ -27,7 +28,9 @@ class TextGenViewModel {
         fun updateType(type: String){
             textGenInfo?.type = type
         }
-
+        fun updateLength(length: String){
+            textGenInfo?.length = length
+        }
         fun getInfoUrls(): List<Uri>? {
             return textGenInfo?.imageUrls
         }
@@ -39,6 +42,9 @@ class TextGenViewModel {
         }
         fun getType(): String? {
             return textGenInfo?.type
+        }
+        fun getLength(): String? {
+            return textGenInfo?.length
         }
     }
 }

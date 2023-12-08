@@ -136,4 +136,6 @@ class UserHttpRequest {
         val url = Contants.SERVER_ADDRESS + "/api/user/userInfo"
         httpRequest.get(url, "satoken", AccountViewModel.token!!, callbackListener)
     }
+
+
 }

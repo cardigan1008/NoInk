@@ -72,6 +72,10 @@ class SearchActivity : AppCompatActivity() {
             }
             false
         }
+
+        binding.backButton.setOnClickListener{
+            finish()
+        }
     }
 
     private fun performSearch() {

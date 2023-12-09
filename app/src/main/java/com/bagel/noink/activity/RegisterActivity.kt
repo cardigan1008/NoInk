@@ -2,6 +2,7 @@ package com.bagel.noink.activity
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Editable
@@ -15,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import com.bagel.noink.R
 import com.bagel.noink.utils.InformationCalc.Companion.calculateAge
 import com.bagel.noink.utils.InformationCalc.Companion.convertDateFormat
@@ -31,8 +33,12 @@ class RegisterActivity : AppCompatActivity() {
     var birthdayText: EditText? = null
     var passwordRepErrMsg: TextView? = null
     var backToLoginPrompt: TextView? = null
+    var usernameMsg: TextView? = null
 
+    // 有用的信息
     var birthday: String = ""
+    var usernameExist: Boolean = false
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +53,7 @@ class RegisterActivity : AppCompatActivity() {
         birthdayText = findViewById(R.id.editText_birthday)
         passwordRepErrMsg = findViewById(R.id.passwordRepErrMsg)
         backToLoginPrompt = findViewById(R.id.backToLoginPrompt)
+        usernameMsg = findViewById(R.id.usernameMsg)
         val genderRadioGroup: RadioGroup? = findViewById(R.id.radioGroup)
 
         // 从单选框中获得性别信息
@@ -55,6 +62,59 @@ class RegisterActivity : AppCompatActivity() {
             val radbtn = findViewById<View>(checkedId) as RadioButton
             gender = radbtn.text.equals("男")
         }
+
+        // 验证用户名是否重复
+        usernameText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No action needed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // No action needed
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val userHttpRequest = UserHttpRequest()
+                val username = usernameText?.text.toString().trim { it <= ' ' }
+                userHttpRequest.isUsernameExist(username) {
+                    if (it) {
+                        if (username != "") {
+                            usernameMsg?.visibility = View.VISIBLE
+                        } else {
+                            usernameMsg?.visibility = View.GONE
+                        }
+                        usernameMsg?.text = "好听的用户名已经被人取走了"
+                        usernameMsg?.setTextColor(Color.RED)
+                        val drawable =
+                            ContextCompat.getDrawable(this@RegisterActivity, R.drawable.lonely)
+                        usernameMsg?.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            drawable,
+                            null,
+                            null,
+                            null
+                        )
+                        usernameExist = true
+                    } else {
+                        if (username != "") {
+                            usernameMsg?.visibility = View.VISIBLE
+                        } else {
+                            usernameMsg?.visibility = View.GONE
+                        }
+                        usernameMsg?.text = "真是一个很酷的用户名"
+                        usernameMsg?.setTextColor(Color.GREEN)
+                        val drawable =
+                            ContextCompat.getDrawable(this@RegisterActivity, R.drawable.happy)
+                        usernameMsg?.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            drawable,
+                            null,
+                            null,
+                            null
+                        )
+                        usernameExist = false
+                    }
+                }
+            }
+        })
 
 
         // 验证两次输入的密码是否一致
@@ -99,31 +159,36 @@ class RegisterActivity : AppCompatActivity() {
             val passwd = passwdText?.text.toString().trim { it <= ' ' }
             val passwd2 = passwdText2?.text.toString().trim { it <= ' ' }
             val wechatId = wechatId?.text.toString().trim { it <= ' ' }
-            val birthday = birthdayText?.text.toString().trim {it <= ' ' }
-
-            // 计算年龄
-            val age = calculateAge(birthday)
+            val birthday = birthdayText?.text.toString().trim { it <= ' ' }
             val userHttpRequest = UserHttpRequest()
 
-            // 调用sendTextRequest方法发送请求
-            userHttpRequest.registerRequest(
-                username = name,
-                password = passwd,
-                gender = gender,
-                age = age,
-                wechatId = wechatId,
-                birthday = convertDateFormat(birthday),
-                callbackListener = object : UserHttpRequest.UserCallbackListener {
-                    override fun onSuccess(responseJson: JSONObject) {
-                        finish()
-                    }
+            if (passwd == passwd2 && !usernameExist
+                && name != ""
+                && wechatId != ""
+                && birthday != ""
+            ) {
+                // 计算年龄
+                val age = calculateAge(birthday)
+                // 调用sendTextRequest方法发送请求
+                userHttpRequest.registerRequest(
+                    username = name,
+                    password = passwd,
+                    gender = gender,
+                    age = age,
+                    wechatId = wechatId,
+                    birthday = convertDateFormat(birthday),
+                    callbackListener = object : UserHttpRequest.UserCallbackListener {
+                        override fun onSuccess(responseJson: JSONObject) {
+                            finish()
+                        }
 
-                    override fun onFailure(errorMessage: String) {
-                        // TODO:
-                        println("Failure")
+                        override fun onFailure(errorMessage: String) {
+                            // TODO:
+                            println("Failure")
+                        }
                     }
-                }
-            )
+                )
+            }
         }
 
         // 返回登录页面

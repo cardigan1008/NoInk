@@ -7,6 +7,12 @@ import java.util.Locale
 class InformationCalc {
     companion object {
         fun calculateAge(birthday: String): Int {
+            // 校验日期格式
+            val pattern = """^\\d{4}\.\d{1,2}\.\\d{1,2}$""".toRegex()
+            if (!birthday.matches(pattern)) {
+                return -1
+            }
+
             val dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
             val currentDate = Calendar.getInstance()
 

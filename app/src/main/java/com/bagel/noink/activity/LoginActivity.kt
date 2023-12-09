@@ -23,7 +23,10 @@ class LoginActivity : AppCompatActivity() {
     var usernameText: EditText? = null
     var passwdText: EditText? = null
     var loginButton: Button? = null
-
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        // 不执行任何操作，使返回键无效
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

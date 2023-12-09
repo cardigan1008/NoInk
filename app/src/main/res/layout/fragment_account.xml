@@ -120,10 +120,18 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/exitButton"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="退出登录" />
+
+        <Button
             android:id="@+id/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:text="登录测试按钮" />
 
         <Button
@@ -132,6 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
+            android:visibility="gone"
             android:text="注册测试按钮" />
     </LinearLayout>
 </LinearLayout>

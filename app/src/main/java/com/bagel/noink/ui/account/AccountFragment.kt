@@ -2,6 +2,7 @@ package com.bagel.noink.ui.account
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -163,6 +164,19 @@ class AccountFragment : Fragment() {
             intent.putExtra("type", "password")
             startActivity(intent)
         }
+
+        activity?.findViewById<Button>(R.id.exitButton)
+            ?.setOnClickListener {
+                // 清除 token
+                val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                val editor = sharedPreferences?.edit()
+                editor?.putString("token", "")
+                editor?.apply()
+
+                // 跳转到LoginActivity
+                val intent = Intent(this.context, LoginActivity::class.java)
+                startActivity(intent)
+            }
 
         // TODO: 删去测试按钮代码，登录按钮和注册按钮的跳转响应
         activity?.findViewById<Button>(R.id.testButton)

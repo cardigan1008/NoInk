@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.history.HistoryFragment">
 
-    <ImageView
-        android:id="@+id/search_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_search"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:padding="8dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/history_recycle"
         android:layout_width="match_parent"

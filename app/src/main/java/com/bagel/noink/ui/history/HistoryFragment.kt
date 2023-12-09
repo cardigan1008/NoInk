@@ -1,10 +1,8 @@
 package com.bagel.noink.ui.history
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
-import com.bagel.noink.activity.SearchActivity
 import com.bagel.noink.adapter.HistoryAdapter
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentHistoryBinding
@@ -60,33 +57,35 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     private fun getHistory(): ArrayList<ListItemBean> {
         val historyList = ArrayList<ListItemBean>()
 
-        val uriTestList = ArrayList<Uri>()
-        uriTestList.add(Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"))
-        uriTestList.add(Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"))
-        historyList.add(ListItemBean(1, "test", "for test", Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"), uriTestList))
-
         val callbackListener = object : HttpRequest.CallbackListener {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSuccess(responseJson: JSONObject) {
                 val items = responseJson.getJSONArray("data")
 
                 for (i in 0 until items.length()) {
                     val item = items.getJSONObject(i)
-                    val uriStrList : List<String> = item.getString("imageUrl").split(",")
+                    val uriStrList: List<String> = item.getString("imageUrl").split(",")
                     val uriList: ArrayList<Uri> = ArrayList()
 
                     for (uriStr in uriStrList) {
                         val uri = Uri.parse(uriStr)
                         uriList.add(uri)
                     }
-                    historyList.add(ListItemBean(item.getInt("id"),
-                        item.getString("originText"),
-                        item.getString("generatedText"),
-                        uriList[0],
-                        uriList
-                    ))
+                    historyList.add(
+                        ListItemBean(
+                            item.getInt("id"),
+                            item.getString("originText"),
+                            item.getString("generatedText"),
+                            uriList[0],
+                            uriList
+                        )
+                    )
                 }
-                Log.i("checkHistory", "begin to get history!")
-                adapter?.notifyDataSetChanged()
+
+                // 在主线程上调用 notifyDataSetChanged()
+                activity?.runOnUiThread {
+                    adapter?.notifyDataSetChanged()
+                }
             }
 
             override fun onFailure(errorMessage: String) {

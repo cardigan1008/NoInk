@@ -17,6 +17,9 @@ import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.HttpRequest
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
@@ -71,13 +74,19 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                         val uri = Uri.parse(uriStr)
                         uriList.add(uri)
                     }
+
+                    val dateString = item.getString("createdAt")
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val date = dateFormat.parse(dateString)
+
                     historyList.add(
                         ListItemBean(
-                            item.getInt("id"),
+                            item.getInt("rid"),
                             item.getString("originText"),
                             item.getString("generatedText"),
                             uriList[0],
-                            uriList
+                            uriList,
+                            date
                         )
                     )
                 }

@@ -1,6 +1,8 @@
 package com.bagel.noink.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,9 @@ import com.bagel.noink.activity.DetailsActivity
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.viewholder.HistoryViewHolder
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.Locale
+import kotlin.time.Duration.Companion.days
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
     private var historyList: List<ListItemBean>
@@ -47,6 +52,22 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
             Glide.with(holder.itemView.context)
                 .load(it)
                 .into(holder.ivImage)
+        }
+
+        val createDate = historyItemBean.createDate
+        Log.i("createDate", "${historyItemBean.createDate}")
+        val dayMonthFormat = SimpleDateFormat("dd/MM", Locale.getDefault())
+
+        createDate?.let {
+            val formattedDate = dayMonthFormat.format(it)
+
+            // 提取日和月
+            val day = formattedDate.substring(0, 2)
+            val month = formattedDate.substring(3) + "月"
+
+            // 设置到对应的 TextView 中
+            holder.tvDay.text = day
+            holder.tvMonth.text = month
         }
 
         holder.itemView.setOnClickListener {

@@ -65,9 +65,18 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
             val day = formattedDate.substring(0, 2)
             val month = formattedDate.substring(3) + "月"
 
-            // 设置到对应的 TextView 中
-            holder.tvDay.text = day
-            holder.tvMonth.text = month
+            // 如果是同一天的第一个条目，则显示日月，否则隐藏
+            if (position == 0 || formattedDate != dayMonthFormat.format(historyList[position - 1].createDate!!)) {
+                holder.tvDay.visibility = View.VISIBLE
+                holder.tvMonth.visibility = View.VISIBLE
+
+                // 设置到对应的 TextView 中
+                holder.tvDay.text = day
+                holder.tvMonth.text = month
+            } else {
+                holder.tvDay.visibility = View.INVISIBLE
+                holder.tvMonth.visibility = View.INVISIBLE
+            }
         }
 
         holder.itemView.setOnClickListener {
@@ -84,6 +93,4 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
             holder.itemView.context.startActivity(intent)
         }
     }
-
-
 }

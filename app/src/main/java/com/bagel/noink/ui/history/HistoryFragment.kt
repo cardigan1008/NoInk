@@ -82,7 +82,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                     historyList.add(
                         ListItemBean(
                             item.getInt("rid"),
-                            item.getString("originText"),
+                            item.getString("title"),
                             item.getString("generatedText"),
                             uriList[0],
                             uriList,

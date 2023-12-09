@@ -1,5 +1,6 @@
 package com.bagel.noink.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -61,9 +62,11 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
 
+                    @SuppressLint("ShowToast")
                     override fun onFailure(errorMessage: String) {
-                        // TODO:
-                        println("Failure")
+                        lifecycleScope.launch {
+                            Toast.makeText(this@LoginActivity, "用户名或密码不正确", Toast.LENGTH_SHORT)
+                        }
                     }
                 }
             )

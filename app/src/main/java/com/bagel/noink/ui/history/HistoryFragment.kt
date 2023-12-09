@@ -60,6 +60,11 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     private fun getHistory(): ArrayList<ListItemBean> {
         val historyList = ArrayList<ListItemBean>()
 
+        val uriTestList = ArrayList<Uri>()
+        uriTestList.add(Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"))
+        uriTestList.add(Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"))
+        historyList.add(ListItemBean(1, "test", "for test", Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"), uriTestList))
+
         val callbackListener = object : HttpRequest.CallbackListener {
             override fun onSuccess(responseJson: JSONObject) {
                 val items = responseJson.getJSONArray("data")

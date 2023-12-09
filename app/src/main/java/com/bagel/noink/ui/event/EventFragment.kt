@@ -1,5 +1,6 @@
 package com.bagel.noink.ui.event
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
@@ -20,6 +22,8 @@ class EventFragment : Fragment() {
     private var _binding: FragmentEventBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var defaultBackground: Drawable
+    private lateinit var pressedBackground: Drawable
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +31,9 @@ class EventFragment : Fragment() {
     : View? {
         // 使用 DataBindingUtil.inflate() 进行绑定
         _binding = FragmentEventBinding.inflate(inflater,container,false)
+        defaultBackground = requireContext().resources.getDrawable(R.drawable.default_background)
+        pressedBackground = requireContext().resources.getDrawable(R.drawable.pressed_background)
+
         changeText()
         setClickListener()
         setNavButton()
@@ -51,10 +58,15 @@ class EventFragment : Fragment() {
             if (child is RelativeLayout) {
                 for(j in 0 until child.childCount){
                     val textView = child.getChildAt(j)
-                    if(textView is TextView) {
-                        textView.setOnClickListener {
-                            val text:String = textView.text.toString()
-                            TextGenViewModel.updateType(text)
+                    if(textView is ToggleButton) {
+                        textView.setOnCheckedChangeListener { _, isChecked ->
+                            if (isChecked) {
+                                textView.background = pressedBackground
+                                val text:String = textView.text.toString()
+                                TextGenViewModel.updateType(text)
+                            } else {
+                                textView.background = defaultBackground
+                            }
                         }
                     }
                 }

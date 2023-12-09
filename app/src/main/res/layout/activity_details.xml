@@ -10,8 +10,6 @@
         android:id="@+id/back"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/black"
         android:visibility="visible"
         app:icon="@drawable/back"
         app:iconGravity="textStart"

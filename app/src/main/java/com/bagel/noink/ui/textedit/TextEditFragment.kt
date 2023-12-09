@@ -22,6 +22,7 @@ import com.bagel.noink.databinding.FragmentTexteditBinding
 import com.bagel.noink.ui.home.HomeFragment
 import com.bagel.noink.ui.home.TextGenViewModel
 import com.bagel.noink.ui.home.TextGenerationFragment
+import com.bagel.noink.utils.AliyunOSSManager
 import com.bagel.noink.utils.TextGenHttpRequest
 import org.json.JSONObject
 import java.time.ZonedDateTime
@@ -83,8 +84,9 @@ class TextEditFragment: Fragment() {
                             val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
                             filePath = it.getString(columnIndex)
                             // filePath 变量包含实际的本地文件路径
-//                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
-                            val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
+                            val aliyunOSSManager = AliyunOSSManager(context)
+                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
+                            //val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
                             if(aliyunOSSUrl != null){
                                 selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                             }
@@ -104,8 +106,9 @@ class TextEditFragment: Fragment() {
                         filePath = it.getString(columnIndex)
                         // filePath 变量包含实际的本地文件路径
 
-//                        val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test");
-                        val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
+                        val aliyunOSSManager = AliyunOSSManager(context)
+                        val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+generateRandomString(6));
+                        //val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
                         if(aliyunOSSUrl != null){
                             selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                         }
@@ -116,6 +119,13 @@ class TextEditFragment: Fragment() {
         }
         handleSelectedImages(selectedImageUris)
     }
+    fun generateRandomString(length: Int): String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9') // 允许的字符集合
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
+    }
+
     private fun handleSelectedImages(imageUris: List<Uri>) {
         val recyclerView: RecyclerView = binding.recyclerView
 

@@ -33,4 +33,8 @@
     <dimen name="defaultHeight">56dp</dimen>
     <dimen name="minHeight">40dp</dimen>
     <dimen name="minPlusHeight">48dp</dimen>
+
+    <dimen name="nine_pic_height">90dp</dimen>
+    <dimen name="nine_pic_width">90dp</dimen>
+    <dimen name="nine_pic_margin">8dp</dimen>
 </resources>

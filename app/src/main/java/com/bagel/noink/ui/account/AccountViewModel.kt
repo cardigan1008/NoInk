@@ -70,6 +70,22 @@ class AccountViewModel : ViewModel() {
             }
         }
 
+        fun updateGender(newGender: Boolean) {
+            userInfo?.gender = newGender
+            if (instance != null) {
+                instance!!._userInformation.value?.gender = newGender
+                instance!!._gender.value = newGender
+            }
+        }
+
+        fun updateBirthday(newBirthday: String) {
+            userInfo?.birthday = newBirthday
+            if (instance != null) {
+                instance!!._userInformation.value?.birthday = newBirthday
+                instance!!._birthday.value = newBirthday
+            }
+        }
+
         fun saveToken(activity: AppCompatActivity) {
             val sharedPreferences = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()

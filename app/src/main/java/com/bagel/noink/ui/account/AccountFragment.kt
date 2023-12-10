@@ -122,6 +122,7 @@ class AccountFragment : Fragment() {
             // 点击 "确定" 按钮关闭对话框
             builder.setPositiveButton("确定") { dialog, _ ->
                 newGender = tempGender
+                AccountViewModel.updateGender(newGender)
                 dialog.dismiss()
             }
 
@@ -148,7 +149,7 @@ class AccountFragment : Fragment() {
                     selectedDate.set(selectedYear, selectedMonth, selectedDay)
 
                     newBirthday = "$selectedYear-$selectedMonth-$selectedDay"
-
+                    AccountViewModel.updateBirthday(newBirthday!!)
                 }, year, month, day)
 
             // 设置最大日期

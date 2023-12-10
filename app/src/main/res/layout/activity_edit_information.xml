@@ -22,17 +22,49 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp" />
 
+        <TextView
+            android:id="@+id/usernameMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="#FF0000"
+            android:visibility="gone"
+            android:textSize="15dp"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:drawableStart="@drawable/lonely"
+            android:text="好听的用户名已经被人取走了" />
+
+        <!-- 微信号输入框 -->
+        <EditText
+            android:id="@+id/wechatIdText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="请输入新绑定的微信号"
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
+
         <EditText
             android:id="@+id/origin_password"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="请输入原密码"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:paddingLeft="20dp"
             android:paddingRight="20dp" />
 
@@ -46,7 +78,7 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="请输入新密码"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:paddingLeft="20dp"
             android:paddingRight="20dp" />
 
@@ -60,8 +92,36 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="请再次输入新密码"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:paddingLeft="20dp"
             android:paddingRight="20dp" />
+
+        <TextView
+            android:id="@+id/passwordRepErrMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="#FF0000"
+            android:visibility="gone"
+            android:textSize="15dp"
+            android:text="两次输入的密码不一致" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/round_button"
+            android:text="保存修改"
+            android:textColor="#FFFFFB"
+            android:textSize="18sp"
+            />
     </LinearLayout>
 </LinearLayout>

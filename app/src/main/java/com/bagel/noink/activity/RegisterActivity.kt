@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.bagel.noink.R
+import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.InformationCalc.Companion.calculateAge
 import com.bagel.noink.utils.InformationCalc.Companion.convertDateFormat
 import com.bagel.noink.utils.UserHttpRequest
@@ -100,7 +101,7 @@ class RegisterActivity : AppCompatActivity() {
                         } else {
                             usernameMsg?.visibility = View.GONE
                         }
-                        usernameMsg?.text = "真是一个很酷的用户名"
+                        usernameMsg?.text = Contants.GOOD_USERNAME_PROMPT
                         usernameMsg?.setTextColor(Color.GREEN)
                         val drawable =
                             ContextCompat.getDrawable(this@RegisterActivity, R.drawable.happy)

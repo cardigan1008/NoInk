@@ -1,6 +1,8 @@
 package com.bagel.noink.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,9 @@ import com.bagel.noink.activity.DetailsActivity
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.viewholder.HistoryViewHolder
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.Locale
+import kotlin.time.Duration.Companion.days
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
     private var historyList: List<ListItemBean>
@@ -49,6 +54,31 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
                 .into(holder.ivImage)
         }
 
+        val createDate = historyItemBean.createDate
+        Log.i("createDate", "${historyItemBean.createDate}")
+        val dayMonthFormat = SimpleDateFormat("dd/MM", Locale.getDefault())
+
+        createDate?.let {
+            val formattedDate = dayMonthFormat.format(it)
+
+            // 提取日和月
+            val day = formattedDate.substring(0, 2)
+            val month = formattedDate.substring(3) + "月"
+
+            // 如果是同一天的第一个条目，则显示日月，否则隐藏
+            if (position == 0 || formattedDate != dayMonthFormat.format(historyList[position - 1].createDate!!)) {
+                holder.tvDay.visibility = View.VISIBLE
+                holder.tvMonth.visibility = View.VISIBLE
+
+                // 设置到对应的 TextView 中
+                holder.tvDay.text = day
+                holder.tvMonth.text = month
+            } else {
+                holder.tvDay.visibility = View.INVISIBLE
+                holder.tvMonth.visibility = View.INVISIBLE
+            }
+        }
+
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailsActivity::class.java)
             intent.putExtra("id", historyItemBean.id)
@@ -63,6 +93,4 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
             holder.itemView.context.startActivity(intent)
         }
     }
-
-
 }

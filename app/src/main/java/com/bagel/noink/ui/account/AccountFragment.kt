@@ -165,6 +165,16 @@ class AccountFragment : Fragment() {
 
                     newBirthday = "$selectedYear-$selectedMonth-$selectedDay"
                     AccountViewModel.updateBirthday(newBirthday!!)
+                    userHttpRequest.updateRequest(callbackListener = object :
+                        UserHttpRequest.UserCallbackListener {
+                        override fun onSuccess(responseJson: JSONObject) {
+                            Log.v("USER", "Success to update user info.")
+                        }
+
+                        override fun onFailure(errorMessage: String) {
+                            Log.v("NETWORK", "Fail to update user info.")
+                        }
+                    })
                 }, year, month, day)
 
             // 设置最大日期

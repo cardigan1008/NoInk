@@ -87,7 +87,19 @@ class AccountViewModel : ViewModel() {
         }
 
         fun updateUsername(newUsername: String) {
+            userInfo?.username = newUsername
+            if (instance != null) {
+                instance!!._userInformation.value?.username = newUsername
+                instance!!._username.value = newUsername
+            }
+        }
 
+        fun updateWechatId(newWechatId: String) {
+            userInfo?.wechatId = newWechatId
+            if (instance != null) {
+                instance!!._userInformation.value?.wechatId = newWechatId
+                instance!!._wechatId.value = newWechatId
+            }
         }
 
         fun saveToken(activity: AppCompatActivity) {

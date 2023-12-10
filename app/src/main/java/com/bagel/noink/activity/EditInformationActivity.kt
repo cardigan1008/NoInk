@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -11,10 +12,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bagel.noink.R
+import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.Contants.Companion.UPDATE_USERNAME_PROMPT
 import com.bagel.noink.utils.Contants.Companion.UPDATE_WECHATID_PROMPT
 import com.bagel.noink.utils.UserHttpRequest
+import org.json.JSONObject
 
 class EditInformationActivity : AppCompatActivity() {
 
@@ -142,9 +145,28 @@ class EditInformationActivity : AppCompatActivity() {
         // 点击保存按钮
         saveButton!!.setOnClickListener {
             // TODO: 根据不同类型事件发送不同请求
-            if (type.equals("username") ) {
-
+            if (type.equals("username") && !usernameExist) {
+                val username = updateEditText?.text.toString().trim { it <= ' ' }
+                AccountViewModel.updateUsername(username)
             }
+
+            if (type.equals("wechat")) {
+                val wechatId = wechatIdText?.text.toString().trim { it <= ' ' }
+                AccountViewModel.updateWechatId(wechatId)
+            }
+            val userHttpRequest = UserHttpRequest()
+            userHttpRequest.updateRequest(callbackListener = object :
+                UserHttpRequest.UserCallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    Log.v("USER", "Success to update user info.")
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    Log.v("NETWORK", "Fail to update user info.")
+                }
+            })
+
+            finish()
         }
     }
     private fun validatePassword() {

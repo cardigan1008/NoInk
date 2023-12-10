@@ -11,17 +11,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.compose.material3.Text
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.adapter.ImageAdapter
 import com.bagel.noink.databinding.FragmentTexteditBinding
-import com.bagel.noink.ui.home.HomeFragment
 import com.bagel.noink.ui.home.TextGenViewModel
-import com.bagel.noink.ui.home.TextGenerationFragment
 import com.bagel.noink.utils.AliyunOSSManager
 import com.bagel.noink.utils.TextGenHttpRequest
 import org.json.JSONObject
@@ -50,10 +48,28 @@ class TextEditFragment: Fragment() {
         // 使用 DataBindingUtil.inflate() 进行绑定
         _binding = FragmentTexteditBinding.inflate(inflater,container,false)
         textGenHttpRequest = TextGenHttpRequest()
+        setTags(inflater)
         setImageUploadButton()
         setGenButton()
         setSaveButton()
         return binding.root
+    }
+    private fun setTags(inflater: LayoutInflater){
+        var linearLayout = binding.tags
+
+        // 创建第一个 item_tag 视图并设置内容
+        val componentViewStyle: View = inflater.inflate(R.layout.item_tag, linearLayout, false)
+        val textViewStyle = componentViewStyle.findViewById<TextView>(R.id.item_tag)
+        textViewStyle.text = TextGenViewModel.getStyle()
+        linearLayout.addView(componentViewStyle)
+
+        // 创建第二个 item_tag 视图并设置内容
+        val componentViewType: View = inflater.inflate(R.layout.item_tag, linearLayout, false)
+        val textViewType = componentViewType.findViewById<TextView>(R.id.item_tag)
+        textViewType.text = TextGenViewModel.getType()
+        linearLayout.addView(componentViewType)
+
+
     }
 
     private fun setImageUploadButton(){

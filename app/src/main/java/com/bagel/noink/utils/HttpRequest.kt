@@ -79,6 +79,23 @@ class HttpRequest {
             }
         })
     }
+
+    fun patch(url: String, requestBody: RequestBody,  headerName: String, headerValue: String, callbackListener: CallbackListener) {
+        val request = Request.Builder().url(url).patch(requestBody).addHeader(headerName,headerValue).build()
+        val call = client.newCall(request)
+
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                val errorMessage = "Failed to connect to the backend"
+                e.message?.let { Log.e("114514", it) }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                handleResponse(response, callbackListener)
+            }
+        })
+    }
+
     private fun handleResponse(response: Response, callbackListener: CallbackListener) {
         if (response.isSuccessful) {
             val responseBody = response.body?.string()

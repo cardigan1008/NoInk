@@ -86,6 +86,10 @@ class AccountViewModel : ViewModel() {
             }
         }
 
+        fun updateUsername(newUsername: String) {
+
+        }
+
         fun saveToken(activity: AppCompatActivity) {
             val sharedPreferences = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,8 @@ import com.bagel.noink.activity.LoginActivity
 import com.bagel.noink.activity.RegisterActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
 import com.bagel.noink.ui.PersonalItemView
+import com.bagel.noink.utils.UserHttpRequest
+import org.json.JSONObject
 
 class AccountFragment : Fragment() {
 
@@ -36,6 +39,8 @@ class AccountFragment : Fragment() {
 
     var newGender: Boolean = true
     var newBirthday: String? = null
+
+    val userHttpRequest = UserHttpRequest()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -123,6 +128,16 @@ class AccountFragment : Fragment() {
             builder.setPositiveButton("确定") { dialog, _ ->
                 newGender = tempGender
                 AccountViewModel.updateGender(newGender)
+                userHttpRequest.updateRequest(callbackListener = object :
+                    UserHttpRequest.UserCallbackListener {
+                    override fun onSuccess(responseJson: JSONObject) {
+                        Log.v("USER", "Success to update user info.")
+                    }
+
+                    override fun onFailure(errorMessage: String) {
+                        Log.v("NETWORK", "Fail to update user info.")
+                    }
+                })
                 dialog.dismiss()
             }
 
@@ -169,7 +184,8 @@ class AccountFragment : Fragment() {
         activity?.findViewById<Button>(R.id.exitButton)
             ?.setOnClickListener {
                 // 清除 token
-                val sharedPreferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                val sharedPreferences =
+                    activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                 val editor = sharedPreferences?.edit()
                 editor?.putString("token", "")
                 editor?.apply()
@@ -177,18 +193,6 @@ class AccountFragment : Fragment() {
                 // 跳转到LoginActivity
                 val intent = Intent(this.context, LoginActivity::class.java)
                 startActivity(intent)
-            }
-
-        // TODO: 删去测试按钮代码，登录按钮和注册按钮的跳转响应
-        activity?.findViewById<Button>(R.id.testButton)
-            ?.setOnClickListener {
-                val intent = Intent(this.context, RegisterActivity::class.java)
-                startActivity(intent)
-            }
-
-        activity?.findViewById<Button>(R.id.loginButton)
-            ?.setOnClickListener {
-                startActivity(Intent(this.context, LoginActivity::class.java))
             }
     }
 }

@@ -67,12 +67,12 @@ class UserHttpRequest {
         val requestBody = jsonBody.toString().toRequestBody(mediaType)
         httpRequest.post(url, requestBody, object : HttpRequest.CallbackListener {
             override fun onSuccess(responseJson: JSONObject) {
-                Log.i("check1441",responseJson.getJSONObject("data").toString())
+                Log.i("check1441", responseJson.getJSONObject("data").toString())
                 callbackListener.onSuccess(responseJson)
             }
 
             override fun onFailure(errorMessage: String) {
-                Log.i("check1441",errorMessage)
+                Log.i("check1441", errorMessage)
                 callbackListener.onFailure(errorMessage)
             }
         })
@@ -81,16 +81,15 @@ class UserHttpRequest {
     /**
      * 修改用户信息请求
      */
-    fun updateRequest(
-        username: String,
-        password: String,
-        gender: Boolean,
-        age: Int,
-        wechatId: String,
-        birthday: String,
-        callbackListener: UserCallbackListener
-    ) {
+    fun updateRequest(callbackListener: UserCallbackListener) {
         val url = Contants.SERVER_ADDRESS + "/api/user/update"
+        val username = AccountViewModel.userInfo?.username
+        val password = AccountViewModel.userInfo?.password
+        val gender = AccountViewModel.userInfo?.gender
+        val age = AccountViewModel.userInfo?.age
+        val wechatId = AccountViewModel.userInfo?.wechatId
+        val birthday = AccountViewModel.userInfo?.birthday
+
         val jsonBody = JSONObject().apply {
             put("username", username)
             put("password", password)
@@ -101,15 +100,20 @@ class UserHttpRequest {
         }
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody = jsonBody.toString().toRequestBody(mediaType)
-        httpRequest.post(url, requestBody, object : HttpRequest.CallbackListener {
-            override fun onSuccess(responseJson: JSONObject) {
-                callbackListener.onSuccess(responseJson)
-            }
+        httpRequest.patch(
+            url,
+            requestBody,
+            "satoken",
+            AccountViewModel.token!!,
+            object : HttpRequest.CallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    callbackListener.onSuccess(responseJson)
+                }
 
-            override fun onFailure(errorMessage: String) {
-                callbackListener.onFailure(errorMessage)
-            }
-        })
+                override fun onFailure(errorMessage: String) {
+                    callbackListener.onFailure(errorMessage)
+                }
+            })
     }
 
     /**
@@ -136,6 +140,5 @@ class UserHttpRequest {
         val url = Contants.SERVER_ADDRESS + "/api/user/userInfo"
         httpRequest.get(url, "satoken", AccountViewModel.token!!, callbackListener)
     }
-
 
 }

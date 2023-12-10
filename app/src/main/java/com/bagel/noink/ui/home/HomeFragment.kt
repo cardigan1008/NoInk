@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.databinding.FragmentHomeBinding
 import android.content.Intent
 import android.database.Cursor
+import android.icu.util.Calendar
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
@@ -55,11 +56,18 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
         navController = findNavController()
 
+        val yearMonth: TextView = binding.yearMonth
         val textView: TextView = binding.textHome
         //val bar: View = binding.bottomBar
         val imageView: ImageView = binding.imageView
         val button: Button = binding.uploadButton
 
+        // 计算今天的日期
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH) + 1
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        yearMonth.text = "${year}年${month}月${day}日"
 
         // Set text from ViewModel
         homeViewModel.text.observe(viewLifecycleOwner) {

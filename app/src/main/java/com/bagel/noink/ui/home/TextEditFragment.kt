@@ -73,7 +73,6 @@ class TextEditFragment : Fragment() {
         val gridLayout: RecyclerView = binding.recyclerView
         val buttonRegenerate:Button = binding.buttonRegenerate
         val buttonSave:Button = binding.buttonSave
-        val buttonPublish:Button = binding.buttonPublish
 
         val args = arguments
         selectedImageUris.addAll(args?.getParcelableArrayList<Uri>(ARG_SELECTED_IMAGE_URIS) ?: emptyList())

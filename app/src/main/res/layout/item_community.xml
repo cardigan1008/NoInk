@@ -52,10 +52,10 @@
 
     <Button
         android:id="@+id/likeButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginRight="16dp"
         android:background="@mipmap/ic_like"
         android:text="点赞"
@@ -64,12 +64,32 @@
 
     <Button
         android:id="@+id/commentButton"
-        android:layout_marginLeft="64dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginTop="10dp"
         android:background="@mipmap/ic_comment"
         android:text="评论"
         app:layout_constraintStart_toEndOf="@+id/likeButton"
         app:layout_constraintTop_toBottomOf="@+id/gridView" />
+
+    <TextView
+        android:id="@+id/likeNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2145"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintStart_toEndOf="@+id/likeButton"
+        app:layout_constraintTop_toTopOf="@+id/likeButton" />
+
+    <TextView
+        android:id="@+id/commentNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4399"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintStart_toEndOf="@+id/commentButton"
+        app:layout_constraintTop_toTopOf="@+id/commentButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

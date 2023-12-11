@@ -11,6 +11,18 @@ import com.bagel.noink.R
 
 class CommunityImageAdapter(private val context: Context, private val images: List<Drawable>) : BaseAdapter() {
 
+    private val positionToImageViewMap = mapOf(
+        0 to R.id.photo1,
+        1 to R.id.photo2,
+        2 to R.id.photo3,
+        3 to R.id.photo4,
+        4 to R.id.photo5,
+        6 to R.id.photo6,
+        7 to R.id.photo7,
+        8 to R.id.photo8,
+        9 to R.id.photo9,
+    )
+
     override fun getCount(): Int {
         return images.size
     }
@@ -30,9 +42,9 @@ class CommunityImageAdapter(private val context: Context, private val images: Li
             convertView
         }
 
-        // TODO: 这里可能需要修改
-        val imageView: ImageView = view.findViewById(R.id.imageView)
-        imageView.setImageDrawable(images[position])
+        assert(position <= 9)
+        val imageView: ImageView? = positionToImageViewMap[position]?.let { view.findViewById(it) }
+        imageView?.setImageDrawable(images[position])
 
         return view
     }

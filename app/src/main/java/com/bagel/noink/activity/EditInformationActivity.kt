@@ -144,7 +144,6 @@ class EditInformationActivity : AppCompatActivity() {
 
         // 点击保存按钮
         saveButton!!.setOnClickListener {
-            // TODO: 根据不同类型事件发送不同请求
             if (type.equals("username") && !usernameExist) {
                 val username = updateEditText?.text.toString().trim { it <= ' ' }
                 AccountViewModel.updateUsername(username)

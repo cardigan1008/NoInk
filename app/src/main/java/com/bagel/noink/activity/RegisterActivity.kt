@@ -184,7 +184,6 @@ class RegisterActivity : AppCompatActivity() {
                         }
 
                         override fun onFailure(errorMessage: String) {
-                            // TODO:
                             println("Failure")
                         }
                     }

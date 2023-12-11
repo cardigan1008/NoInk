@@ -1,5 +1,4 @@
 package com.bagel.noink.activity
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,10 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.adapter.CommunityAdapter
-import com.bagel.noink.adapter.CommunityImageAdapter
 import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.databinding.ActivityCommunityBinding
-import com.bagel.noink.databinding.ActivityDetailsBinding
 
 
 class CommunityActivity : AppCompatActivity() {
@@ -27,8 +24,6 @@ class CommunityActivity : AppCompatActivity() {
 
         // 找到 RecyclerView
         postRecyclerView = findViewById(R.id.postRecyclerView)
-
-
 
         // 添加示例数据，您需要根据您的数据类型提供正确的数据
 

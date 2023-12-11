@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.bean.RecordCardBean
@@ -74,6 +76,9 @@ class RecordCardAdapter(private val cards: List<RecordCardBean>) : RecyclerView.
             yearMonth.text = "${year}年${month}月${day}日"
 
             text_home.text = "记录下今天干的事情"
+            uploadButton.setOnClickListener {
+                itemView.findNavController().navigate(R.id.nav_mood)
+            }
         }
     }
 

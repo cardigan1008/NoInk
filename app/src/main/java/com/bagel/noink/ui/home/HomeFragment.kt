@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
     // 用于存储选择的多个图片的 Uri 列表
     private val selectedImageUris = mutableListOf<Uri>()
 
-    @SuppressLint("DiscouragedApi")
+    @SuppressLint("DiscouragedApi", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

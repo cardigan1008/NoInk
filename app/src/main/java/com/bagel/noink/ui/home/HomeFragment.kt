@@ -1,5 +1,6 @@
 package com.bagel.noink.ui.home
 
+import RecordCardAdapter
 import kotlin.random.Random
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
@@ -22,7 +23,10 @@ import android.widget.Button
 import android.widget.GridLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bagel.noink.R
+import com.bagel.noink.bean.RecordCardBean
 import com.bagel.noink.databinding.FragmentHomeCatBinding
 import com.bagel.noink.utils.AliyunOSSManager
 
@@ -35,6 +39,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var aliyunOSSManager: AliyunOSSManager
+
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101 // 更改请求码，以便处理多个图片选择
     }
@@ -42,7 +47,7 @@ class HomeFragment : Fragment() {
     // 用于存储选择的多个图片的 Uri 列表
     private val selectedImageUris = mutableListOf<Uri>()
 
-    @SuppressLint("DiscouragedApi")
+    @SuppressLint("DiscouragedApi", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -90,7 +95,7 @@ class HomeFragment : Fragment() {
 //            Log.e("ImageView", "PNG image resource not found")
 //        }
 
-        button.setOnClickListener{
+        button.setOnClickListener {
             navController.navigate(R.id.nav_mood)
 
 //            val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
@@ -99,6 +104,9 @@ class HomeFragment : Fragment() {
 //            startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
         }
 
+        val viewPager: ViewPager2 = binding.viewPager
+        val recordCardAdapter = RecordCardAdapter(getCardList()) // cardsList 是包含卡片数据的列表
+        viewPager.adapter = recordCardAdapter
         return root
     }
 
@@ -122,7 +130,8 @@ class HomeFragment : Fragment() {
                 for (i in 0 until clipData.itemCount) {
                     val uri = clipData.getItemAt(i).uri
                     val projection = arrayOf(MediaStore.Images.Media.DATA)
-                    val cursor: Cursor? = requireActivity().contentResolver.query(uri, projection, null, null, null)
+                    val cursor: Cursor? =
+                        requireActivity().contentResolver.query(uri, projection, null, null, null)
                     var filePath: String
                     cursor?.use {
                         if (it.moveToFirst()) {
@@ -130,8 +139,9 @@ class HomeFragment : Fragment() {
                             filePath = it.getString(columnIndex)
                             // filePath 变量包含实际的本地文件路径
 //                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
-                            val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
-                            if(aliyunOSSUrl != null){
+                            val aliyunOSSUrl =
+                                "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
+                            if (aliyunOSSUrl != null) {
                                 selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                             }
                             // 将选择的图片 Uri 添加到列表中
@@ -142,7 +152,8 @@ class HomeFragment : Fragment() {
                 // 单选图片时处理
                 val uri = data?.data!!
                 val projection = arrayOf(MediaStore.Images.Media.DATA)
-                val cursor: Cursor? = requireActivity().contentResolver.query(uri, projection, null, null, null)
+                val cursor: Cursor? =
+                    requireActivity().contentResolver.query(uri, projection, null, null, null)
                 var filePath: String
                 cursor?.use {
                     if (it.moveToFirst()) {
@@ -152,7 +163,7 @@ class HomeFragment : Fragment() {
 
 //                        val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test");
                         val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
-                        if(aliyunOSSUrl != null){
+                        if (aliyunOSSUrl != null) {
                             selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                         }
                         // 将选择的图片 Uri 添加到列表中
@@ -168,6 +179,30 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun getCardList(): MutableList<RecordCardBean> {
+
+        val data1 = RecordCardBean(
+            "2023年12月11日",
+            "考研加油",
+            Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"),
+            "离考研只剩两个月了，最后冲刺一把"
+        )
+
+        val data2 = RecordCardBean(
+            "2024年1月10日",
+            "期末考结束了",
+            Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"),
+            "期末考终于结束了呜呜呜，球球老师，给个高分让我过个好年吧。"
+        )
+
+        val cardList: MutableList<RecordCardBean> = ArrayList()
+        for (i in 1..2) {
+            cardList.add(data1)
+            cardList.add(data2)
+        }
+        return cardList
     }
 }
 

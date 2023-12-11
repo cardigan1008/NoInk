@@ -18,4 +18,8 @@
     <string name="forget_password">忘记密码</string>
     <string name="title">标题</string>
     <string name="tag">标记</string>
+
+    <string name="content_demo_movie">刚刚观看了一部令人心潮澎湃的电影！深入的情节、精彩的演技，让我完全沉浸其中。推荐给大家，绝对不容错过！</string>
+    <string name="date_demo_231211">2023年12月11日</string>
+    <string name="title_demo_movie">好好看的电影</string>
 </resources>

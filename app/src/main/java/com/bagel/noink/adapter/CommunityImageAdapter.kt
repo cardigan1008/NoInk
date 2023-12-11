@@ -1,15 +1,16 @@
 package com.bagel.noink.adapter
 
 import android.content.Context
-import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.bagel.noink.R
 
-class CommunityImageAdapter(private val context: Context, private val images: List<Drawable>) : BaseAdapter() {
+class CommunityImageAdapter(private val context: Context, private val images: List<Uri>) : BaseAdapter() {
 
     private val positionToImageViewMap = mapOf(
         0 to R.id.photo1,
@@ -44,7 +45,9 @@ class CommunityImageAdapter(private val context: Context, private val images: Li
 
         assert(position <= 9)
         val imageView: ImageView? = positionToImageViewMap[position]?.let { view.findViewById(it) }
-        imageView?.setImageDrawable(images[position])
+        Glide.with(context)
+            .load(images[position]) // 加载 Uri
+            .into(imageView!!) // 设置图像到 ImageView
 
         return view
     }

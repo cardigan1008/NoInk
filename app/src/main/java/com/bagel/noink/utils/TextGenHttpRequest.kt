@@ -1,11 +1,8 @@
 package com.bagel.noink.utils
 
-import android.accounts.Account
 import android.net.Uri
 import com.bagel.noink.ui.account.AccountViewModel
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject

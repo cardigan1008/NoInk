@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="主页" />
+            android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_menu_camera"
@@ -15,7 +15,13 @@
         <item
             android:id="@+id/nav_personal_account"
             android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_community" />
+
+        <item
+            android:id="@+id/nav_community"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_personal_account" />
+
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_more"

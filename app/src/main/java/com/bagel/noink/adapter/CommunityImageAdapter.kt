@@ -30,6 +30,7 @@ class CommunityImageAdapter(private val context: Context, private val images: Li
             convertView
         }
 
+        // TODO: 这里可能需要修改
         val imageView: ImageView = view.findViewById(R.id.imageView)
         imageView.setImageDrawable(images[position])
 

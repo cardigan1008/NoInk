@@ -32,7 +32,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_more"
         android:layout_marginEnd="10dp"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/data"

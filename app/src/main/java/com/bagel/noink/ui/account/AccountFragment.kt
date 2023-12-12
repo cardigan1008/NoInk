@@ -95,7 +95,7 @@ class AccountFragment : Fragment() {
             )
         }
         AccountViewModel.userInfo?.let { itemBirthday?.setData(it.birthday) }
-        // AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
+        AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
 
         // 跳转到修改用户名界面
         itemUsername?.setOnClickListener {
@@ -161,9 +161,9 @@ class AccountFragment : Fragment() {
                 DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
                     // 处理用户选择的日期
                     val selectedDate = Calendar.getInstance()
-                    selectedDate.set(selectedYear, selectedMonth, selectedDay)
+                    selectedDate.set(selectedYear, selectedMonth + 1, selectedDay)
 
-                    newBirthday = "$selectedYear-$selectedMonth-$selectedDay"
+                    newBirthday = "$selectedYear-${selectedMonth + 1}-$selectedDay"
                     AccountViewModel.updateBirthday(newBirthday!!)
                     userHttpRequest.updateRequest(callbackListener = object :
                         UserHttpRequest.UserCallbackListener {

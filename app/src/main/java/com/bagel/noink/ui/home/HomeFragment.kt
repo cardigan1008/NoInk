@@ -21,14 +21,24 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.GridLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bagel.noink.R
+import com.bagel.noink.adapter.HistoryAdapter
+import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.bean.RecordCardBean
 import com.bagel.noink.databinding.FragmentHomeCatBinding
+import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.AliyunOSSManager
+import com.bagel.noink.utils.Contants
+import com.bagel.noink.utils.HttpRequest
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class HomeFragment : Fragment() {
@@ -39,6 +49,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var aliyunOSSManager: AliyunOSSManager
+    private var recordCardAdapter: RecordCardAdapter? = null
 
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101 // 更改请求码，以便处理多个图片选择
@@ -47,7 +58,7 @@ class HomeFragment : Fragment() {
     // 用于存储选择的多个图片的 Uri 列表
     private val selectedImageUris = mutableListOf<Uri>()
 
-    @SuppressLint("DiscouragedApi", "SetTextI18n")
+    @SuppressLint("DiscouragedApi", "SetTextI18n", "NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -105,8 +116,10 @@ class HomeFragment : Fragment() {
         }
 
         val viewPager: ViewPager2 = binding.viewPager
-        val recordCardAdapter = RecordCardAdapter(getCardList()) // cardsList 是包含卡片数据的列表
+        val emptyList: List<RecordCardBean> = listOf()
+        recordCardAdapter = RecordCardAdapter(emptyList) // cardsList 是包含卡片数据的列表
         viewPager.adapter = recordCardAdapter
+        recordCardAdapter!!.updateData(getCardList())
         return root
     }
 
@@ -198,10 +211,63 @@ class HomeFragment : Fragment() {
         )
 
         val cardList: MutableList<RecordCardBean> = ArrayList()
-        for (i in 1..2) {
-            cardList.add(data1)
-            cardList.add(data2)
+        cardList.add(data1)
+//        for (i in 1..2) {
+//            cardList.add(data1)
+//            cardList.add(data2)
+//        }
+
+        val callbackListener = object : HttpRequest.CallbackListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onSuccess(responseJson: JSONObject) {
+                val items = responseJson.getJSONArray("data")
+
+                for (i in 0 until items.length()) {
+                    val item = items.getJSONObject(i)
+                    val uriStrList: List<String> = item.getString("imageUrl").split(",")
+                    val uriList: ArrayList<Uri> = ArrayList()
+
+                    for (uriStr in uriStrList) {
+                        val uri = Uri.parse(uriStr)
+                        uriList.add(uri)
+                    }
+
+                    val dateString = item.getString("createdAt")
+                    val dateFormat =
+                        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val date = dateFormat.parse(dateString)
+
+                    cardList.add(
+                        RecordCardBean(
+                            "${dateString.substring(0, 4)}年${
+                                dateString.substring(5, 7)
+                            }月"
+                                    + "${dateString.substring(8, 10)}日",
+                            item.getString("title"),
+                            uriList[0],
+                            item.getString("generatedText"),
+                        )
+                    )
+                }
+
+                // 在主线程上调用 notifyDataSetChanged()
+                activity?.runOnUiThread {
+                    recordCardAdapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(errorMessage: String) {
+                print(errorMessage)
+            }
         }
+
+        val httpRequest = HttpRequest()
+        httpRequest.get(
+            Contants.SERVER_ADDRESS + "/api/record/allRecord",
+            "satoken",
+            AccountViewModel.token!!,
+            callbackListener
+        )
         return cardList
     }
 }

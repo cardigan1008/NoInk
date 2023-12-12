@@ -12,7 +12,7 @@ import com.bagel.noink.R
 import com.bagel.noink.bean.RecordCardBean
 import com.bumptech.glide.Glide
 
-class RecordCardAdapter(private val cards: List<RecordCardBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecordCardAdapter(private var cards: List<RecordCardBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_CARD_NEW = 1
@@ -100,5 +100,9 @@ class RecordCardAdapter(private val cards: List<RecordCardBean>) : RecyclerView.
                 .into(imageView)
             contentView.text = card.content
         }
+    }
+
+    fun updateData(newCards: List<RecordCardBean>) {
+        cards = newCards
     }
 }

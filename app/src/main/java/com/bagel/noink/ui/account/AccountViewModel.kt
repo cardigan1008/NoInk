@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.bagel.noink.bean.RecordCardBean
 import com.bagel.noink.bean.UserInfoBean
 import org.json.JSONObject
 
@@ -42,6 +43,8 @@ class AccountViewModel : ViewModel() {
             "13989884399",
             "2005-8-31"
         )
+
+        var cardList: MutableList<RecordCardBean> = ArrayList()
 
         fun updateUserInfoByJson(data: JSONObject) {
             userInfo?.id = data.getLong("uid")

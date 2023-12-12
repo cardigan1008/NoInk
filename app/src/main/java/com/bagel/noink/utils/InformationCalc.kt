@@ -8,7 +8,7 @@ class InformationCalc {
     companion object {
         fun calculateAge(birthday: String): Int {
             // 校验日期格式
-            val pattern = """^\\d{4}\.\d{1,2}\.\\d{1,2}$""".toRegex()
+            val pattern = "\\d{4}.\\d{1,2}.\\d{1,2}".toRegex()
             if (!birthday.matches(pattern)) {
                 return -1
             }

@@ -12,6 +12,12 @@ class InformationCalcTest {
         assertEquals(20, result);
     }
 
+    @Test
+    fun calculateAgeTest2() {
+        val result = InformationCalc.calculateAge("2003.8.18")
+        assertEquals(20, result);
+    }
+
 //    @Test
 //    fun calculateAgeTest2() {
 //        val result = InformationCalc.calculateAge("2003.12.2")

@@ -25,7 +25,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="100dp"
         android:layout_margin="@dimen/defaultPadding"
         app:cardCornerRadius="@dimen/defaultPadding"
         app:cardBackgroundColor="@color/teal_200"
@@ -41,7 +41,7 @@
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="发布数"
+                android:text="文章数"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/bigTextSize"
@@ -69,7 +69,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="点赞数"
+                android:text="发布数"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/bigTextSize"

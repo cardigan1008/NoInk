@@ -47,11 +47,13 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_history, R.id.nav_personal_account
+                R.id.nav_home, R.id.nav_history, R.id.nav_community,R.id.nav_personal_account
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
 
         // 进入主界面进行的操作
         val sharedPreferences =

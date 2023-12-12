@@ -8,15 +8,18 @@
     tools:context=".ui.mood.MoodFragment">
 
     <!-- 添加一个 TextView -->
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="那么User114514\n这一天的心情是怎样的呢"
-        android:textSize="18sp"
         android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        android:text="那么User114514\n这一天的心情是怎样的呢"
+        android:textSize="@dimen/defaultTextSize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -24,15 +27,18 @@
         app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintBottom_toTopOf="@id/includedLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
 
     <include
         android:id="@+id/includedLayout"
         layout="@layout/mood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         app:layout_constraintTop_toBottomOf="@id/textView"
-        android:layout_marginTop="32dp"/>
+        tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/button"

@@ -9,12 +9,11 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.ActivitySearchBinding
 import com.bagel.noink.ui.account.AccountViewModel
-import com.bagel.noink.ui.history.SearchResultFragment
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.HttpRequest
 import okhttp3.RequestBody
@@ -132,26 +131,12 @@ class SearchActivity : AppCompatActivity() {
                     )
                 }
 
-                // 创建 SearchFragment 并传递数据
-                val searchResultFragment = SearchResultFragment.newInstance(searchList)
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
 
-                // 使用容器的 ID 替换布局文件的 ID
-                try {
-                    val curFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
-                    if (curFragment != null) {
-                        supportFragmentManager.beginTransaction()
-                            .remove(curFragment)
-                            .commit()
-                    }
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame_layout, searchResultFragment)
-                        .addToBackStack(null)
-                        .commit()
-                    Log.i("searchFragment", "searchFragment: $searchResultFragment")
-                } catch (e: Exception) {
-                    Log.i("searchFragment", e.message.toString())
-                }
-
+                val bundle = Bundle()
+                bundle.putParcelableArrayList("searchList", searchList)
+                navHostFragment?.findNavController()?.navigate(R.id.nav_search_result, bundle)
             }
 
             override fun onFailure(errorMessage: String) {

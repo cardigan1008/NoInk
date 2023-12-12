@@ -27,23 +27,6 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
         super.onCreate(savedInstanceState)
     }
 
-    // 伴生对象，包含静态方法
-    companion object {
-        // 静态方法，用于创建 SearchResultFragment 实例，并传递数据
-        fun newInstance(searchList: ArrayList<ListItemBean>): SearchResultFragment {
-            val fragment = SearchResultFragment()
-
-            // 使用 Bundle 传递数据
-            val bundle = Bundle()
-            bundle.putSerializable("searchList", searchList)
-            fragment.arguments = bundle
-
-            Log.i("searchFragment", "newInstance: ${searchList.size}")
-
-            return fragment
-        }
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +35,10 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
     ): View? {
         _binding = FragmentSearchResultBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        addRecycleView(root, arguments?.getSerializable("searchList") as ArrayList<ListItemBean>)
+        arguments?.getParcelableArrayList<ListItemBean>("searchList")?.let { searchList ->
+            addRecycleView(root, ArrayList(searchList))
+            Log.i("SearchResultFragment", "searchList: $searchList")
+        }
 
         return root
     }

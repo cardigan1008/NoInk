@@ -1,12 +1,14 @@
 package com.bagel.noink.ui.textedit
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,8 +25,11 @@ import com.bagel.noink.ui.home.TextGenViewModel
 import com.bagel.noink.utils.AliyunOSSManager
 import com.bagel.noink.utils.TextGenHttpRequest
 import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+
 
 class TextEditFragment: Fragment() {
     private var _binding: FragmentTexteditBinding? = null
@@ -81,6 +86,38 @@ class TextEditFragment: Fragment() {
             startActivityForResult(galleryIntent, TextEditFragment.PICK_IMAGES_REQUEST_CODE)
         }
     }
+    fun getDriveFile(context: Context, uri: Uri): String? {
+        val returnCursor = context.contentResolver.query(uri, null, null, null, null)
+        val nameIndex = returnCursor!!.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        val sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE)
+        returnCursor.moveToFirst()
+        val name = returnCursor.getString(nameIndex)
+        val size = java.lang.Long.toString(returnCursor.getLong(sizeIndex))
+        val file = File(context.cacheDir, name)
+        try {
+            val inputStream = context.contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(file)
+            var read = 0
+            val maxBufferSize = 1 * 1024 * 1024
+            val bytesAvailable = inputStream!!.available()
+
+            //int bufferSize = 1024;
+            val bufferSize = Math.min(bytesAvailable, maxBufferSize)
+            val buffers = ByteArray(bufferSize)
+            while (inputStream.read(buffers).also { read = it } != -1) {
+                outputStream.write(buffers, 0, read)
+            }
+            Log.e("File Size", "Size " + file.length())
+            inputStream.close()
+            outputStream.close()
+            Log.e("File Path", "Path " + file.path)
+            Log.e("File Size", "Size " + file.length())
+        } catch (e: Exception) {
+            Log.e("Exception", e.message!!)
+        }
+        return file.path
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -92,46 +129,31 @@ class TextEditFragment: Fragment() {
             if (clipData != null) {
                 for (i in 0 until clipData.itemCount) {
                     val uri = clipData.getItemAt(i).uri
-                    val projection = arrayOf(MediaStore.Images.Media.DATA)
-                    val cursor: Cursor? = requireActivity().contentResolver.query(uri, projection, null, null, null)
-                    var filePath: String
-                    cursor?.use {
-                        if (it.moveToFirst()) {
-                            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                            filePath = it.getString(columnIndex)
-                            // filePath 变量包含实际的本地文件路径
-                            val aliyunOSSManager = AliyunOSSManager(context)
-                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
-                            //val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
-                            if(aliyunOSSUrl != null){
-                                selectedImageUris.add(Uri.parse(aliyunOSSUrl))
-                            }
-                            // 将选择的图片 Uri 添加到列表中
-                        }
+                    val filePath = getDriveFile(requireContext(), uri)
+                    // filePath 变量包含实际的本地文件路径
+                    val aliyunOSSManager = AliyunOSSManager(context)
+                    val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(8));
+//                            val aliyunOSSUrl = "https://i.postimg.cc/cJW9nd6s/image.jpg"
+                    if(aliyunOSSUrl != null){
+                        selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                     }
+                    // 将选择的图片 Uri 添加到列表中
                 }
+
             } else {
                 // 单选图片时处理
                 val uri = data?.data!!
-                val projection = arrayOf(MediaStore.Images.Media.DATA)
-                val cursor: Cursor? = requireActivity().contentResolver.query(uri, projection, null, null, null)
-                var filePath: String
-                cursor?.use {
-                    if (it.moveToFirst()) {
-                        val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                        filePath = it.getString(columnIndex)
-                        // filePath 变量包含实际的本地文件路径
-
-                        val aliyunOSSManager = AliyunOSSManager(context)
-                        val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+generateRandomString(6));
-                        //val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
-                        if(aliyunOSSUrl != null){
-                            selectedImageUris.add(Uri.parse(aliyunOSSUrl))
-                        }
-                        // 将选择的图片 Uri 添加到列表中
-                    }
+                val filePath = getDriveFile(requireContext(), uri)
+                val aliyunOSSManager = AliyunOSSManager(context)
+                val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+generateRandomString(8));
+//                        val aliyunOSSUrl = "https://i.postimg.cc/cJW9nd6s/image.jpg"
+                if(aliyunOSSUrl != null){
+                    selectedImageUris.add(Uri.parse(aliyunOSSUrl))
                 }
+                // 将选择的图片 Uri 添加到列表中
             }
+
+
         }
         handleSelectedImages(selectedImageUris)
     }
@@ -143,14 +165,18 @@ class TextEditFragment: Fragment() {
     }
 
     private fun handleSelectedImages(imageUris: List<Uri>) {
-        val recyclerView: RecyclerView = binding.recyclerView
+        binding?.let { bound ->
+            val recyclerView: RecyclerView = bound.recyclerView
 
-        val adapter = ImageAdapter(imageUris)
-        recyclerView.adapter = adapter
+            val adapter = ImageAdapter(imageUris)
+            recyclerView.adapter = adapter
 
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.layoutManager = layoutManager
+            val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.layoutManager = layoutManager
+        }
     }
+
+
     private fun setGenButton(){
         val genButton = binding.buttonRegenerate
         genButton.setOnClickListener {

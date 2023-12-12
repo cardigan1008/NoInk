@@ -1,5 +1,7 @@
 package com.bagel.noink.activity
 
+import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.EditorInfo
@@ -7,8 +9,19 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.R
+import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.ActivitySearchBinding
+import com.bagel.noink.ui.account.AccountViewModel
+import com.bagel.noink.ui.history.SearchResultFragment
+import com.bagel.noink.utils.Contants
+import com.bagel.noink.utils.HttpRequest
+import okhttp3.RequestBody
+import org.json.JSONObject
+import java.net.URLEncoder
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class SearchActivity : AppCompatActivity() {
     lateinit var binding : ActivitySearchBinding
@@ -83,10 +96,80 @@ class SearchActivity : AppCompatActivity() {
         performSearch(searchQuery, selectedMoodTags, selectedEventTags)
     }
 
+    @SuppressLint("ResourceType")
     private fun performSearch(query: String, moodTags: ArrayList<String>, eventTags: ArrayList<String>) {
         Log.i("SearchActivity", "Search query: $query, event tags: $eventTags, mood tags: $moodTags")
-        // TODO: backend api
+
+        val callbackListener = object : HttpRequest.CallbackListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onSuccess(responseJson: JSONObject) {
+                val items = responseJson.getJSONArray("data")
+                val searchList: ArrayList<ListItemBean> = ArrayList()
+
+                for (i in 0 until items.length()) {
+                    val item = items.getJSONObject(i)
+                    val uriStrList: List<String> = item.getString("imageUrl").split(",")
+                    val uriList: ArrayList<Uri> = ArrayList()
+
+                    for (uriStr in uriStrList) {
+                        val uri = Uri.parse(uriStr)
+                        uriList.add(uri)
+                    }
+
+                    val dateString = item.getString("createdAt")
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val date = dateFormat.parse(dateString)
+
+                    searchList.add(
+                        ListItemBean(
+                            item.getInt("rid"),
+                            item.getString("title"),
+                            item.getString("generatedText"),
+                            uriList[0],
+                            uriList,
+                            date
+                        )
+                    )
+                }
+
+                // 创建 SearchFragment 并传递数据
+                val searchResultFragment = SearchResultFragment.newInstance(searchList)
+
+                // 使用容器的 ID 替换布局文件的 ID
+                try {
+                    val curFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
+                    if (curFragment != null) {
+                        supportFragmentManager.beginTransaction()
+                            .remove(curFragment)
+                            .commit()
+                    }
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, searchResultFragment)
+                        .addToBackStack(null)
+                        .commit()
+                    Log.i("searchFragment", "searchFragment: $searchResultFragment")
+                } catch (e: Exception) {
+                    Log.i("searchFragment", e.message.toString())
+                }
+
+            }
+
+            override fun onFailure(errorMessage: String) {
+                Log.i("HTTPResponse", errorMessage)
+                print(errorMessage)
+            }
+        }
+
+        val queryString = URLEncoder.encode(query, "UTF-8")
+        val moodTagsString = moodTags.joinToString(",") { URLEncoder.encode(it, "UTF-8") }
+        val eventTagsString = eventTags.joinToString(",") { URLEncoder.encode(it, "UTF-8") }
+        val httpRequest = HttpRequest()
+        httpRequest.post(Contants.SERVER_ADDRESS +
+                "/api/record/records?search=$queryString&labelList=${moodTagsString}&typeList=${eventTagsString}", RequestBody.create(null, byteArrayOf()), "satoken", AccountViewModel.token!!, callbackListener)
+        Log.i("HTTPResponse", Contants.SERVER_ADDRESS +
+                "/api/record/records?search=$queryString&labelList=${moodTagsString}&typeList=${eventTagsString}")
     }
+
 
     private fun resetSelection() {
         // 清空已选选项

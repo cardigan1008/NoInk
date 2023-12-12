@@ -41,7 +41,7 @@ class HttpRequest {
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 val errorMessage = "Failed to connect to the backend"
-                callbackListener.onFailure(errorMessage)
+                callbackListener.onFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {

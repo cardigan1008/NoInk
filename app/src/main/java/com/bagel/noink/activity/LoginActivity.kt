@@ -52,7 +52,15 @@ class LoginActivity : AppCompatActivity() {
                 username = username,
                 password = passwd,
                 callbackListener = object : UserHttpRequest.UserCallbackListener {
+                    @SuppressLint("ShowToast")
                     override fun onSuccess(responseJson: JSONObject) {
+                        if (responseJson.getInt("code") == 400) {
+                            lifecycleScope.launch {
+                                Toast.makeText(this@LoginActivity, "用户名或密码不正确", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                            return
+                        }
                         val data = responseJson.getJSONObject("data")
 
                         lifecycleScope.launch {
@@ -69,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
                     override fun onFailure(errorMessage: String) {
                         lifecycleScope.launch {
                             Toast.makeText(this@LoginActivity, "用户名或密码不正确", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }

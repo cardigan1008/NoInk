@@ -1,3 +1,4 @@
+import android.content.Intent
 import android.icu.util.Calendar
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
+import com.bagel.noink.activity.DetailsActivity
 import com.bagel.noink.bean.RecordCardBean
 import com.bumptech.glide.Glide
 
@@ -99,6 +101,20 @@ class RecordCardAdapter(private var cards: List<RecordCardBean>) : RecyclerView.
                 .load(card.photo)
                 .into(imageView)
             contentView.text = card.content
+
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetailsActivity::class.java)
+                intent.putExtra("id", card.id)
+                val imageUris = card.images
+                val uriList = ArrayList<String>()
+                for (uri in imageUris) {
+                    uriList.add(uri.toString())
+                }
+                intent.putStringArrayListExtra("imageUris", uriList)
+                intent.putExtra("text", card.content)
+
+                itemView.context.startActivity(intent)
+            }
         }
     }
 

@@ -196,26 +196,20 @@ class HomeFragment : Fragment() {
 
     fun getCardList(): MutableList<RecordCardBean> {
 
+        val uriDemo = Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png")
+
         val data1 = RecordCardBean(
+            1,
             "2023年12月11日",
             "考研加油",
-            Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"),
-            "离考研只剩两个月了，最后冲刺一把"
-        )
-
-        val data2 = RecordCardBean(
-            "2024年1月10日",
-            "期末考结束了",
-            Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png"),
-            "期末考终于结束了呜呜呜，球球老师，给个高分让我过个好年吧。"
+            uriDemo,
+            "离考研只剩两个月了，最后冲刺一把",
+            listOf(uriDemo)
         )
 
         val cardList: MutableList<RecordCardBean> = ArrayList()
+        // 第一张卡片无需使用真实数据
         cardList.add(data1)
-//        for (i in 1..2) {
-//            cardList.add(data1)
-//            cardList.add(data2)
-//        }
 
         val callbackListener = object : HttpRequest.CallbackListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -233,19 +227,18 @@ class HomeFragment : Fragment() {
                     }
 
                     val dateString = item.getString("createdAt")
-                    val dateFormat =
-                        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-                    val date = dateFormat.parse(dateString)
+                    val year = dateString.substring(0, 4)
+                    val month = dateString.substring(5, 7)
+                    val day = dateString.substring(8, 10)
 
                     cardList.add(
                         RecordCardBean(
-                            "${dateString.substring(0, 4)}年${
-                                dateString.substring(5, 7)
-                            }月"
-                                    + "${dateString.substring(8, 10)}日",
+                            item.getInt("rid"),
+                            year + "年" + month + "月" + day + "日",
                             item.getString("title"),
                             uriList[0],
                             item.getString("generatedText"),
+                            uriList
                         )
                     )
                 }

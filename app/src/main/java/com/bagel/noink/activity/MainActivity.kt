@@ -53,8 +53,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-
-
         // 进入主界面进行的操作
         val sharedPreferences =
             this@MainActivity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)

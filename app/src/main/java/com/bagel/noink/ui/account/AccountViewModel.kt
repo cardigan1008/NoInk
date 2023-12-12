@@ -29,7 +29,7 @@ class AccountViewModel : ViewModel() {
 
 
     companion object {
-        var token: String? = "token"
+        var token: String? = ""
         var instance: AccountViewModel? = null
 
 
@@ -55,7 +55,10 @@ class AccountViewModel : ViewModel() {
             userInfo?.birthday = data.getString("birthday")
             userInfo?.wechatId = data.getString("wechatId")
 
-            token = data.getString("tokenValue")
+            if (data.getString("tokenValue") != "null") {
+                token = data.getString("tokenValue")
+            }
+
             if (instance != null) {
                 instance!!._userInformation.value = userInfo
                 instance!!._username.value = userInfo?.username

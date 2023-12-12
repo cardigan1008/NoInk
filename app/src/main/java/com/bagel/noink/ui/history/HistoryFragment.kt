@@ -1,6 +1,7 @@
 package com.bagel.noink.ui.history
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -103,6 +104,11 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         }
 
         val httpRequest = HttpRequest()
+        if (AccountViewModel.token == "" || AccountViewModel.token == null || AccountViewModel.token == "null") {
+            val sharedPreferences =
+                activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            AccountViewModel.token = sharedPreferences?.getString("token", "")
+        }
         httpRequest.get(Contants.SERVER_ADDRESS + "/api/record/allRecord", "satoken", AccountViewModel.token!!,callbackListener)
 
         return historyList

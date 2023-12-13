@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.GridView
 import android.widget.ImageView
@@ -30,10 +29,12 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val usernameTextView: TextView = itemView.findViewById(R.id.username)
     private val gridView: GridView = itemView.findViewById(R.id.gridView)
 
+
     fun bind(item: CommunityItemBean) {
         // 将数据绑定到视图
         Glide.with(itemView.context)
             .load(item.avatar)
+            .override(75, 75)  // 替换 width 和 height 为你想要的具体尺寸值
             .into(avatarImageView)
 
         contentTextView.text = item.content

@@ -97,4 +97,17 @@
         android:layout_marginLeft="5dp"
         app:layout_constraintStart_toEndOf="@+id/commentButton"
         app:layout_constraintTop_toTopOf="@+id/commentButton" />
+
+    <LinearLayout
+        android:id="@+id/commentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/content"
+        app:layout_constraintTop_toBottomOf="@+id/commentButton">
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

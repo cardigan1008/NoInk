@@ -1,6 +1,7 @@
 package com.bagel.noink.bean
 
 import android.net.Uri
+
 data class CommunityItemBean(
     var aid: Int, // 文章id
     var title: String,
@@ -15,5 +16,7 @@ data class CommunityItemBean(
     var likes: Int,  // 点赞个数
     var comments: Int,
     var state: Int, // 为web管理端暂存
-    var uid: Int  // 发布uid
+    var uid: Int, // 发布uid
+    var username: String,
+    var commentList: List<CommentItemBean>
 )

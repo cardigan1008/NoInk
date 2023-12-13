@@ -53,7 +53,9 @@ class CommunityImageAdapter(private val context: Context, private val images: Li
     }
 
     private fun getLayoutResource(): Int {
-        return if (images.size <= 4) {
+        return if(images.size == 1){
+            R.layout.grid_item_one
+        } else if (images.size in 2..4) {
             R.layout.grid_item_four
         } else {
             R.layout.grid_item_nine

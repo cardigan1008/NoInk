@@ -113,13 +113,14 @@ class CommunityFragment : Fragment() {
                             val events = dataObject?.optString("events", "")!!
                             val pv = dataObject?.optInt("pv", 0) ?: 0
                             val likes = dataObject?.optInt("likes", 0) ?: 0
+                            val comments = dataObject?.optInt("comments",0) ?: 0
                             val state = dataObject?.optInt("state", 0) ?: 0
                             val uid = dataObject?.optInt("uid", 0) ?: 0
 
                             val communityItem = title?.let {
                                 CommunityItemBean(
                                     aid, it, avatar, createdAt, updatedAt, content, imageUrl,
-                                    moods, events, pv, likes, state, uid
+                                    moods, events, pv, likes, state, comments, uid
                                 )
                             }
                             if (communityItem != null) {

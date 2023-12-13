@@ -30,4 +30,22 @@ class CommunityHttpRequest {
         })
     }
 
+    fun addLikes(aid: String, callbackListener: CommunityCallbackListener){
+        val url = Contants.SERVER_ADDRESS +"/api/article/like"
+        val headerName = "satoken";
+        val headerValue = AccountViewModel.token!!;
+        val params = mapOf(
+            "aid" to aid,
+        )
+        httpRequest.get(url, params, headerName, headerValue, object : HttpRequest.CallbackListener{
+            override fun onSuccess(responseJson: JSONObject) {
+                callbackListener.onSuccess(responseJson)
+            }
+
+            override fun onFailure(errorMessage: String) {
+                callbackListener.onFailure(errorMessage)
+            }
+        })
+    }
+
 }

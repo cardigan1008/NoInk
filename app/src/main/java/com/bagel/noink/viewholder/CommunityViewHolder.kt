@@ -1,20 +1,28 @@
 package com.bagel.noink.viewholder;
 
-import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CompoundButton
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bagel.noink.R
 import com.bagel.noink.adapter.CommunityImageAdapter
 import com.bagel.noink.bean.CommunityItemBean
+import com.bagel.noink.utils.CommunityHttpRequest
+import com.bumptech.glide.Glide
+import org.json.JSONObject
+
 
 class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    private val TAG: String = "CommunityViewHolder"
+    private var communityHttpRequest: CommunityHttpRequest = CommunityHttpRequest()
     private val avatarImageView: ImageView = itemView.findViewById(R.id.avatar)
     private val contentTextView: TextView = itemView.findViewById(R.id.content)
     private val likeCountTextView: TextView = itemView.findViewById(R.id.likeNumber)
@@ -46,8 +54,47 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } ?: run {
             gridView.visibility = View.GONE // 如果 imageUrls 为空，则隐藏 GridView
         }
-    }
 
+        setLikeButton(item.aid.toString())
+
+
+    }
+    private fun setLikeButton(aid: String){
+        var likeButton:ToggleButton = itemView.findViewById(R.id.likeButton)
+
+        likeButton.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                // 处理点赞逻辑
+                performLikeAction(aid)
+            } else {
+                // 处理取消点赞逻辑
+                performUnlikeAction(aid)
+            }
+        })
+
+    }
+    private fun performLikeAction(aid: String){
+        val addLikes: TextView = itemView.findViewById(R.id.likeNumber)
+        addLikes.setText((addLikes.text.toString().toInt()+1).toString())
+        communityHttpRequest.addLikes(aid, callbackListener = object : CommunityHttpRequest.CommunityCallbackListener{
+            override fun onSuccess(responseJson: JSONObject) {
+                // 校验类型
+                val code = responseJson.getInt("code")
+                if (code !in 200..299) {
+                    Log.e(TAG, "add likes not success")
+                    throw IllegalArgumentException("Invalid 'code' value")
+                }
+
+            }
+            override fun onFailure(errorMessage: String) {
+                Log.e(TAG, errorMessage)
+            }
+        })
+    }
+    private fun performUnlikeAction(aid: String){
+        val addLikes: TextView = itemView.findViewById(R.id.likeNumber)
+        addLikes.setText((addLikes.text.toString().toInt()-1).toString())
+    }
     companion object {
         fun create(parent: ViewGroup): CommunityViewHolder {
             val view = LayoutInflater.from(parent.context)

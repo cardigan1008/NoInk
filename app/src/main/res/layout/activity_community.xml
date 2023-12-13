@@ -1,52 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activity.CommunityActivity">
 
-    <!-- 顶部标题栏 -->
-    <LinearLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:orientation="horizontal">
-
-        <!-- 返回按钮 -->
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@mipmap/ic_back"
-            android:layout_gravity="center_vertical"/>
-
-        <!-- 标题 -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Community"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:gravity="center"/>
-
-        <!-- 更多选项 -->
-        <ImageButton
-            android:id="@+id/moreOptionsButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@mipmap/ic_more_options"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-
-    <!-- 帖子列表 -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/postRecyclerView"
+    <fragment
+        android:id="@+id/nav_host_fragment_community"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        android:clipChildren="false"/>
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/community_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

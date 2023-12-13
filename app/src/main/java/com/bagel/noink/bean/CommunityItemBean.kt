@@ -2,10 +2,18 @@ package com.bagel.noink.bean
 
 import android.net.Uri
 data class CommunityItemBean(
-    var avatar: Uri,
-    var imageUrls: List<Uri>?,
-    var username: String,
+    var aid: Int, // 文章id
+    var title: String,
+    var avatar: Uri,  // 发布者头像
+    var createdAt: String,
+    var updatedAt: String,
     var content: String,
-    var likeNumber: Int,
-    var commentNumber: Int
+    var imageUrls: List<Uri>?,
+    var moods: String,
+    var events: String,
+    var pv: Int,  // 浏览量
+    var likes: Int,  // 点赞个数
+    var comments: Int,
+    var state: Int, // 为web管理端暂存
+    var uid: Int  // 发布uid
 )

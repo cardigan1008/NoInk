@@ -44,6 +44,7 @@ public class AliyunOSSManager {
             return ossClient.presignPublicObjectURL(BUCKET_NAME, uploadImageName);
 
         } catch (ClientException e) {
+            Log.e(TAG, "ClientException: " + e.getMessage());
             // 本地异常，例如网络异常等
             e.printStackTrace();
         } catch (ServiceException e) {
@@ -52,6 +53,7 @@ public class AliyunOSSManager {
             Log.e(TAG, "RequestId: " + e.getRequestId());
             Log.e(TAG, "HostId: " + e.getHostId());
             Log.e(TAG, "RawMessage: " + e.getRawMessage());
+
         }
 
         return null; // 上传失败时返回 null

@@ -13,25 +13,61 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/defaultPadding"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="4dp"
+
+            >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_cat"
+                android:scaleType="centerCrop"
+            />
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:src="@mipmap/ic_cat"-->
+<!--            app:layout_constraintHeight_percent="0.3"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:layout_editor_absoluteX="0dp"-->
+
+<!--            />-->
+
+
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
 
-            <TextView
-                android:id="@+id/yearMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:padding="@dimen/defaultPadding"
-                android:text="@string/date_demo_231211"
-                android:textColor="@color/black"
-                android:textSize="@dimen/bigTextSize" />
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="@android:color/darker_gray"-->
+<!--                />-->
+
 
             <TextView
                 android:id="@+id/title"
@@ -41,27 +77,34 @@
                 android:padding="@dimen/defaultPadding"
                 android:text="@string/title_demo_movie"
                 android:textColor="@color/black"
-                android:textSize="@dimen/bigTextSize" />
+                android:textSize="@dimen/bigTextSize"
+                />
+
+            <TextView
+                android:id="@+id/yearMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/date_demo_231211"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/smallTextSize"
+                />
+
+
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp"
-            android:src="@mipmap/ic_cat"
-            app:layout_constraintHeight_percent="0.3"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp" />
+
 
 
         <TextView
             android:id="@+id/content"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:text="@string/content_demo_movie" />
+            android:text="@string/content_demo_movie"
+            android:padding="@dimen/defaultPadding"
+            android:layout_weight="1"
+            />
 
 
 

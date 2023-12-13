@@ -1,20 +1,14 @@
-package com.bagel.noink.ui.length
+package com.bagel.noink.ui.generate
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
-import com.bagel.noink.databinding.EventBinding
-import com.bagel.noink.databinding.FragmentEventBinding
 import com.bagel.noink.databinding.FragmentLengthBinding
-import com.bagel.noink.databinding.LengthBinding
 import com.bagel.noink.ui.home.TextGenViewModel
 
 class LengthFragment: Fragment() {

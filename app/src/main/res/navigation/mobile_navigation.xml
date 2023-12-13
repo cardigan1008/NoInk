@@ -37,25 +37,25 @@
 
     <fragment
         android:id="@+id/nav_textEdit"
-        android:name="com.bagel.noink.ui.textedit.TextEditFragment"
+        android:name="com.bagel.noink.ui.generate.TextEditFragment"
         android:label="Text Edit"
         tools:layout="@layout/fragment_textedit"/>
 
     <fragment
         android:id="@+id/nav_mood"
-        android:name="com.bagel.noink.ui.mood.MoodFragment"
+        android:name="com.bagel.noink.ui.generate.MoodFragment"
         android:label="Mood"
         tools:layout="@layout/fragment_mood"/>
 
     <fragment
         android:id="@+id/nav_event"
-        android:name="com.bagel.noink.ui.event.EventFragment"
+        android:name="com.bagel.noink.ui.generate.EventFragment"
         android:label="Event"
         tools:layout="@layout/fragment_event"/>
 
     <fragment
         android:id="@+id/nav_length"
-        android:name="com.bagel.noink.ui.length.LengthFragment"
+        android:name="com.bagel.noink.ui.generate.LengthFragment"
         android:label="Length"
         tools:layout="@layout/length" />
 </navigation>

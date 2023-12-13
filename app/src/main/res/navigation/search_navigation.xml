@@ -4,21 +4,31 @@
     android:id="@+id/search_navigation"
     app:startDestination="@id/nav_search">
 
-    <activity
+    <fragment
         android:id="@+id/nav_search"
-        android:name="com.bagel.noink.activity.SearchActivity"
+        android:name="com.bagel.noink.ui.search.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/activity_search">
-    </activity>
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_nav_search_to_nav_search_result"
+            app:destination="@id/nav_search_result">
+            <argument
+                android:name="searchQuery"
+                app:argType="string" />
+            <argument
+                android:name="moodTags"
+                app:argType="string" />
+            <argument
+                android:name="eventTags"
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_search_result"
-        android:name="com.bagel.noink.ui.history.SearchResultFragment"
+        android:name="com.bagel.noink.ui.search.SearchResultFragment"
         android:label="Search Result"
         tools:layout="@layout/fragment_search_result">
-        <argument
-            android:name="searchList"
-            app:argType="java.util.ArrayList" />
     </fragment>
 
 </navigation>

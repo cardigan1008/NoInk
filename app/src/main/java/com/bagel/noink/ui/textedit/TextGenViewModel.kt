@@ -1,10 +1,7 @@
-package com.bagel.noink.ui.home
+package com.bagel.noink.ui.textedit
 
-import android.content.Context
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import com.bagel.noink.bean.TextGenInfoBean
-import org.json.JSONObject
 
 class TextGenViewModel {
     companion object {

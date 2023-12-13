@@ -3,11 +3,9 @@ package com.bagel.noink.ui.textedit
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.adapter.ImageAdapter
 import com.bagel.noink.databinding.FragmentTexteditBinding
-import com.bagel.noink.ui.home.TextGenViewModel
 import com.bagel.noink.utils.AliyunOSSManager
 import com.bagel.noink.utils.TextGenHttpRequest
 import org.json.JSONObject
@@ -227,6 +224,7 @@ class TextEditFragment: Fragment() {
             saveText()
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
         val currentTime = ZonedDateTime.now()

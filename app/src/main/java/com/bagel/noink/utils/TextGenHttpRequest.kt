@@ -75,7 +75,7 @@ class TextGenHttpRequest {
         type: String,
         callbackListener: TextGenCallbackListener
     ){
-        val url = "http://10.0.2.2:8080/api/record/save" // Replace with your server address
+        val url = Contants.SERVER_ADDRESS + "/api/record/save" // Replace with your server address
         // uri to string
         val stringList = mutableListOf<String>()
         for (uri in imageUrls) {

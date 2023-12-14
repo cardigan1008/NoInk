@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp">
+
+    <!-- 头像 -->
+    <ImageView
+        android:id="@+id/avatarImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@mipmap/ic_cat"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"/>
+
+    <!-- 用户名 -->
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_toEndOf="@id/avatarImageView"
+        android:layout_alignTop="@id/avatarImageView"/>
+
+    <!-- 评论正文 -->
+    <TextView
+        android:id="@+id/commentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comment text goes here..."
+        android:textSize="12sp"
+        android:layout_toEndOf="@id/avatarImageView"
+        android:layout_below="@id/usernameTextView"
+        android:layout_marginTop="4dp"/>
+
+    <!-- 点赞按钮 -->
+    <ToggleButton
+        android:id="@+id/likeButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/heart_selector"
+        android:textOn=""
+        android:textOff=""
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

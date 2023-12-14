@@ -49,6 +49,28 @@ class HttpRequest {
             }
         })
     }
+    fun get(url: String, params: Map<String, String>, headerName: String, headerValue: String, callbackListener: CallbackListener){
+        val urlBuilder = StringBuilder(url)
+        urlBuilder.append("?") // 添加参数到 URL 中
+        // 构建参数
+        for ((key, value) in params) {
+            urlBuilder.append(key).append("=").append(value).append("&")
+        }
+        val requestUrl = urlBuilder.toString().removeSuffix("&") // 移除末尾多余的 "&"
+        val request = Request.Builder().url(requestUrl).addHeader(headerName,headerValue).build()
+        val call = client.newCall(request)
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                val errorMessage = "Failed to connect to the backend"
+                callbackListener.onFailure(e.message.toString())
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                handleResponse(response, callbackListener)
+            }
+        })
+    }
+
     fun post(url: String, requestBody: RequestBody, callbackListener: CallbackListener) {
         val request = Request.Builder().url(url).post(requestBody).build()
         val call = client.newCall(request)

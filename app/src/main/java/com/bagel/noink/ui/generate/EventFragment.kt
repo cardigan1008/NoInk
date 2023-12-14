@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.EventBinding
 import com.bagel.noink.databinding.FragmentEventBinding
-import com.bagel.noink.ui.home.TextGenViewModel
 
 class EventFragment : Fragment() {
     private var _binding: FragmentEventBinding? = null

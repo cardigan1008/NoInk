@@ -41,8 +41,8 @@
 
     <GridView
         android:id="@+id/gridView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:columnWidth="100dp"
         android:gravity="center"
         android:numColumns="auto_fit"
@@ -51,19 +51,21 @@
         app:layout_constraintStart_toStartOf="@+id/content"
         app:layout_constraintTop_toBottomOf="@+id/content" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/likeButton"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="16dp"
-        android:background="@mipmap/ic_like"
+        android:background="@drawable/toggle_button_selector"
         android:text="点赞"
+        android:textOn=""
+        android:textOff=""
         app:layout_constraintStart_toStartOf="@+id/content"
         app:layout_constraintTop_toBottomOf="@+id/gridView" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/commentButton"
         android:layout_marginLeft="50dp"
         android:layout_width="25dp"
@@ -71,6 +73,8 @@
         android:layout_marginTop="10dp"
         android:background="@mipmap/ic_comment"
         android:text="评论"
+        android:textOn=""
+        android:textOff=""
         app:layout_constraintStart_toEndOf="@+id/likeButton"
         app:layout_constraintTop_toBottomOf="@+id/gridView" />
 
@@ -93,4 +97,17 @@
         android:layout_marginLeft="5dp"
         app:layout_constraintStart_toEndOf="@+id/commentButton"
         app:layout_constraintTop_toTopOf="@+id/commentButton" />
+
+    <LinearLayout
+        android:id="@+id/commentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/content"
+        app:layout_constraintTop_toBottomOf="@+id/commentButton">
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

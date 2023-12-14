@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.adapter.ImageAdapter
 import com.bagel.noink.databinding.FragmentTexteditBinding
-import com.bagel.noink.ui.home.TextGenViewModel
 import com.bagel.noink.utils.AliyunOSSManager
 import com.bagel.noink.utils.TextGenHttpRequest
 import org.json.JSONObject
@@ -225,6 +224,7 @@ class TextEditFragment: Fragment() {
             saveText()
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
         val currentTime = ZonedDateTime.now()

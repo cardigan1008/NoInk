@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentLengthBinding
-import com.bagel.noink.ui.home.TextGenViewModel
 
 class LengthFragment: Fragment() {
     private var _binding: FragmentLengthBinding? = null

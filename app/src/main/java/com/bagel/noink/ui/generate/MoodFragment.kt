@@ -16,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentMoodBinding
 import com.bagel.noink.databinding.MoodBinding
-import com.bagel.noink.ui.home.TextGenViewModel
 
 class MoodFragment : Fragment() {
     private var _binding: FragmentMoodBinding? = null

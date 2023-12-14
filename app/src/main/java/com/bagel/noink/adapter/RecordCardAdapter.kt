@@ -6,15 +6,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.activity.DetailsActivity
+import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.bean.RecordCardBean
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class RecordCardAdapter(private var cards: List<RecordCardBean>, navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecordCardAdapter(private var cards: List<ListItemBean>, private val navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_CARD_NEW = 1
@@ -67,7 +71,7 @@ class RecordCardAdapter(private var cards: List<RecordCardBean>, navController: 
         private val text_home: TextView = itemView.findViewById(R.id.text_home)
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
         private val uploadButton: Button = itemView.findViewById(R.id.uploadButton)
-        fun bind(card: RecordCardBean) {
+        fun bind(card: ListItemBean) {
             // 绑定 CardViewHolder1 的数据和视图
 
             // 计算今天的日期
@@ -91,34 +95,40 @@ class RecordCardAdapter(private var cards: List<RecordCardBean>, navController: 
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
         private val contentView: TextView = itemView.findViewById(R.id.content)
 
-        fun bind(card: RecordCardBean) {
+        fun bind(card: ListItemBean) {
             // 绑定 CardViewHolder2 的数据和视图
-            dataView.text = card.date
+            val format = SimpleDateFormat("yyyy年M月d日", Locale.getDefault())
+            dataView.text = format.format(card.createDate)
             titleTextView.text = card.title
 
             // 使用 Glide 加载并绑定 Uri 到 imageView
             Glide.with(itemView.context)
-                .load(card.photo)
+                .load(card.coverUri)
                 .into(imageView)
-            contentView.text = card.content
+            contentView.text = card.text
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, DetailsActivity::class.java)
-                intent.putExtra("id", card.id)
-                val imageUris = card.images
-                val uriList = ArrayList<String>()
-                for (uri in imageUris) {
-                    uriList.add(uri.toString())
-                }
-                intent.putStringArrayListExtra("imageUris", uriList)
-                intent.putExtra("text", card.content)
-
-                itemView.context.startActivity(intent)
+//                val intent = Intent(itemView.context, DetailsActivity::class.java)
+//                intent.putExtra("id", card.id)
+//                val imageUris = card.images
+//                val uriList = ArrayList<String>()
+//                for (uri in imageUris) {
+//                    uriList.add(uri.toString())
+//                }
+//                intent.putStringArrayListExtra("imageUris", uriList)
+//                intent.putExtra("text", card.content)
+//
+//                itemView.context.startActivity(intent)
+                val bundle = bundleOf(
+                    "listItem" to card
+                )
+                navController.navigate(R.id.action_nav_home_to_nav_card_details, bundle)
             }
         }
     }
 
-    fun updateData(newCards: List<RecordCardBean>) {
+    fun updateData(newCards: List<ListItemBean>) {
         cards = newCards
     }
+
 }

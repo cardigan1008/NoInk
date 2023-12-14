@@ -38,6 +38,7 @@ import com.bagel.noink.utils.HttpRequest
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 
@@ -116,7 +117,7 @@ class HomeFragment : Fragment() {
         }
 
         val viewPager: ViewPager2 = binding.viewPager
-        val emptyList: List<RecordCardBean> = listOf()
+        val emptyList: List<ListItemBean> = listOf()
         recordCardAdapter = RecordCardAdapter(emptyList, navController) // cardsList 是包含卡片数据的列表
         viewPager.adapter = recordCardAdapter
         recordCardAdapter!!.updateData(getCardList())
@@ -194,20 +195,21 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    fun getCardList(): MutableList<RecordCardBean> {
+    fun getCardList(): MutableList<ListItemBean> {
 
-        val uriDemo = Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png")
+        val uriDemo =
+            Uri.parse("https://quasdo.oss-cn-hangzhou.aliyuncs.com/img/YFLTFY_JPDKCQFOZ2LBZYPQ.png")
 
-        val data1 = RecordCardBean(
+        val data1 = ListItemBean(
             1,
-            "2023年12月11日",
             "考研加油",
-            uriDemo,
             "离考研只剩两个月了，最后冲刺一把",
-            listOf(uriDemo)
+            uriDemo,
+            listOf(uriDemo),
+            Date(1639468800000L)
         )
 
-        val cardList: MutableList<RecordCardBean> = ArrayList()
+        val cardList: MutableList<ListItemBean> = ArrayList()
         // 第一张卡片无需使用真实数据
         cardList.add(data1)
 
@@ -230,15 +232,16 @@ class HomeFragment : Fragment() {
                     val year = dateString.substring(0, 4)
                     val month = dateString.substring(5, 7)
                     val day = dateString.substring(8, 10)
-
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val date = dateFormat.parse(dateString)
                     cardList.add(
-                        RecordCardBean(
+                        ListItemBean(
                             item.getInt("rid"),
-                            year + "年" + month + "月" + day + "日",
                             item.getString("title"),
-                            uriList[0],
                             item.getString("generatedText"),
-                            uriList
+                            uriList[0],
+                            uriList,
+                            date
                         )
                     )
                 }

@@ -47,5 +47,22 @@ class CommunityHttpRequest {
             }
         })
     }
-
+    fun addCommentLikes(cid : String, callbackListener: CommunityCallbackListener){
+        val url = Contants.SERVER_ADDRESS + "/api/comment/like"
+        val headerName = "satoken";
+        val headerValue = AccountViewModel.token!!;
+        val jsonBody = JSONObject().apply {
+            put("cid", cid)
+        }
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = jsonBody.toString().toRequestBody(mediaType)
+        httpRequest.post(url, requestBody, headerName, headerValue, object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                callbackListener.onSuccess(responseJson)
+            }
+            override fun onFailure(errorMessage: String) {
+                callbackListener.onFailure(errorMessage)
+            }
+        })
+    }
 }

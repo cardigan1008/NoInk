@@ -18,5 +18,5 @@ data class CommunityItemBean(
     var state: Int, // 为web管理端暂存
     var uid: Int, // 发布uid
     var username: String,
-    var commentList: List<CommentItemBean>
+    var commentList: List<CommentItemBean>?
 )

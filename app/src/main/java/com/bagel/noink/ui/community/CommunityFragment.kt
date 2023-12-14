@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.adapter.CommunityAdapter
+import com.bagel.noink.bean.CommentItemBean
 import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.databinding.FragmentCommunityBinding
 import com.bagel.noink.utils.CommunityHttpRequest
@@ -90,60 +91,91 @@ class CommunityFragment : Fragment() {
 
         return fakeItemList
     }
-    private fun getCommunityContent(){
-        communityHttpRequest.getCommunityList(
-            callbackListener = object : CommunityHttpRequest.CommunityCallbackListener{
-                override fun onSuccess(responseJson: JSONObject) {
-                    val code = responseJson.optInt("code", -1)
-                    val desc = responseJson.optString("desc", "")
-                    val dataArray = responseJson.optJSONArray("data")
+    private fun getCommunityContent() {
+        communityHttpRequest.getCommunityList(object : CommunityHttpRequest.CommunityCallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                val code = responseJson.optInt("code", -1)
+                val desc = responseJson.optString("desc", "")
+                val dataArray = responseJson.optJSONArray("data")
 
-                    if (code == 200 && dataArray != null) {
-                        for (i in 0 until dataArray.length()) {
-                            val dataObject = dataArray.optJSONObject(i)
-                            val aid = dataObject?.optInt("aid", 0) ?: 0
-                            val title = dataObject?.optString("title", "")
-                            // temp avatar
-                            val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
-                            val createdAt = dataObject?.optString("createdAt", "")!!
-                            val updatedAt = dataObject?.optString("updatedAt", "")!!
-                            val content = dataObject?.optString("content", "")!!
-                            val imageUrl = stringToUriList(dataObject?.optString("imageUrl", "")!!)
-                            val moods = dataObject?.optString("moods", "")!!
-                            val events = dataObject?.optString("events", "")!!
-                            val pv = dataObject?.optInt("pv", 0) ?: 0
-                            val likes = dataObject?.optInt("likes", 0) ?: 0
-                            val comments = dataObject?.optInt("comments",0) ?: 0
-                            val state = dataObject?.optInt("state", 0) ?: 0
-                            val uid = dataObject?.optInt("uid", 0) ?: 0
+                if (code == 200 && dataArray != null) {
 
-                            val communityItem = title?.let {
-                                CommunityItemBean(
-                                    aid, it, avatar, createdAt, updatedAt, content, imageUrl,
-                                    moods, events, pv, likes, state, comments, uid
-                                )
-                            }
-                            if (communityItem != null) {
-                                communityList.add(communityItem)
-                            }
-                        }
-                    } else {
-                        val errorMessage = "Failed to fetch community list"
+                    for (i in 0 until dataArray.length()) {
+                        val dataObject = dataArray.optJSONObject(i)
+
+                        val communityItem = createCommunityItem(dataObject)
+                        communityItem?.let { communityList.add(it) }
                     }
-
-                    // 在主线程上调用 notifyDataSetChanged()
-                    activity?.runOnUiThread {
-                        adapter?.notifyDataSetChanged()
-                    }
-                }
-
-                override fun onFailure(errorMessage: String) {
+                } else {
+                    val errorMessage = "Failed to fetch community list"
                     Log.e(TAG, errorMessage)
                 }
+
+                activity?.runOnUiThread {
+                    adapter?.notifyDataSetChanged()
+                }
             }
+
+            override fun onFailure(errorMessage: String) {
+                Log.e(TAG, errorMessage)
+            }
+        })
+    }
+
+    private fun createCommunityItem(dataObject: JSONObject?): CommunityItemBean? {
+        dataObject ?: return null
+
+        val aid = dataObject.optInt("aid", 0)
+        val title = dataObject.optString("title", "")
+        // temp avatar
+        val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
+        val createdAt = dataObject.optString("createdAt", "")
+        val updatedAt = dataObject.optString("updatedAt", "")
+        val content = dataObject.optString("content", "")
+        val imageUrl = stringToUriList(dataObject.optString("imageUrl", ""))
+        val moods = dataObject.optString("moods", "")
+        val events = dataObject.optString("events", "")
+        val pv = dataObject.optInt("pv", 0)
+        val likes = dataObject.optInt("likes", 0)
+        val comments = dataObject.optInt("comments", 0)
+        val state = dataObject.optInt("state", 0)
+        val uid = dataObject.optInt("uid", 0)
+
+        val communityItem = CommunityItemBean(
+            aid, title, avatar, createdAt, updatedAt, content, imageUrl,
+            moods, events, pv, likes, state, comments, uid, "", null
         )
 
+        val commentsArray = dataObject.optJSONArray("commentList")
+        if (commentsArray != null) {
+            val commentList = mutableListOf<CommentItemBean>()
+
+            for (j in 0 until commentsArray.length()) {
+                val commentObject = commentsArray.optJSONObject(j)
+                val cid = commentObject?.optInt("cid", 0) ?: 0
+                val pid = commentObject?.optInt("pid", 0) ?: 0
+                val createAt = commentObject?.optString("createAt", "") ?: ""
+                val updateAt = commentObject?.optString("updateAt", "") ?: ""
+                val commentContent = commentObject?.optString("content", "") ?: ""
+                val commentAid = commentObject?.optInt("aid", 0) ?: 0
+                val commentState = commentObject?.optInt("state", 0) ?: 0
+                val commentUser = commentObject?.optInt("commentUser", 0) ?: 0
+                val username = commentObject?.optString("username", "") ?: ""
+                val likes = commentObject?.optInt("likes", 0) ?: 0
+
+                val commentItem = CommentItemBean(
+                    cid, pid, createAt, updateAt, commentContent,
+                    commentAid, commentState, commentUser, username, likes
+                )
+                commentList.add(commentItem)
+            }
+            communityItem.commentList = commentList
+        }
+
+        return communityItem
     }
+
+
 
     fun stringToUriList(inputString: String): List<Uri> {
         val uriList = mutableListOf<Uri>()

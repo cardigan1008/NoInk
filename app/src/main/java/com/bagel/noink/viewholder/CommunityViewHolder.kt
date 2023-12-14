@@ -1,5 +1,6 @@
 package com.bagel.noink.viewholder;
 
+import CommentAdapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ToggleButton
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.adapter.CommunityImageAdapter
+import com.bagel.noink.bean.CommentItemBean
 import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.utils.CommunityHttpRequest
 import com.bumptech.glide.Glide
@@ -29,6 +33,7 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val usernameTextView: TextView = itemView.findViewById(R.id.username)
     private val gridView: GridView = itemView.findViewById(R.id.gridView)
 
+    private val recyclerView: RecyclerView = itemView.findViewById(R.id.commentLayout)
 
     fun bind(item: CommunityItemBean) {
         // 将数据绑定到视图
@@ -54,6 +59,23 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
         } ?: run {
             gridView.visibility = View.GONE // 如果 imageUrls 为空，则隐藏 GridView
+        }
+
+        item.commentList?.let { commentItemBeans: List<CommentItemBean> ->
+            if(commentItemBeans.isNotEmpty()){
+                // 在适当的地方初始化 RecyclerView，设置其布局管理器和适配器
+                val commentAdapter = CommentAdapter(itemView.context, commentItemBeans)
+                recyclerView.layoutManager = LinearLayoutManager(itemView.context)
+                recyclerView.adapter = commentAdapter
+
+            // 更新 Adapter 的数据集（commentItemBeans）后，调用 notifyDataSetChanged() 方法
+                commentAdapter.notifyDataSetChanged()
+
+            }else {
+                recyclerView.visibility = View.GONE
+            }
+        }?: run {
+            recyclerView.visibility = View.GONE // 如果 imageUrls 为空，则隐藏 GridView
         }
 
         setLikeButton(item.aid.toString())

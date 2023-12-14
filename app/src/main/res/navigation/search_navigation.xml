@@ -29,6 +29,19 @@
         android:name="com.bagel.noink.ui.search.SearchResultFragment"
         android:label="Search Result"
         tools:layout="@layout/fragment_search_result">
+        <action
+            android:id="@+id/action_nav_search_result_to_nav_result_details"
+            app:destination="@id/nav_result_details" >
+            <argument
+                android:name="resultId"
+                app:argType="int" />
+        </action>
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_result_details"
+        android:name="com.bagel.noink.ui.history.DetailsFragment"
+        android:label="Result Details"
+        tools:layout="@layout/fragment_details" />
 
 </navigation>

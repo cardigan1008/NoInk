@@ -1,38 +1,42 @@
-package com.bagel.noink.activity
+package com.bagel.noink.ui.history
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.PagerAdapter
-import com.bagel.noink.databinding.ActivityDetailsBinding
+import com.bagel.noink.R
+import com.bagel.noink.databinding.FragmentDetailsBinding
+import com.bagel.noink.databinding.FragmentPostBinding
 import com.bumptech.glide.Glide
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsFragment : Fragment(R.layout.fragment_details) {
 
-    lateinit var binding: ActivityDetailsBinding
+    private var _binding: FragmentDetailsBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
-        val text = intent.getStringExtra("text")
-        val imageURIs = convertToUriList(intent.getStringArrayListExtra("imageUris"))
+        var imageUris: ArrayList<Uri> = ArrayList()
 
-        binding.text.text = text
         val viewPager = binding.viewPager
         val pagerIndicator = binding.pagerIndicator
 
-        val imagePagerAdapter = imageURIs?.let { ImagePagerAdapter(it) }
+        // Set up ViewPager2 and CirclePageIndicator
+        val imagePagerAdapter = ImagePagerAdapter(imageUris)
         viewPager.adapter = imagePagerAdapter
         pagerIndicator.setViewPager(viewPager)
-    }
 
-    private fun convertToUriList(imageURIs: List<String>?): List<Uri>? {
-        return imageURIs?.map { Uri.parse(it) }
+        return root
     }
 
     private inner class ImagePagerAdapter(private val imageURIs: List<Uri>) : PagerAdapter() {
@@ -58,4 +62,5 @@ class DetailsActivity : AppCompatActivity() {
             container.removeView(`object` as View)
         }
     }
+
 }

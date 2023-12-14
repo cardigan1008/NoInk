@@ -18,6 +18,7 @@ import com.bagel.noink.databinding.FragmentHistoryBinding
 import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.HttpRequest
+import com.bumptech.glide.Glide
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -37,6 +38,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     ): View? {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        bindingUserInfo()
         addRecycleView(root)
 
         return root
@@ -108,5 +110,35 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         httpRequest.get(Contants.SERVER_ADDRESS + "/api/record/allRecord", "satoken", AccountViewModel.token!!,callbackListener)
 
         return historyList
+    }
+
+    private fun bindingUserInfo() {
+        val callbackListener = object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                val data = responseJson.getJSONObject("data")
+                val avatar= Uri.parse(data.getString("userprofile"))
+                val username = data.getString("username")
+
+                activity?.runOnUiThread {
+                    Glide.with(this@HistoryFragment)
+                        .load(avatar)
+                        .into(binding.avatar)
+                    binding.username.text = username
+                }
+            }
+
+            override fun onFailure(errorMessage: String) {
+                print(errorMessage)
+            }
+        }
+
+        if (AccountViewModel.token == "" || AccountViewModel.token == null || AccountViewModel.token == "null") {
+            val sharedPreferences =
+                activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            AccountViewModel.token = sharedPreferences?.getString("token", "")
+        }
+
+        val httpRequest = HttpRequest()
+        httpRequest.get(Contants.SERVER_ADDRESS + "/api/user/userInfo", "satoken", AccountViewModel.token!!, callbackListener)
     }
 }

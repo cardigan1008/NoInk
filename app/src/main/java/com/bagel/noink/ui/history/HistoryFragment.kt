@@ -93,6 +93,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 // 在主线程上调用 notifyDataSetChanged()
                 activity?.runOnUiThread {
                     adapter?.notifyDataSetChanged()
+                    binding.tvEmptyState.visibility = if (historyList.isEmpty()) View.VISIBLE else View.GONE
                 }
             }
 

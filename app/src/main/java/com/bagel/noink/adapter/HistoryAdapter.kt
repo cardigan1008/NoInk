@@ -1,30 +1,26 @@
 package com.bagel.noink.adapter
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
-import com.bagel.noink.activity.DetailsActivity
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.viewholder.HistoryViewHolder
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Locale
-import kotlin.time.Duration.Companion.days
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
     private var historyList: List<ListItemBean>
+    private val navController: NavController
 
-    constructor(historyList: List<ListItemBean>) {
+    constructor(historyList: List<ListItemBean>, navController: NavController) {
         this.historyList = historyList
-    }
-
-    private fun setHistoryList(historyList: List<ListItemBean>) {
-        this.historyList = historyList
+        this.navController = navController
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -80,17 +76,10 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
         }
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DetailsActivity::class.java)
-            intent.putExtra("id", historyItemBean.id)
-            val imageUris = historyItemBean.imagesUri
-            val uriList = ArrayList<String>()
-            for (uri in imageUris) {
-                uriList.add(uri.toString())
-            }
-            intent.putStringArrayListExtra("imageUris", uriList)
-            intent.putExtra("text", historyItemBean.text)
-
-            holder.itemView.context.startActivity(intent)
+            val bundle = bundleOf(
+                "listItem" to historyItemBean
+            )
+            navController.navigate(R.id.action_nav_history_list_to_nav_history_details, bundle)
         }
     }
 }

@@ -33,8 +33,8 @@
             android:id="@+id/action_nav_search_result_to_nav_result_details"
             app:destination="@id/nav_result_details" >
             <argument
-                android:name="resultId"
-                app:argType="int" />
+                android:name="listItem"
+                app:argType="com.bagel.noink.bean.ListItemBean" />
         </action>
     </fragment>
 

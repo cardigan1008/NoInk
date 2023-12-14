@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.PagerAdapter
 import com.bagel.noink.R
+import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentDetailsBinding
 import com.bagel.noink.databinding.FragmentPostBinding
 import com.bumptech.glide.Glide
@@ -26,13 +27,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        var imageUris: ArrayList<Uri> = ArrayList()
+        binding.title.text = arguments?.getParcelable<ListItemBean>("listItem")?.title
+        binding.text.text = arguments?.getParcelable<ListItemBean>("listItem")?.text
+        binding.date.text = arguments?.getParcelable<ListItemBean>("listItem")?.createDate.toString()
 
+        var imageURIs: List<Uri> = arguments?.getParcelable<ListItemBean>("listItem")?.imagesUri ?: emptyList()
         val viewPager = binding.viewPager
         val pagerIndicator = binding.pagerIndicator
 
         // Set up ViewPager2 and CirclePageIndicator
-        val imagePagerAdapter = ImagePagerAdapter(imageUris)
+        val imagePagerAdapter = ImagePagerAdapter(imageURIs)
         viewPager.adapter = imagePagerAdapter
         pagerIndicator.setViewPager(viewPager)
 

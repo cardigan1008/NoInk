@@ -8,10 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
-import com.bagel.noink.adapter.SearchAdapter
+import com.bagel.noink.adapter.SearchResultAdapter
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentSearchResultBinding
 import com.bagel.noink.ui.account.AccountViewModel
@@ -27,7 +28,7 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
 
     private var _binding: FragmentSearchResultBinding? = null
     private var recyclerView: RecyclerView? = null
-    private var adapter: SearchAdapter? = null
+    private var adapter: SearchResultAdapter? = null
 
     private val binding get() = _binding!!
 
@@ -52,11 +53,11 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
 
     private fun addRecycleView(view: View) {
         recyclerView = view.findViewById(R.id.search_recycle)
-        adapter = SearchAdapter(performSearch(
+        adapter = SearchResultAdapter(performSearch(
             arguments?.getString("searchQuery")!!,
             arguments?.getString("moodTags")!!,
             arguments?.getString("eventTags")!!
-        ))
+        ), findNavController())
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(context)
     }

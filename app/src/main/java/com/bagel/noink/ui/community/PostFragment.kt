@@ -18,6 +18,8 @@ import com.bagel.noink.databinding.FragmentPostBinding
 import com.bagel.noink.utils.CommunityHttpRequest
 import com.bumptech.glide.Glide
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class PostFragment : Fragment(R.layout.fragment_post) {
     private val TAG: String = "PostFragment"
@@ -41,12 +43,28 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         communityHttpRequest.getCommunityDetail(receivedAid, object : CommunityHttpRequest.CommunityCallbackListener{
             override fun onSuccess(responseJson: JSONObject) {
                 communityItemBean = createCommunityItem(responseJson) ?: return
+
+                val title = communityItemBean.title
+                val content = communityItemBean.content
+//                val createDate = communityItemBean.createdAt
+//                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+//                val formattedDate = dateFormat.format(createDate)
+
+                activity?.runOnUiThread {
+                    binding.title.text = title
+                    binding.text.text = content
+
+                }
+
+
                 val imageUris: List<Uri>? = communityItemBean.imageUrls
                 val viewPager = binding.viewPager
                 val pagerIndicator = binding.pagerIndicator
                 imagePagerAdapter = imageUris?.let { ImagePagerAdapter(it) }!!
                 viewPager.adapter = imagePagerAdapter
                 pagerIndicator.setViewPager(viewPager)
+
+
 
                 val comments: List<CommentItemBean>? = communityItemBean.commentList
                 commentDetailAdapter = comments?.let { CommentDetailAdapter(it) }!!
@@ -82,7 +100,8 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         val aid = dataObject.optInt("aid", 0)
         val title = dataObject.optString("title", "")
         // temp avatar
-        val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
+        //val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
+        val avatar = Uri.parse(dataObject.optString("userprofile", ""))
         val createdAt = dataObject.optString("createdAt", "")
         val updatedAt = dataObject.optString("updatedAt", "")
         val content = dataObject.optString("content", "")

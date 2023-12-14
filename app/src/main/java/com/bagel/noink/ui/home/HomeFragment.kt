@@ -51,7 +51,8 @@ class HomeFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var aliyunOSSManager: AliyunOSSManager
     private var recordCardAdapter: RecordCardAdapter? = null
-
+    var selectedCardPosition: Int = -1
+    private var cardCache: List<ListItemBean>? = null
     companion object {
         private const val PICK_IMAGES_REQUEST_CODE = 101 // 更改请求码，以便处理多个图片选择
     }
@@ -118,11 +119,44 @@ class HomeFragment : Fragment() {
 
         val viewPager: ViewPager2 = binding.viewPager
         val emptyList: List<ListItemBean> = listOf()
-        recordCardAdapter = RecordCardAdapter(emptyList, navController) // cardsList 是包含卡片数据的列表
+        recordCardAdapter = RecordCardAdapter(emptyList, navController) { postion ->
+            selectedCardPosition = postion
+        }
         viewPager.adapter = recordCardAdapter
+        // cardsList 是包含卡片数据的列表
+        if (cardCache == null) {
+            cardCache = getCardList()
+        }
         recordCardAdapter!!.updateData(getCardList())
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                selectedCardPosition = position
+            }
+        })
+
+        // Restore selected card position if available
+        if (selectedCardPosition != -1) {
+            // Scroll to selected card position
+            viewPager.post {
+                viewPager.setCurrentItem(selectedCardPosition, false)
+            }
+
+        }
         return root
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//
+//        val viewPager: ViewPager2 = requireView().findViewById(R.id.viewPager)
+//
+//        if (selectedCardPosition != -1) {
+//            viewPager.post {
+//                viewPager.currentItem = selectedCardPosition
+//            }
+//        }
+//    }
 
     fun generateRandomString(length: Int): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9') // 允许的字符集合

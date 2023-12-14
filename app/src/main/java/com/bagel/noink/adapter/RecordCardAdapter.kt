@@ -1,5 +1,6 @@
 import android.content.Intent
 import android.icu.util.Calendar
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +19,7 @@ import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class RecordCardAdapter(private var cards: List<ListItemBean>, private val navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+class RecordCardAdapter(private var cards: List<ListItemBean>, private val navController: NavController, private val onItemClick: (position: Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val VIEW_TYPE_CARD_NEW = 1
         private const val VIEW_TYPE_CARD_RECORD = 2
@@ -56,7 +56,7 @@ class RecordCardAdapter(private var cards: List<ListItemBean>, private val navCo
             }
             is CardViewHolder2 -> {
                 // 绑定 CardViewHolder2 的数据和视图
-                holder.bind(card)
+                holder.bind(card, position)
             }
         }
     }
@@ -95,7 +95,7 @@ class RecordCardAdapter(private var cards: List<ListItemBean>, private val navCo
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
         private val contentView: TextView = itemView.findViewById(R.id.content)
 
-        fun bind(card: ListItemBean) {
+        fun bind(card: ListItemBean, position: Int) {
             // 绑定 CardViewHolder2 的数据和视图
             val format = SimpleDateFormat("yyyy年M月d日", Locale.getDefault())
             dataView.text = format.format(card.createDate)
@@ -108,17 +108,7 @@ class RecordCardAdapter(private var cards: List<ListItemBean>, private val navCo
             contentView.text = card.text
 
             itemView.setOnClickListener {
-//                val intent = Intent(itemView.context, DetailsActivity::class.java)
-//                intent.putExtra("id", card.id)
-//                val imageUris = card.images
-//                val uriList = ArrayList<String>()
-//                for (uri in imageUris) {
-//                    uriList.add(uri.toString())
-//                }
-//                intent.putStringArrayListExtra("imageUris", uriList)
-//                intent.putExtra("text", card.content)
-//
-//                itemView.context.startActivity(intent)
+                onItemClick(position)
                 val bundle = bundleOf(
                     "listItem" to card
                 )

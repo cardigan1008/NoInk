@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
@@ -19,7 +20,6 @@ import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.HttpRequest
 import org.json.JSONObject
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
@@ -49,7 +49,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private fun addRecycleView(view: View) {
         recyclerView = view.findViewById(R.id.history_recycle)
-        adapter = HistoryAdapter(getHistory())
+        adapter = HistoryAdapter(getHistory(), findNavController())
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(context)
     }

@@ -8,20 +8,20 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.bagel.noink.R
-import com.bagel.noink.databinding.ActivitySearchBinding
+import com.bagel.noink.databinding.ActivityHistoryBinding
 
-class SearchActivity : AppCompatActivity() {
+class HistoryActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivitySearchBinding
+    private lateinit var binding: ActivityHistoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivitySearchBinding.inflate(layoutInflater)
+        binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_search)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_history)
         val navController = navHostFragment?.findNavController()
 
         appBarConfiguration = AppBarConfiguration(navController!!.graph)
@@ -29,7 +29,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_search)
+        val navController = findNavController(R.id.nav_host_fragment_history)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

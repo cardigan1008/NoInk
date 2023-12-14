@@ -11,11 +11,11 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home_cat" />
 
-    <fragment
+    <activity
         android:id="@+id/nav_history"
-        android:name="com.bagel.noink.ui.history.HistoryFragment"
+        android:name="com.bagel.noink.activity.HistoryActivity"
         android:label="@string/menu_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/activity_history" />
 
     <activity
         android:id="@+id/nav_community"

@@ -1,4 +1,4 @@
-package com.bagel.noink.ui
+package com.bagel.noink.ui.account
 
 import android.annotation.SuppressLint
 import android.content.Context

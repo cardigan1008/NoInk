@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.adapter.ImageAdapter
 import com.bagel.noink.databinding.FragmentTexteditBinding
-import com.bagel.noink.ui.textedit.TextGenViewModel
+import com.bagel.noink.ui.generate.TextGenViewModel
 import com.bagel.noink.utils.TextGenHttpRequest
 import org.json.JSONObject
 import java.time.ZonedDateTime

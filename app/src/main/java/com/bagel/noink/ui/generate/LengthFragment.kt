@@ -1,4 +1,4 @@
-package com.bagel.noink.ui.length
+package com.bagel.noink.ui.generate
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentLengthBinding
-import com.bagel.noink.ui.textedit.TextGenViewModel
 
 class LengthFragment: Fragment() {
     private var _binding: FragmentLengthBinding? = null

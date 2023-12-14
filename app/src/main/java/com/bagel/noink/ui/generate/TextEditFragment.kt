@@ -1,4 +1,4 @@
-package com.bagel.noink.ui.textedit
+package com.bagel.noink.ui.generate
 
 import android.app.Activity
 import android.content.Context
@@ -80,7 +80,7 @@ class TextEditFragment: Fragment() {
             val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
             galleryIntent.type = "image/*"
             galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            startActivityForResult(galleryIntent, TextEditFragment.PICK_IMAGES_REQUEST_CODE)
+            startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
         }
     }
     fun getDriveFile(context: Context, uri: Uri): String? {
@@ -118,7 +118,7 @@ class TextEditFragment: Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == TextEditFragment.PICK_IMAGES_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == PICK_IMAGES_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // 清空已选图片列表，以便重新添加选择的图片
             selectedImageUris.clear()
             // 获取从系统图片选择器返回的所有 Uri

@@ -1,4 +1,4 @@
-package com.bagel.noink.ui.textedit
+package com.bagel.noink.ui.generate
 
 import android.net.Uri
 import com.bagel.noink.bean.TextGenInfoBean

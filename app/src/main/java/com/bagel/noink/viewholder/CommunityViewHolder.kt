@@ -49,7 +49,7 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         likeCountTextView.text = item.likes.toString()
         // 评论数
         commentCountTextView.text = item.state.toString()
-        usernameTextView.text = "boogiepop"
+        usernameTextView.text = item.username.toString()
 
         // 如果可用，显示 imageUrls 列表中的第一个图像
         item.imageUrls?.let { imageUrls ->

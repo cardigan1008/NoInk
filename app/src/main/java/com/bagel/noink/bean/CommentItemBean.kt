@@ -1,5 +1,7 @@
 package com.bagel.noink.bean
 
+import android.net.Uri
+
 data class CommentItemBean (
     var cid: Int,
     var pid: Int,
@@ -11,5 +13,6 @@ data class CommentItemBean (
     var commentUser: Int,
     var username: String,
     var likes: Int,
-    var commentList: List<CommentItemBean>?
+    var commentList: List<CommentItemBean>?,
+    var avatar: Uri
 )

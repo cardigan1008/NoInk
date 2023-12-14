@@ -129,10 +129,11 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         val commentUser = commentObject.optInt("commentUser", 0)
         val username = commentObject.optString("username", "")
         val likes = commentObject.optInt("likes", 0)
+        val avatar = Uri.parse(commentObject.optString("userprofile", ""))
 
         val commentItem = CommentItemBean(
             cid, pid, createAt, updateAt, content,
-            aid, state, commentUser, username, likes, null
+            aid, state, commentUser, username, likes, null, avatar
         )
 
         val childCommentListObject = commentObject.optJSONArray("commentList")

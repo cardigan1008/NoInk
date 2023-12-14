@@ -129,7 +129,7 @@ class CommunityFragment : Fragment() {
         val aid = dataObject.optInt("aid", 0)
         val title = dataObject.optString("title", "")
         // temp avatar
-        val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
+        //val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
         val createdAt = dataObject.optString("createdAt", "")
         val updatedAt = dataObject.optString("updatedAt", "")
         val content = dataObject.optString("content", "")
@@ -141,10 +141,12 @@ class CommunityFragment : Fragment() {
         val comments = dataObject.optInt("comments", 0)
         val state = dataObject.optInt("state", 0)
         val uid = dataObject.optInt("uid", 0)
+        val username = dataObject.optString("username", "")
+        val avatar = Uri.parse(dataObject.optString("userprofile", ""))
 
         val communityItem = CommunityItemBean(
             aid, title, avatar, createdAt, updatedAt, content, imageUrl,
-            moods, events, pv, likes, state, comments, uid, "", listOf()
+            moods, events, pv, likes, state, comments, uid, username, listOf()
         )
 
         val commentsArray = dataObject.optJSONArray("commentList")
@@ -163,6 +165,8 @@ class CommunityFragment : Fragment() {
                 val commentUser = commentObject?.optInt("commentUser", 0) ?: 0
                 val username = commentObject?.optString("username", "") ?: ""
                 val likes = commentObject?.optInt("likes", 0) ?: 0
+                val avatar = Uri.parse(dataObject.optString("userprofile", ""))
+
 
                 val childCommentListObject = commentObject?.optJSONArray("commentList")
                 val childCommentList = mutableListOf<CommentItemBean>()
@@ -179,16 +183,17 @@ class CommunityFragment : Fragment() {
                     val childCommentUser = childCommentObject?.optInt("commentUser", 0) ?: 0
                     val childUsername = childCommentObject?.optString("username", "") ?: ""
                     val childLikes = childCommentObject?.optInt("likes", 0) ?: 0
+                    val childAvatar = Uri.parse(childCommentObject.optString("userprofile", ""))
                     val childCommentItem = CommentItemBean(
                         childCid, childPid, childCreateAt, childUpdateAt, childCommentContent,
-                        childCommentAid, childCommentState, childCommentUser, childUsername, childLikes, null
+                        childCommentAid, childCommentState, childCommentUser, childUsername, childLikes, listOf(), childAvatar
                     )
                     childCommentList.add(childCommentItem)
                 }
 
                 val commentItem = CommentItemBean(
                     cid, pid, createAt, updateAt, commentContent,
-                    commentAid, commentState, commentUser, username, likes, childCommentList
+                    commentAid, commentState, commentUser, username, likes, childCommentList, avatar
                 )
                 commentList.add(commentItem)
             }

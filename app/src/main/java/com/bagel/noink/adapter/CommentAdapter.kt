@@ -30,6 +30,7 @@ class CommentAdapter(private val context: Context, private val commentList: List
 
         holder.usernameTextView.text = comment.username
         holder.commentTextView.text = comment.content
+        
 
         // 设置头像等操作，如果需要的话
         // 例如：holder.avatarImageView.setImageResource(R.drawable.avatar_placeholder)

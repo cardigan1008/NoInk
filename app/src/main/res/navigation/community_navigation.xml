@@ -10,13 +10,20 @@
         android:name="com.bagel.noink.ui.community.CommunityFragment"
         android:label="Community"
         tools:layout="@layout/fragment_community">
+        <action
+            android:id="@+id/action_nav_community_to_nav_community_detail"
+            app:destination="@id/nav_community_detail">
+            <argument
+                android:name="aid"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/nav_community_detail"
-        android:name="com.bagel.noink.ui.community.CommunityDetailFragment"
+        android:name="com.bagel.noink.ui.community.PostFragment"
         android:label="Community Detail"
-        tools:layout="@layout/fragment_community_detail">
+        tools:layout="@layout/fragment_post">
     </fragment>
 
 </navigation>

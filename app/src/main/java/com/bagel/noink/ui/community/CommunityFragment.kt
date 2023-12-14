@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
@@ -56,7 +57,7 @@ class CommunityFragment : Fragment() {
         postRecyclerView.layoutManager = layoutManager
 
         // 创建并设置适配器
-        adapter = CommunityAdapter(communityList)
+        adapter = CommunityAdapter(communityList, findNavController())
 
 
         postRecyclerView.adapter = adapter

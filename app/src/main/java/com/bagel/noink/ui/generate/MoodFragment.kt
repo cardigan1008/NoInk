@@ -1,4 +1,4 @@
-package com.bagel.noink.ui.mood
+package com.bagel.noink.ui.generate
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
@@ -10,17 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentMoodBinding
 import com.bagel.noink.databinding.MoodBinding
-import com.bagel.noink.ui.home.HomeViewModel
-import com.bagel.noink.ui.home.TextGenViewModel
-import org.w3c.dom.Text
 
 class MoodFragment : Fragment() {
     private var _binding: FragmentMoodBinding? = null

@@ -16,9 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.R
 import com.bagel.noink.activity.EditInformationActivity
 import com.bagel.noink.activity.LoginActivity
-import com.bagel.noink.activity.RegisterActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
-import com.bagel.noink.ui.PersonalItemView
 import com.bagel.noink.utils.UserHttpRequest
 import org.json.JSONObject
 

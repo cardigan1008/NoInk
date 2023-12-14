@@ -117,7 +117,7 @@ class HomeFragment : Fragment() {
 
         val viewPager: ViewPager2 = binding.viewPager
         val emptyList: List<RecordCardBean> = listOf()
-        recordCardAdapter = RecordCardAdapter(emptyList) // cardsList 是包含卡片数据的列表
+        recordCardAdapter = RecordCardAdapter(emptyList, navController) // cardsList 是包含卡片数据的列表
         viewPager.adapter = recordCardAdapter
         recordCardAdapter!!.updateData(getCardList())
         return root

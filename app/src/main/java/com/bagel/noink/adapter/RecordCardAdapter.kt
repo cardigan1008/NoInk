@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.activity.DetailsActivity
 import com.bagel.noink.bean.RecordCardBean
 import com.bumptech.glide.Glide
 
-class RecordCardAdapter(private var cards: List<RecordCardBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecordCardAdapter(private var cards: List<RecordCardBean>, navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_CARD_NEW = 1

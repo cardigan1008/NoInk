@@ -22,10 +22,13 @@ class DetailsActivity : AppCompatActivity() {
         val text = intent.getStringExtra("text")
         val imageURIs = convertToUriList(intent.getStringArrayListExtra("imageUris"))
 
-        binding.textView.text = text
-        binding.viewPager.adapter = imageURIs?.let { ImagePagerAdapter(it) }
+        binding.text.text = text
+        val viewPager = binding.viewPager
+        val pagerIndicator = binding.pagerIndicator
 
-        binding.back.setOnClickListener { finish() }
+        val imagePagerAdapter = imageURIs?.let { ImagePagerAdapter(it) }
+        viewPager.adapter = imagePagerAdapter
+        pagerIndicator.setViewPager(viewPager)
     }
 
     private fun convertToUriList(imageURIs: List<String>?): List<Uri>? {

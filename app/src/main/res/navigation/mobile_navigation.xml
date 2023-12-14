@@ -9,13 +9,21 @@
         android:id="@+id/nav_home"
         android:name="com.bagel.noink.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home_cat" />
+        tools:layout="@layout/fragment_home_cat" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_card_details"
+            app:destination="@id/nav_card_details" >
+            <argument
+                android:name="listItem"
+                app:argType="com.bagel.noink.bean.ListItemBean" />
+        </action>
+    </fragment>
 
-    <fragment
+    <activity
         android:id="@+id/nav_history"
-        android:name="com.bagel.noink.ui.history.HistoryFragment"
+        android:name="com.bagel.noink.activity.HistoryActivity"
         android:label="@string/menu_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/activity_history" />
 
     <activity
         android:id="@+id/nav_community"
@@ -37,25 +45,32 @@
 
     <fragment
         android:id="@+id/nav_textEdit"
-        android:name="com.bagel.noink.ui.textedit.TextEditFragment"
+        android:name="com.bagel.noink.ui.generate.TextEditFragment"
         android:label="Text Edit"
         tools:layout="@layout/fragment_textedit"/>
 
     <fragment
         android:id="@+id/nav_mood"
-        android:name="com.bagel.noink.ui.mood.MoodFragment"
+        android:name="com.bagel.noink.ui.generate.MoodFragment"
         android:label="Mood"
         tools:layout="@layout/fragment_mood"/>
 
     <fragment
         android:id="@+id/nav_event"
-        android:name="com.bagel.noink.ui.event.EventFragment"
+        android:name="com.bagel.noink.ui.generate.EventFragment"
         android:label="Event"
         tools:layout="@layout/fragment_event"/>
 
     <fragment
         android:id="@+id/nav_length"
-        android:name="com.bagel.noink.ui.length.LengthFragment"
+        android:name="com.bagel.noink.ui.generate.LengthFragment"
         android:label="Length"
         tools:layout="@layout/length" />
+
+    <fragment
+        android:id="@+id/nav_card_details"
+        android:name="com.bagel.noink.ui.history.DetailsFragment"
+        android:label="Card Details"
+        tools:layout="@layout/fragment_details" />
+
 </navigation>

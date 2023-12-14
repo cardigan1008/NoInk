@@ -1,4 +1,4 @@
-package com.bagel.noink.ui.event
+package com.bagel.noink.ui.generate
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -15,8 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.EventBinding
 import com.bagel.noink.databinding.FragmentEventBinding
-import com.bagel.noink.databinding.MoodBinding
-import com.bagel.noink.ui.home.TextGenViewModel
 
 class EventFragment : Fragment() {
     private var _binding: FragmentEventBinding? = null

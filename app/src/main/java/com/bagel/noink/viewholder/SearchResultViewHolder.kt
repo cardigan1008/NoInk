@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 
-class SearchViewHolder : RecyclerView.ViewHolder {
+class SearchResultViewHolder : RecyclerView.ViewHolder {
     var ivImage: ImageView
         private set
 

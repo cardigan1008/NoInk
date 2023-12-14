@@ -102,7 +102,7 @@
         >
 
 
-        <com.bagel.noink.ui.PersonalItemView
+        <com.bagel.noink.ui.account.PersonalItemView
             android:id="@+id/item_username"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -114,7 +114,7 @@
             app:show_more="true"
             tools:ignore="MissingConstraints" />
 
-        <com.bagel.noink.ui.PersonalItemView
+        <com.bagel.noink.ui.account.PersonalItemView
             android:id="@+id/item_gender"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -126,7 +126,7 @@
             app:show_more="true"
             tools:ignore="MissingConstraints" />
 
-        <com.bagel.noink.ui.PersonalItemView
+        <com.bagel.noink.ui.account.PersonalItemView
             android:id="@+id/item_birthday"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -138,7 +138,7 @@
             app:show_more="true"
             tools:ignore="MissingConstraints" />
 
-        <com.bagel.noink.ui.PersonalItemView
+        <com.bagel.noink.ui.account.PersonalItemView
             android:id="@+id/item_wechat"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -159,7 +159,7 @@
         android:background="#ffffff"
         android:orientation="vertical">
 
-        <com.bagel.noink.ui.PersonalItemView
+        <com.bagel.noink.ui.account.PersonalItemView
             android:id="@+id/item_uid"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -171,7 +171,7 @@
             app:show_more="false"
             tools:ignore="MissingConstraints" />
 
-        <com.bagel.noink.ui.PersonalItemView
+        <com.bagel.noink.ui.account.PersonalItemView
             android:id="@+id/item_update_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"

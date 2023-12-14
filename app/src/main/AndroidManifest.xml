@@ -49,8 +49,9 @@
             android:exported="true">
         </activity>
 
-        <activity android:name=".activity.DetailsActivity" />
         <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.HistoryActivity" />
+        <activity android:name=".activity.DetailsActivity" />
 
     </application>
 

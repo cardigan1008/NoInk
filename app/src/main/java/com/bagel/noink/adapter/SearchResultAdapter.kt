@@ -4,36 +4,40 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.activity.DetailsActivity
-import com.bagel.noink.viewholder.SearchViewHolder
+import com.bagel.noink.viewholder.SearchResultViewHolder
 import com.bagel.noink.bean.ListItemBean
 import com.bumptech.glide.Glide
 
 
-class SearchAdapter : RecyclerView.Adapter<SearchViewHolder> {
+class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder> {
 
     private var searchList: List<ListItemBean>
+    private val navController: NavController
 
-    constructor(searchList: List<ListItemBean>) {
+    constructor(searchList: List<ListItemBean>, navController: NavController) {
         this.searchList = searchList
+        this.navController = navController
     }
 
     fun setSearchList(searchList: List<ListItemBean>) {
         this.searchList = searchList
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.search_result_recycleview_item, parent, false)
-        return SearchViewHolder(view)
+        return SearchResultViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return searchList.size
     }
 
-    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         val searchItemBean = searchList[position]
 
         searchItemBean.title?.let {
@@ -51,16 +55,10 @@ class SearchAdapter : RecyclerView.Adapter<SearchViewHolder> {
         }
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DetailsActivity::class.java)
-            intent.putExtra("id", searchItemBean.id)
-            val imageUris = searchItemBean.imagesUri
-            val uriList = ArrayList<String>()
-            for (uri in imageUris) {
-                uriList.add(uri.toString())
-            }
-            intent.putStringArrayListExtra("imageUris", uriList)
-            intent.putExtra("text", searchItemBean.text)
-            holder.itemView.context.startActivity(intent)
+            val bundle = bundleOf(
+                "listItem" to searchItemBean
+            )
+            navController.navigate(R.id.action_nav_search_result_to_nav_result_details, bundle)
         }
     }
 }

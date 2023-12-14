@@ -10,5 +10,6 @@ data class CommentItemBean (
     var state: Int,
     var commentUser: Int,
     var username: String,
-    var likes: Int
+    var likes: Int,
+    var commentList: List<CommentItemBean>?
 )

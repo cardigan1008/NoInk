@@ -36,6 +36,7 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val recyclerView: RecyclerView = itemView.findViewById(R.id.commentLayout)
 
     fun bind(item: CommunityItemBean) {
+
         // 将数据绑定到视图
         Glide.with(itemView.context)
             .load(item.avatar)

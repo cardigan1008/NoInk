@@ -1,5 +1,6 @@
 package com.bagel.noink.ui.community
 
+import CommentDetailAdapter
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.bagel.noink.R
+import com.bagel.noink.bean.CommentItemBean
 import com.bagel.noink.databinding.FragmentPostBinding
 import com.bumptech.glide.Glide
 
@@ -16,6 +19,9 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
     private var _binding: FragmentPostBinding? = null
     private val binding get() = _binding!!
+
+    val recyclerView:RecyclerView = binding.commentRecyclerView
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +41,13 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         viewPager.adapter = imagePagerAdapter
         pagerIndicator.setViewPager(viewPager)
 
+        // 等待接口接入
+        var comments: List<CommentItemBean> = ArrayList()
+        val commentDetailAdapter = CommentDetailAdapter(comments)
+        recyclerView.adapter = commentDetailAdapter
+        commentDetailAdapter.notifyDataSetChanged()
         return root
+
     }
 
     private inner class ImagePagerAdapter(private val imageURIs: List<Uri>) : PagerAdapter() {

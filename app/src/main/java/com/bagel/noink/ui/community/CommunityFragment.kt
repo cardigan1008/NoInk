@@ -143,7 +143,7 @@ class CommunityFragment : Fragment() {
 
         val communityItem = CommunityItemBean(
             aid, title, avatar, createdAt, updatedAt, content, imageUrl,
-            moods, events, pv, likes, state, comments, uid, "", null
+            moods, events, pv, likes, state, comments, uid, "", listOf()
         )
 
         val commentsArray = dataObject.optJSONArray("commentList")
@@ -163,9 +163,31 @@ class CommunityFragment : Fragment() {
                 val username = commentObject?.optString("username", "") ?: ""
                 val likes = commentObject?.optInt("likes", 0) ?: 0
 
+                val childCommentListObject = commentObject?.optJSONArray("commentList")
+                val childCommentList = mutableListOf<CommentItemBean>()
+
+                if(childCommentListObject != null){
+                    val childCommentObject = childCommentListObject.optJSONObject(j)
+                    val childCid = childCommentObject?.optInt("cid", 0) ?: 0
+                    val childPid = childCommentObject?.optInt("pid", 0) ?: 0
+                    val childCreateAt = childCommentObject?.optString("createAt", "") ?: ""
+                    val childUpdateAt = childCommentObject?.optString("updateAt", "") ?: ""
+                    val childCommentContent = childCommentObject?.optString("content", "") ?: ""
+                    val childCommentAid = childCommentObject?.optInt("aid", 0) ?: 0
+                    val childCommentState = childCommentObject?.optInt("state", 0) ?: 0
+                    val childCommentUser = childCommentObject?.optInt("commentUser", 0) ?: 0
+                    val childUsername = childCommentObject?.optString("username", "") ?: ""
+                    val childLikes = childCommentObject?.optInt("likes", 0) ?: 0
+                    val childCommentItem = CommentItemBean(
+                        childCid, childPid, childCreateAt, childUpdateAt, childCommentContent,
+                        childCommentAid, childCommentState, childCommentUser, childUsername, childLikes, null
+                    )
+                    childCommentList.add(childCommentItem)
+                }
+
                 val commentItem = CommentItemBean(
                     cid, pid, createAt, updateAt, commentContent,
-                    commentAid, commentState, commentUser, username, likes
+                    commentAid, commentState, commentUser, username, likes, childCommentList
                 )
                 commentList.add(commentItem)
             }

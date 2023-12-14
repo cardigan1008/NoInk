@@ -12,7 +12,6 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bagel.noink.R
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentDetailsBinding
-import com.bagel.noink.databinding.FragmentPostBinding
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Locale

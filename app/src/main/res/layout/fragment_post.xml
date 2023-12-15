@@ -101,14 +101,20 @@
         android:orientation="horizontal"
         android:gravity="center" >
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+
+
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_weight="1"
             android:background="@drawable/edit_text_background"
             android:drawableLeft="@drawable/ic_comment"
             android:drawablePadding="10dp"
-            android:hint="输入评论" />
+            android:id="@+id/commentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="输入评论内容"
+            android:inputType="textMultiLine"
+            android:maxLines="5" />
+
 
         <ImageView
             android:layout_width="20dp"

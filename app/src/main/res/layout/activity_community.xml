@@ -7,15 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".activity.CommunityActivity">
 
-    <fragment
-        android:id="@+id/nav_host_fragment_community"
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/app_bar_community"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/community_navigation"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

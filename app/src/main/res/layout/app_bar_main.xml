@@ -7,6 +7,7 @@
     tools:context=".activity.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.NoInk.AppBarOverlay">
@@ -22,10 +23,10 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="没墨水"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:layout_gravity="center"
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.Toolbar>

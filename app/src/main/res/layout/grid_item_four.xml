@@ -5,44 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageView
-        android:id="@+id/photo1"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_cat" />
+        android:columnCount="2"
+        android:rowCount="2"
+        >
+        <ImageView
+            android:id="@+id/photo1"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+             />
 
-    <ImageView
-        android:id="@+id/photo2"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        <ImageView
+            android:id="@+id/photo2"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="10dp"
+             />
 
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/photo1"
-        app:layout_constraintTop_toTopOf="@+id/photo1"
-        app:srcCompat="@mipmap/ic_cat" />
+        <ImageView
+            android:id="@+id/photo3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+             />
 
-    <ImageView
-        android:id="@+id/photo3"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        <ImageView
+            android:id="@+id/photo4"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
 
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/photo1"
-        app:layout_constraintTop_toBottomOf="@+id/photo1"
-        app:srcCompat="@mipmap/ic_cat" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+             />
+    </GridLayout>
 
-    <ImageView
-        android:id="@+id/photo4"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
 
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/photo3"
-        app:layout_constraintTop_toBottomOf="@+id/photo2"
-        app:srcCompat="@mipmap/ic_cat" />
 </androidx.constraintlayout.widget.ConstraintLayout>

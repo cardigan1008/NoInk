@@ -18,10 +18,10 @@ class CommunityImageAdapter(private val context: Context, private val images: Li
         2 to R.id.photo3,
         3 to R.id.photo4,
         4 to R.id.photo5,
-        6 to R.id.photo6,
-        7 to R.id.photo7,
-        8 to R.id.photo8,
-        9 to R.id.photo9,
+        5 to R.id.photo6,
+        6 to R.id.photo7,
+        7 to R.id.photo8,
+        8 to R.id.photo9,
     )
 
     override fun getCount(): Int {
@@ -44,7 +44,7 @@ class CommunityImageAdapter(private val context: Context, private val images: Li
         }
 
         assert(position <= 9)
-        val imageView: ImageView? = positionToImageViewMap[position]?.let { view.findViewById(it) }
+        val imageView: ImageView? = positionToImageViewMap[0]?.let { view.findViewById(it) }
         Glide.with(context)
             .load(images[position]) // 加载 Uri
             .into(imageView!!) // 设置图像到 ImageView
@@ -53,12 +53,13 @@ class CommunityImageAdapter(private val context: Context, private val images: Li
     }
 
     private fun getLayoutResource(): Int {
-        return if(images.size == 1){
+        return R.layout.grid_item_one
+        /*return if(images.size == 1){
             R.layout.grid_item_one
         } else if (images.size in 2..4) {
             R.layout.grid_item_four
         } else {
             R.layout.grid_item_nine
-        }
+        }*/
     }
 }

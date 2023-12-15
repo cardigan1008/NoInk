@@ -12,12 +12,14 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.bagel.noink.R
 import com.bagel.noink.databinding.ActivityMainBinding
 import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.HttpRequest
 import com.bagel.noink.utils.UserHttpRequest
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
+        val bottomNavigationView: BottomNavigationView = binding.bottomNavView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -49,8 +52,11 @@ class MainActivity : AppCompatActivity() {
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+        bottomNavigationView.setupWithNavController(navController)
         navView.setupWithNavController(navController)
-
+        bottomNavigationView.setupWithNavController(navController)
+        navView.setupWithNavController(navController)
+        
         // 进入主界面进行的操作
         val sharedPreferences =
             this@MainActivity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)

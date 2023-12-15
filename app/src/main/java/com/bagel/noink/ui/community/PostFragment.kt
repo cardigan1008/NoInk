@@ -80,7 +80,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     comments = communityItemBean.commentList as MutableList<CommentItemBean>?
                     commentDetailAdapter = comments?.let {
                         CommentDetailAdapter(
-                            it,commentEditText
+                            it,commentEditText,context!!
                         )
                     }!!
 
@@ -100,9 +100,9 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                             )
                             addComment(CommentViewModel.pid, commentItem)
 
-                            for()
-
-                            comments?.add(commentItem)
+                            CommentViewModel.commentItemBean?.commentList = CommentViewModel.commentItemBean?.commentList?.toMutableList()?.apply {
+                                add(commentItem)
+                            }
                             commentEditText.text = null
 
                             CommentViewModel.updatePid(-1)

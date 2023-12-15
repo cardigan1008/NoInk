@@ -38,7 +38,9 @@
             android:exported="true">
         </activity>
         <activity android:name=".activity.CommunityActivity"
-            android:exported="true"/>
+            android:theme="@style/Theme.NoInk.NoActionBar"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".activity.RegisterActivity"
             android:exported="true">
@@ -49,7 +51,9 @@
             android:exported="true">
         </activity>
 
-        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.SearchActivity"
+            android:theme="@style/Theme.NoInk.NoActionBar">
+        </activity>
         <activity
             android:name=".activity.HistoryActivity"
             android:theme="@style/Theme.NoInk.NoActionBar">

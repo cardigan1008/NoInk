@@ -20,7 +20,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.NoInk.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.NoInk.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:textColorPrimary">@color/teal_200</item>
+    </style>
 
     <style name="Theme.NoInk.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

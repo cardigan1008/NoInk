@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.PagerAdapter
@@ -38,6 +39,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         val formattedDate = dateFormat.format(createDate)
 
         binding.date.text = "编辑于 $formattedDate"
+
+        val bottomNavContainer : FrameLayout ?= activity?.findViewById(R.id.bottom_nav_container)
+        bottomNavContainer?.setVisibility(View.GONE)
 
         var imageURIs: List<Uri> = arguments?.getParcelable<ListItemBean>("listItem")?.imagesUri ?: emptyList()
         val viewPager = binding.viewPager
@@ -75,4 +79,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        val bottomNavContainer : FrameLayout ?= activity?.findViewById(R.id.bottom_nav_container)
+        bottomNavContainer?.setVisibility(View.VISIBLE)
+    }
 }

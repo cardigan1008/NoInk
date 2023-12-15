@@ -101,6 +101,7 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
 
                 activity?.runOnUiThread {
                     adapter?.notifyDataSetChanged()
+                    binding.tvEmptyState.visibility = if (searchList.isEmpty()) View.VISIBLE else View.GONE
                 }
             }
 

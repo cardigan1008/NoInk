@@ -36,7 +36,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="3dp"
                         android:background="@drawable/rounded_edittext_background"
-                        android:drawableStart="@drawable/ic_search"
+                        android:drawableStart="@drawable/ic_search_teal"
                         android:hint="查找想要的历史文案"
                         android:imeOptions="actionSearch"
                         android:inputType="text"

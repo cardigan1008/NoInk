@@ -2,10 +2,12 @@ package com.bagel.noink.ui.community
 import CommentDetailAdapter
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,8 +17,10 @@ import com.bagel.noink.R
 import com.bagel.noink.bean.CommentItemBean
 import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.databinding.FragmentPostBinding
+import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.CommunityHttpRequest
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -30,7 +34,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
     private lateinit var communityItemBean: CommunityItemBean
 
-
+    private lateinit var commentDetailAdapter: CommentDetailAdapter
     private lateinit var imagePagerAdapter: ImagePagerAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,21 +44,20 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         _binding = FragmentPostBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val receivedAid = arguments?.getString("aid") ?: "" // 获取传递的 aid 数据
-
+        var comments: MutableList<CommentItemBean>? = null
         communityHttpRequest.getCommunityDetail(receivedAid, object : CommunityHttpRequest.CommunityCallbackListener{
             override fun onSuccess(responseJson: JSONObject) {
                 communityItemBean = createCommunityItem(responseJson) ?: return
 
                 val title = communityItemBean.title
                 val content = communityItemBean.content
-//                val createDate = communityItemBean.createdAt
-//                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-//                val formattedDate = dateFormat.format(createDate)
+                val createDate = communityItemBean.createdAt.substring(0, 10) + ' ' + communityItemBean.createdAt.substring(11, 19)
+
 
                 activity?.runOnUiThread {
                     binding.title.text = title
                     binding.text.text = content
-
+                    binding.date.text = createDate
                 }
 
 
@@ -67,20 +70,45 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     pagerIndicator.setViewPager(viewPager)
                 }
                 activity?.runOnUiThread {
-                val recyclerView: RecyclerView = binding.commentDetailRecyclerView
-                val layoutManager = LinearLayoutManager(context)
-                recyclerView.layoutManager = layoutManager
+                    val recyclerView: RecyclerView = binding.commentDetailRecyclerView
+                    val layoutManager = LinearLayoutManager(context)
+                    recyclerView.layoutManager = layoutManager
 
-                val comments: List<CommentItemBean>? = communityItemBean.commentList
-                val commentDetailAdapter: CommentDetailAdapter = comments?.let {
-                    CommentDetailAdapter(
-                        it
-                    )
-                }!!
+                    comments = communityItemBean.commentList as MutableList<CommentItemBean>?
+                    commentDetailAdapter = comments?.let {
+                        CommentDetailAdapter(
+                            it
+                        )
+                    }!!
 
-                recyclerView.adapter = commentDetailAdapter
-                commentDetailAdapter?.notifyDataSetChanged()
-            }
+                    recyclerView.adapter = commentDetailAdapter
+                    commentDetailAdapter?.notifyDataSetChanged()
+                }
+
+                val commentEditText:TextInputEditText = binding.commentEditText
+                commentEditText.setImeOptions(EditorInfo.IME_ACTION_SEND)
+                commentEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
+
+                commentEditText.setOnEditorActionListener { _, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_SEND) {
+                        val commentText = commentEditText.text.toString().trim()
+                        if (commentText.isNotEmpty()) {
+                            val commentItem = CommentItemBean(
+                                0, -1, getCurrentTime(), getCurrentTime(), commentText, receivedAid.toInt(), 1, AccountViewModel.userInfo?.id!!.toInt(),
+                                AccountViewModel.userInfo?.username!!,  0, null, Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
+                            )
+                            addComment(-1, commentItem)
+                            comments?.add(commentItem)
+                            commentEditText.text = null
+                            activity?.runOnUiThread {
+                                commentDetailAdapter.notifyDataSetChanged()
+                            }
+                        }
+                        true
+                    } else {
+                        false
+                    }
+                }
 
 
             }
@@ -91,10 +119,27 @@ class PostFragment : Fragment(R.layout.fragment_post) {
             }
         })
 
+
+
+
         return root
     }
+    private fun getCurrentTime(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(System.currentTimeMillis())
+    }
+    private fun addComment(pid:Int, itemBean: CommentItemBean){
+        communityHttpRequest.addComment(pid, itemBean, object : CommunityHttpRequest.CommunityCallbackListener{
+            override fun onSuccess(responseJson: JSONObject) {
+                Log.e(TAG, "add comment success")
 
+            }
 
+            override fun onFailure(errorMessage: String) {
+                Log.e(TAG, "Failed to add comment: $errorMessage")
+            }
+        })
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

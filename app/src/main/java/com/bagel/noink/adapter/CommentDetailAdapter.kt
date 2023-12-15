@@ -1,16 +1,15 @@
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.bean.CommentItemBean
-import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.viewholder.CommentViewHolder
+import com.google.android.material.textfield.TextInputEditText
+
 
 class CommentDetailAdapter:
     RecyclerView.Adapter<CommentViewHolder> {
@@ -38,7 +37,11 @@ class CommentDetailAdapter:
         // 设置 RecyclerView 的布局管理器，可以根据需要设置
         holder.childRecyclerView.layoutManager = LinearLayoutManager(holder.itemView.context, RecyclerView.VERTICAL, false)
         childCommentAdapter.notifyDataSetChanged()
+
+
     }
+
+
 
     override fun getItemCount(): Int {
         return commentList.size

@@ -1,5 +1,4 @@
 package com.bagel.noink.ui.community
-
 import CommentDetailAdapter
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.bagel.noink.R
@@ -29,7 +29,8 @@ class PostFragment : Fragment(R.layout.fragment_post) {
     private val communityHttpRequest: CommunityHttpRequest = CommunityHttpRequest()
 
     private lateinit var communityItemBean: CommunityItemBean
-    private lateinit var commentDetailAdapter: CommentDetailAdapter
+
+
     private lateinit var imagePagerAdapter: ImagePagerAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,18 +62,27 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                 val viewPager = binding.viewPager
                 val pagerIndicator = binding.pagerIndicator
                 imagePagerAdapter = imageUris?.let { ImagePagerAdapter(it) }!!
-                viewPager.adapter = imagePagerAdapter
-                pagerIndicator.setViewPager(viewPager)
-
-
+                activity?.runOnUiThread {
+                    viewPager.adapter = imagePagerAdapter
+                    pagerIndicator.setViewPager(viewPager)
+                }
+                activity?.runOnUiThread {
+                val recyclerView: RecyclerView = binding.commentDetailRecyclerView
+                val layoutManager = LinearLayoutManager(context)
+                recyclerView.layoutManager = layoutManager
 
                 val comments: List<CommentItemBean>? = communityItemBean.commentList
-                commentDetailAdapter = comments?.let { CommentDetailAdapter(it) }!!
-                binding.commentRecyclerView.adapter = commentDetailAdapter
+                val commentDetailAdapter: CommentDetailAdapter = comments?.let {
+                    CommentDetailAdapter(
+                        it
+                    )
+                }!!
 
-                activity?.runOnUiThread{
-                    commentDetailAdapter?.notifyDataSetChanged()
-                }
+                recyclerView.adapter = commentDetailAdapter
+                commentDetailAdapter?.notifyDataSetChanged()
+            }
+
+
             }
 
             override fun onFailure(errorMessage: String) {
@@ -104,7 +114,8 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         val avatar = Uri.parse(dataObject.optString("userprofile", ""))
         val createdAt = dataObject.optString("createdAt", "")
         val updatedAt = dataObject.optString("updatedAt", "")
-        val content = dataObject.optString("content", "")
+        val content = dataObject.optString("conte" +
+                "nt", "")
         val imageUrl = stringToUriList(dataObject.optString("imageUrl", ""))
         val moods = dataObject.optString("moods", "")
         val events = dataObject.optString("events", "")

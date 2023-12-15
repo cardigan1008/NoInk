@@ -27,11 +27,8 @@ class CommentAdapter(private val context: Context, private val commentList: List
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val comment = commentList[position]
-
         holder.usernameTextView.text = comment.username
         holder.commentTextView.text = comment.content
-        
-
         // 设置头像等操作，如果需要的话
         // 例如：holder.avatarImageView.setImageResource(R.drawable.avatar_placeholder)
 
@@ -47,7 +44,6 @@ class CommentAdapter(private val context: Context, private val commentList: List
                             // 处理成功响应
                             val code = responseJson.getInt("code")
                         }
-
                         override fun onFailure(errorMessage: String) {
                             // 处理失败情况
                             Log.e(TAG, errorMessage)

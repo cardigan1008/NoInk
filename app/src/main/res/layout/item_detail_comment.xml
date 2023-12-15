@@ -36,17 +36,19 @@
         android:layout_marginTop="4dp"/>
 
     <!-- 点赞按钮 -->
+
+    <!-- RecyclerView -->
+
     <ToggleButton
         android:id="@+id/likeButton"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:background="@drawable/heart_selector"
-        android:textOn=""
-        android:textOff=""
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"/>
+        android:layout_marginEnd="27dp"
+        android:background="@drawable/heart_selector"
+        android:textOff=""
+        android:textOn="" />
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/secondRecyclerView"
         android:layout_width="match_parent"

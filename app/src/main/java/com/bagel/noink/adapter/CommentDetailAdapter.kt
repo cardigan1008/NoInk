@@ -1,13 +1,51 @@
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.NavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.bean.CommentItemBean
+import com.bagel.noink.bean.ListItemBean
+import com.bagel.noink.viewholder.CommentViewHolder
 
-class CommentDetailAdapter(private val commentList: List<CommentItemBean>) :
-    RecyclerView.Adapter<CommentDetailAdapter.CommentViewHolder>() {
+class CommentDetailAdapter:
+    RecyclerView.Adapter<CommentViewHolder> {
+    private val commentList: List<CommentItemBean>
+    constructor(commentList: List<CommentItemBean>) {
+        this.commentList = commentList
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
+        Log.e("114514", "get in the comment detail adapter")
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_detail_comment, parent, false)
+        return CommentViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
+        Log.e("114514", "get in the comment detail adapter")
+        val comment = commentList[position]
+
+        holder.usernameTextView.text = comment.username
+        holder.commentTextView.text = comment.content
+        // 设置其他评论的信息
+
+        // 设置子评论列表的适配器和数据
+        val childCommentAdapter = ChildCommentAdapter(comment.commentList ?: emptyList())
+        holder.childRecyclerView.adapter = childCommentAdapter
+        // 设置 RecyclerView 的布局管理器，可以根据需要设置
+        holder.childRecyclerView.layoutManager = LinearLayoutManager(holder.itemView.context, RecyclerView.VERTICAL, false)
+        childCommentAdapter.notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int {
+        return commentList.size
+    }
+
+
+
     // 子评论的适配器
     inner class ChildCommentAdapter(private val childCommentList: List<CommentItemBean>) :
         RecyclerView.Adapter<ChildCommentAdapter.ChildCommentViewHolder>() {
@@ -39,33 +77,6 @@ class CommentDetailAdapter(private val commentList: List<CommentItemBean>) :
         }
     }
 
-    // 外部 ViewHolder 类
-    inner class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
-        val commentTextView: TextView = itemView.findViewById(R.id.commentTextView)
-        val childRecyclerView: RecyclerView = itemView.findViewById(R.id.secondRecyclerView)
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment, parent, false)
-        return CommentViewHolder(view)
-    }
 
-    override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        val comment = commentList[position]
-
-        holder.usernameTextView.text = comment.username
-        holder.commentTextView.text = comment.content
-        // 设置其他评论的信息
-
-        // 设置子评论列表的适配器和数据
-        val childCommentAdapter = ChildCommentAdapter(comment.commentList ?: emptyList())
-        holder.childRecyclerView.adapter = childCommentAdapter
-        // 设置 RecyclerView 的布局管理器，可以根据需要设置
-        // holder.childRecyclerView.layoutManager = LinearLayoutManager(holder.itemView.context, RecyclerView.VERTICAL, false)
-    }
-
-    override fun getItemCount(): Int {
-        return commentList.size
-    }
 }

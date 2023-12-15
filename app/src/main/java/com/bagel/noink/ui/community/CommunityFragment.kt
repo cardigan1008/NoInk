@@ -42,15 +42,9 @@ class CommunityFragment : Fragment() {
         // 初始化
         communityHttpRequest = CommunityHttpRequest()
 
-        binding.backButton.setOnClickListener { activity?.finish() }
-
-
-
         getCommunityContent()
         // 找到 RecyclerView
         postRecyclerView = binding.postRecyclerView
-
-        // 添加示例数据，您需要根据您的数据类型提供正确的数据
 
         // 创建并设置布局管理器
         val layoutManager = LinearLayoutManager(context)
@@ -58,7 +52,6 @@ class CommunityFragment : Fragment() {
 
         // 创建并设置适配器
         adapter = CommunityAdapter(communityList, findNavController())
-
 
         postRecyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
@@ -72,26 +65,6 @@ class CommunityFragment : Fragment() {
         _binding = null // 在 Fragment 销毁时解除绑定，避免潜在的内存泄漏
     }
 
-    fun createFakeCommunityItemList(): List<CommunityItemBean> {
-        val fakeItemList = mutableListOf<CommunityItemBean>()
-
-        // 添加假数据
-        val avatarUri = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg") // 替换为实际的 Uri
-        val imageUris = listOf(
-            Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg"), // 替换为实际的 Uri
-            Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")  // 替换为实际的 Uri
-        )
-//        val item1 = CommunityItemBean(avatarUri, imageUris, "User1", "Content 1", 10, 5)
-//        val item2 = CommunityItemBean(avatarUri, null, "User2", "Content 2", 20, 8)
-//        val item3 = CommunityItemBean(avatarUri, imageUris, "User3", "Content 3", 15, 12)
-//
-//        // 将假数据添加到列表中
-//        fakeItemList.add(item1)
-//        fakeItemList.add(item2)
-//        fakeItemList.add(item3)
-
-        return fakeItemList
-    }
     private fun getCommunityContent() {
         communityHttpRequest.getCommunityList(object : CommunityHttpRequest.CommunityCallbackListener {
             override fun onSuccess(responseJson: JSONObject) {
@@ -129,7 +102,7 @@ class CommunityFragment : Fragment() {
         val aid = dataObject.optInt("aid", 0)
         val title = dataObject.optString("title", "")
         // temp avatar
-        val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
+        //val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
         val createdAt = dataObject.optString("createdAt", "")
         val updatedAt = dataObject.optString("updatedAt", "")
         val content = dataObject.optString("content", "")
@@ -141,10 +114,12 @@ class CommunityFragment : Fragment() {
         val comments = dataObject.optInt("comments", 0)
         val state = dataObject.optInt("state", 0)
         val uid = dataObject.optInt("uid", 0)
+        val username = dataObject.optString("username", "")
+        val avatar = Uri.parse(dataObject.optString("userprofile", ""))
 
         val communityItem = CommunityItemBean(
             aid, title, avatar, createdAt, updatedAt, content, imageUrl,
-            moods, events, pv, likes, state, comments, uid, "", listOf()
+            moods, events, pv, likes, state, comments, uid, username, listOf()
         )
 
         val commentsArray = dataObject.optJSONArray("commentList")
@@ -163,6 +138,8 @@ class CommunityFragment : Fragment() {
                 val commentUser = commentObject?.optInt("commentUser", 0) ?: 0
                 val username = commentObject?.optString("username", "") ?: ""
                 val likes = commentObject?.optInt("likes", 0) ?: 0
+                val avatar = Uri.parse(dataObject.optString("userprofile", ""))
+
 
                 val childCommentListObject = commentObject?.optJSONArray("commentList")
                 val childCommentList = mutableListOf<CommentItemBean>()
@@ -179,16 +156,17 @@ class CommunityFragment : Fragment() {
                     val childCommentUser = childCommentObject?.optInt("commentUser", 0) ?: 0
                     val childUsername = childCommentObject?.optString("username", "") ?: ""
                     val childLikes = childCommentObject?.optInt("likes", 0) ?: 0
+                    val childAvatar = Uri.parse(childCommentObject.optString("userprofile", ""))
                     val childCommentItem = CommentItemBean(
                         childCid, childPid, childCreateAt, childUpdateAt, childCommentContent,
-                        childCommentAid, childCommentState, childCommentUser, childUsername, childLikes, null
+                        childCommentAid, childCommentState, childCommentUser, childUsername, childLikes, listOf(), childAvatar
                     )
                     childCommentList.add(childCommentItem)
                 }
 
                 val commentItem = CommentItemBean(
                     cid, pid, createAt, updateAt, commentContent,
-                    commentAid, commentState, commentUser, username, likes, childCommentList
+                    commentAid, commentState, commentUser, username, likes, childCommentList, avatar
                 )
                 commentList.add(commentItem)
             }

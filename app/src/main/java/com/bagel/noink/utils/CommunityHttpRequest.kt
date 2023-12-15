@@ -1,6 +1,7 @@
 package com.bagel.noink.utils
 
 import android.net.Uri
+import com.bagel.noink.bean.CommentItemBean
 import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.ui.account.AccountViewModel
 import okhttp3.MediaType.Companion.toMediaType
@@ -82,6 +83,29 @@ class CommunityHttpRequest {
             }
         })
     }
-
-
+    fun addComment(pid:Int, itemBean: CommentItemBean, callbackListener: CommunityCallbackListener){
+        val url = Contants.SERVER_ADDRESS + "/api/comment/save"
+        val headerName = "satoken";
+        val headerValue = AccountViewModel.token!!;
+        val jsonBody = JSONObject().apply {
+            put("pid", pid)
+            put("createAt", itemBean.createAt)
+            put("updateAt", itemBean.updateAt)
+            put("content", itemBean.content)
+            put("aid", itemBean.aid)
+            put("state", itemBean.state)
+            put("commentUser", itemBean.commentUser)
+            put("likes", itemBean.likes)
+        }
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = jsonBody.toString().toRequestBody(mediaType)
+        httpRequest.post(url, requestBody, headerName, headerValue, object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                callbackListener.onSuccess(responseJson)
+            }
+            override fun onFailure(errorMessage: String) {
+                callbackListener.onFailure(errorMessage)
+            }
+        })
+    }
 }

@@ -21,15 +21,12 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_search)
-        val navController = navHostFragment?.findNavController()
+        setSupportActionBar(binding.appBarLayout.toolbar)
 
-        appBarConfiguration = AppBarConfiguration(navController!!.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        val backButton = binding.appBarLayout.back
+        backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_search)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
 }

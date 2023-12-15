@@ -2,19 +2,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="12dp"
-    android:layout_marginStart="16dp"> <!-- 这里增加了左边距 -->
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    > <!-- 这里增加了左边距 -->
 
     <!-- 整体布局容器 -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"> <!-- 向右移动整体布局 -->
+        android:layout_marginStart="10dp"> <!-- 向右移动整体布局 -->
 
         <!-- 头像 -->
         <ImageView
             android:id="@+id/avatarImageView"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@mipmap/ic_cat"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -23,7 +25,7 @@
         <!-- 用户名 -->
         <TextView
             android:id="@+id/usernameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:text="Username"
             android:textSize="14sp"
@@ -34,7 +36,7 @@
         <!-- 评论正文 -->
         <TextView
             android:id="@+id/commentTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:text="Comment text goes here..."
             android:textSize="12sp"

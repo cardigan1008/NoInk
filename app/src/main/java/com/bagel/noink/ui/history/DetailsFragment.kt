@@ -1,5 +1,6 @@
 package com.bagel.noink.ui.history
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,14 +13,16 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bagel.noink.R
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentDetailsBinding
-import com.bagel.noink.databinding.FragmentPostBinding
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +33,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         binding.title.text = arguments?.getParcelable<ListItemBean>("listItem")?.title
         binding.text.text = arguments?.getParcelable<ListItemBean>("listItem")?.text
-        binding.date.text = arguments?.getParcelable<ListItemBean>("listItem")?.createDate.toString()
+
+        val createDate = arguments?.getParcelable<ListItemBean>("listItem")?.createDate
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val formattedDate = dateFormat.format(createDate)
+
+        binding.date.text = "编辑于 $formattedDate"
 
         val bottomNavContainer : FrameLayout ?= activity?.findViewById(R.id.bottom_nav_container)
         bottomNavContainer?.setVisibility(View.GONE)

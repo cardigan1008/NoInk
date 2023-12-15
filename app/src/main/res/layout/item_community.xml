@@ -31,9 +31,11 @@
 
     <TextView
         android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="顺利度过第一门期末考"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="顺利度过第一门期末考了"
+        
+        android:paddingEnd="16dp"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@+id/username"
@@ -43,12 +45,14 @@
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:columnWidth="75dp"
         android:gravity="center"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@+id/content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content" />
 
     <ToggleButton
@@ -100,6 +104,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

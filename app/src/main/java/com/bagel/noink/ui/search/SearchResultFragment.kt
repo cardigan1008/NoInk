@@ -110,12 +110,16 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
                     val date = dateFormat.parse(dateString)
 
+                    val moodList: List<String> = item.getString("labels").split(",")
+
                     searchList.add(
                         ListItemBean(
                             item.getInt("rid"),
                             item.getString("title"),
                             item.getString("generatedText"),
                             uriList[0],
+                            moodList,
+                            item.getString("type"),
                             uriList,
                             date
                         )

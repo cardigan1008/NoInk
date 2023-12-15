@@ -239,6 +239,8 @@ class HomeFragment : Fragment() {
             "考研加油",
             "离考研只剩两个月了，最后冲刺一把",
             uriDemo,
+            listOf("开心", "努力"),
+            "学习",
             listOf(uriDemo),
             Date(1639468800000L)
         )
@@ -268,12 +270,17 @@ class HomeFragment : Fragment() {
                     val day = dateString.substring(8, 10)
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
                     val date = dateFormat.parse(dateString)
+
+                    val moodList: List<String> = item.getString("labels").split(",")
+
                     cardList.add(
                         ListItemBean(
                             item.getInt("rid"),
                             item.getString("title"),
                             item.getString("generatedText"),
                             uriList[0],
+                            moodList,
+                            item.getString("type"),
                             uriList,
                             date
                         )

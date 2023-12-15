@@ -34,6 +34,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.title.text = arguments?.getParcelable<ListItemBean>("listItem")?.title
         binding.text.text = arguments?.getParcelable<ListItemBean>("listItem")?.text
 
+        val moodTags: List<String> = arguments?.getParcelable<ListItemBean>("listItem")?.moodTags ?: emptyList()
+        val eventTag: String = arguments?.getParcelable<ListItemBean>("listItem")?.eventTag ?: ""
+
+        var tag = "#$eventTag "
+        for (mood in moodTags) {
+            tag = "$tag#$mood "
+        }
+
+        binding.tags.text = tag
+
         val createDate = arguments?.getParcelable<ListItemBean>("listItem")?.createDate
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         val formattedDate = dateFormat.format(createDate)

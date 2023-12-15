@@ -69,6 +69,8 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                     val uriStrList: List<String> = item.getString("imageUrl").split(",")
                     val uriList: ArrayList<Uri> = ArrayList()
 
+                    val moodList: List<String> = item.getString("labels").split(",")
+
                     for (uriStr in uriStrList) {
                         val uri = Uri.parse(uriStr)
                         uriList.add(uri)
@@ -84,6 +86,8 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                             item.getString("title"),
                             item.getString("generatedText"),
                             uriList[0],
+                            moodList,
+                            item.getString("type"),
                             uriList,
                             date
                         )

@@ -1,6 +1,7 @@
 package com.bagel.noink.ui.account
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -41,7 +42,8 @@ class AccountViewModel : ViewModel() {
             true,
             18,
             "13989884399",
-            "2005-8-31"
+            "2005-8-31",
+            Uri.parse("")
         )
 
         var cardList: MutableList<RecordCardBean> = ArrayList()
@@ -54,6 +56,7 @@ class AccountViewModel : ViewModel() {
             userInfo?.password = data.getString("password")
             userInfo?.birthday = data.getString("birthday")
             userInfo?.wechatId = data.getString("wechatId")
+            userInfo?.userprofile = Uri.parse(data.getString("userprofile"))
 
             if (data.getString("tokenValue") != "null") {
                 token = data.getString("tokenValue")

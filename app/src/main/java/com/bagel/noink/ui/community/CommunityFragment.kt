@@ -172,7 +172,6 @@ class CommunityFragment : Fragment() {
             }
             communityItem.commentList = commentList
         }
-
         return communityItem
     }
 

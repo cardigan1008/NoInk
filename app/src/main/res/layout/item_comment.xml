@@ -1,17 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp">
+    android:padding="4dp">
 
     <!-- 头像 -->
     <ImageView
         android:id="@+id/avatarImageView"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@mipmap/ic_cat"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="12dp"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"/>
 
     <!-- 用户名 -->
     <TextView

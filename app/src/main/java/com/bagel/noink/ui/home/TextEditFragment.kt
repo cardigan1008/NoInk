@@ -112,7 +112,7 @@ class TextEditFragment : Fragment() {
             originText = originText,
             imageUrls = imageUris,
             labels = labels,
-            generatedText = generatedText,
+            generatedText = editText.text.toString(),
             type = type,
             callbackListener = object : TextGenHttpRequest.TextGenCallbackListener {
                 override fun onSuccess(responseJson: JSONObject) {

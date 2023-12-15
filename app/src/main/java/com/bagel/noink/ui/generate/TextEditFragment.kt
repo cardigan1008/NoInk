@@ -11,6 +11,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -18,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.adapter.ImageAdapter
+import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.databinding.FragmentTexteditBinding
+import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.AliyunOSSManager
 import com.bagel.noink.utils.TextGenHttpRequest
 import org.json.JSONObject
@@ -41,6 +45,8 @@ class TextEditFragment: Fragment() {
     private lateinit var createdAt: String
     private lateinit var updatedAt: String
     private lateinit var generatedText: String
+    private lateinit var title: EditText
+    private lateinit var content: EditText
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,12 +56,54 @@ class TextEditFragment: Fragment() {
         // 使用 DataBindingUtil.inflate() 进行绑定
         _binding = FragmentTexteditBinding.inflate(inflater,container,false)
         textGenHttpRequest = TextGenHttpRequest()
+        title = binding.editTextTitle
+        content = binding.editText
+        val toolbarImage: ImageButton = requireActivity().findViewById(R.id.toolbar_upload)
+        toolbarImage.visibility = View.VISIBLE
+
         setTags(inflater)
         setImageUploadButton()
         setGenButton()
         setSaveButton()
+        setPostUploadButton()
         return binding.root
     }
+    private fun setPostUploadButton(){
+        val postUploadButton:ImageButton = requireActivity().findViewById(R.id.toolbar_upload)
+
+        postUploadButton.setOnClickListener {
+            textGenHttpRequest.sendPostRequest(CommunityItemBean(
+                aid = 0,
+                title = title.text.toString(),
+                avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg"),
+                createdAt = createdAt,
+                updatedAt = updatedAt,
+                content = content.text.toString(),
+                imageUrls = selectedImageUris,
+                moods = TextGenViewModel.getStyle()!!,
+                events = TextGenViewModel.getType()!!,
+                pv = 0,
+                likes = 0,
+                comments = 0,
+                state = 1,
+                uid = AccountViewModel.userInfo!!.id.toInt(),
+                username = AccountViewModel.userInfo!!.username,
+                commentList = emptyList()
+            ), object : TextGenHttpRequest.TextGenCallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    // 处理请求成功的响应JSON对象
+                    // 在这里使用responseJson
+                    Log.i("post succuss", responseJson.getString("code"));
+                }
+                override fun onFailure(errorMessage: String) {
+                    // 处理请求失败
+                    println("Request failed: $errorMessage")
+                }
+            })
+
+        }
+    }
+
     private fun setTags(inflater: LayoutInflater){
         var linearLayout = binding.tags
 
@@ -239,7 +287,7 @@ class TextEditFragment: Fragment() {
             originText = TextGenViewModel.getOriginText()!!,
             imageUrls = selectedImageUris,
             labels = TextGenViewModel.getStyle()!!,
-            generatedText = generatedText,
+            generatedText = content.text.toString(),
             type = TextGenViewModel.getType()!!,
             callbackListener = object : TextGenHttpRequest.TextGenCallbackListener {
                 override fun onSuccess(responseJson: JSONObject) {
@@ -258,6 +306,8 @@ class TextEditFragment: Fragment() {
     }
     override fun onDestroyView() {
         super.onDestroyView()
+        val toolbarImage: ImageButton = requireActivity().findViewById(R.id.toolbar_upload)
+        toolbarImage.visibility = View.GONE
         _binding = null
     }
 }

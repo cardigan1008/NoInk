@@ -29,6 +29,15 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+
+            <ImageButton
+                android:id="@+id/toolbar_upload"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@mipmap/ic_share_upload"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="end"/>
+
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

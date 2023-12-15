@@ -1,6 +1,7 @@
 package com.bagel.noink.utils
 
 import android.net.Uri
+import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.ui.account.AccountViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -91,6 +92,46 @@ class TextGenHttpRequest {
             put("labels", labels)
             put("generatedText",generatedText)
             put("type", type)
+        }
+        val headerName = "satoken";
+        val headerValue = AccountViewModel.token!!;
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = jsonBody.toString().toRequestBody(mediaType)
+        httpRequest.post(url, requestBody, headerName, headerValue, object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                callbackListener.onSuccess(responseJson)
+            }
+            override fun onFailure(errorMessage: String) {
+                callbackListener.onFailure(errorMessage)
+            }
+        })
+
+    }
+
+    fun sendPostRequest(
+        communityItemBean: CommunityItemBean,
+        callbackListener: TextGenCallbackListener
+    ){
+        val url = Contants.SERVER_ADDRESS + "/api/article/save" // Replace with your server address
+        // uri to string
+        val stringList = mutableListOf<String>()
+        for (uri in communityItemBean.imageUrls!!) {
+            val uriString = uri.toString()
+            stringList.add(uriString)
+        }
+        val imageString = formatUrlList(stringList);
+        val jsonBody = JSONObject().apply {
+            put("createdAt", communityItemBean.createdAt)
+            put("updatedAt", communityItemBean.updatedAt)
+            put("title", communityItemBean.title)
+            put("content", communityItemBean.content)
+            put("imageUrl", imageString)
+            put("moods", communityItemBean.moods)
+            put("events", communityItemBean.events)
+            put("pv", communityItemBean.pv)
+            put("likes", communityItemBean.likes)
+            put("state", communityItemBean.state)
+            put("uid", communityItemBean.uid)
         }
         val headerName = "satoken";
         val headerValue = AccountViewModel.token!!;

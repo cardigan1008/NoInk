@@ -16,9 +16,17 @@ class SearchResultViewHolder : RecyclerView.ViewHolder {
     var tvText: TextView
         private set
 
+    var tvDay: TextView
+        private set
+
+    var tvMonth: TextView
+        private set
+
     constructor(view: View) : super(view) {
         ivImage = view.findViewById(R.id.image_recycle)
         tvTitle = view.findViewById(R.id.tv_title)
         tvText = view.findViewById(R.id.tv_text)
+        tvDay = view.findViewById(R.id.tv_day)
+        tvMonth = view.findViewById(R.id.tv_month)
     }
 }

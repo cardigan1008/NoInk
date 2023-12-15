@@ -1,25 +1,29 @@
 import android.net.Uri
+import android.content.Context
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.ImageView
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.bean.CommentItemBean
+import com.bagel.noink.ui.community.CommentViewModel
 import com.bagel.noink.viewholder.CommentViewHolder
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 
 
-class CommentDetailAdapter:
-    RecyclerView.Adapter<CommentViewHolder> {
-    private val commentList: List<CommentItemBean>
-    constructor(commentList: List<CommentItemBean>) {
-        this.commentList = commentList
-    }
+class CommentDetailAdapter(private val commentList: List<CommentItemBean>, private val editText: TextInputEditText, private val context: Context) :
+    RecyclerView.Adapter<CommentViewHolder>() {
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
         Log.e("114514", "get in the comment detail adapter")
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_detail_comment, parent, false)
@@ -39,13 +43,21 @@ class CommentDetailAdapter:
             .into(holder.avatarImageView)
 
         // 设置子评论列表的适配器和数据
-        val childCommentAdapter = ChildCommentAdapter(comment.commentList ?: emptyList())
+        val childCommentAdapter = ChildCommentAdapter(comment.commentList ?: emptyList(), editText, context)
         holder.childRecyclerView.adapter = childCommentAdapter
         // 设置 RecyclerView 的布局管理器，可以根据需要设置
         holder.childRecyclerView.layoutManager = LinearLayoutManager(holder.itemView.context, RecyclerView.VERTICAL, false)
         childCommentAdapter.notifyDataSetChanged()
 
+        val textView = holder.itemView.findViewById<TextView>(R.id.commentTextView)
+        textView.setOnClickListener {
+            CommentViewModel.updateCommentItemBean(comment)
+            CommentViewModel.updatePid(comment.cid)
+            editText.requestFocus()
 
+            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 
 
@@ -57,7 +69,7 @@ class CommentDetailAdapter:
 
 
     // 子评论的适配器
-    inner class ChildCommentAdapter(private val childCommentList: List<CommentItemBean>) :
+    inner class ChildCommentAdapter(private val childCommentList: List<CommentItemBean>, private val editText: TextInputEditText, private val context: Context) :
         RecyclerView.Adapter<ChildCommentAdapter.ChildCommentViewHolder>() {
         // 内部 ViewHolder 类
         inner class ChildCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -80,6 +92,15 @@ class CommentDetailAdapter:
                 .load(comment.avatar)
                 .into(holder.avatarImageView)
 
+            val textView = holder.itemView.findViewById<TextView>(R.id.commentTextView)
+            textView.setOnClickListener {
+                CommentViewModel.updateCommentItemBean(comment)
+                CommentViewModel.updatePid(comment.cid)
+                editText.requestFocus()
+
+                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+            }
             // 设置其他子评论的信息
 
             // 如果需要更多子评论的信息，可以在此处设置对应的 TextView

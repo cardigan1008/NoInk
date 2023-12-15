@@ -54,6 +54,29 @@ class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder> {
                 .into(holder.ivImage)
         }
 
+        val createDate = searchItemBean.createDate
+        val dayMonthFormat = java.text.SimpleDateFormat("dd/MM", java.util.Locale.getDefault())
+        createDate?.let {
+            val formattedDate = dayMonthFormat.format(it)
+
+            // 提取日和月
+            val day = formattedDate.substring(0, 2)
+            val month = formattedDate.substring(3) + "月"
+
+            // 如果是同一天的第一个条目，则显示日月，否则隐藏
+            if (position == 0 || formattedDate != dayMonthFormat.format(searchList[position - 1].createDate!!)) {
+                holder.tvDay.visibility = View.VISIBLE
+                holder.tvMonth.visibility = View.VISIBLE
+
+                // 设置到对应的 TextView 中
+                holder.tvDay.text = day
+                holder.tvMonth.text = month
+            } else {
+                holder.tvDay.visibility = View.INVISIBLE
+                holder.tvMonth.visibility = View.INVISIBLE
+            }
+        }
+
         holder.itemView.setOnClickListener {
             val bundle = bundleOf(
                 "listItem" to searchItemBean

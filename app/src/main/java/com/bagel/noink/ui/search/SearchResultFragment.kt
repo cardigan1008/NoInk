@@ -1,17 +1,21 @@
 package com.bagel.noink.ui.search
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
+import com.bagel.noink.activity.SearchActivity
 import com.bagel.noink.adapter.SearchResultAdapter
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentSearchResultBinding
@@ -32,6 +36,16 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
 
     private val binding get() = _binding!!
 
+    private lateinit var activity: SearchActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is SearchActivity) {
+            activity = context
+        }
+    }
+
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,8 +60,19 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarTitle = activity.findViewById<TextView>(R.id.toolbar_title)
+        toolbarTitle.text = "搜索结果"
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+
+        val toolbarTitle = activity.findViewById<TextView>(R.id.toolbar_title)
+        toolbarTitle.text = "没墨水"
+
         _binding = null
     }
 

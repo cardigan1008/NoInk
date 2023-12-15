@@ -57,8 +57,6 @@
             android:theme="@style/Theme.NoInk.NoActionBar">
         </activity>
 
-        <activity android:name=".activity.DetailsActivity" />
-
     </application>
 
 </manifest>

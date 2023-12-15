@@ -1,6 +1,4 @@
-import android.content.Intent
 import android.icu.util.Calendar
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
-import com.bagel.noink.activity.DetailsActivity
 import com.bagel.noink.bean.ListItemBean
-import com.bagel.noink.bean.RecordCardBean
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Locale

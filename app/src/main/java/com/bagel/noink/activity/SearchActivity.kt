@@ -12,7 +12,6 @@ import com.bagel.noink.databinding.ActivitySearchBinding
 
 class SearchActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivitySearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

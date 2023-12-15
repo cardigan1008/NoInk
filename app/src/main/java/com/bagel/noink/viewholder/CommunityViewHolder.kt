@@ -55,6 +55,9 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         item.imageUrls?.let { imageUrls ->
             if (imageUrls.isNotEmpty()) {
                 // 创建 CommunityImageAdapter 实例，并设置到 GridView 上
+
+
+
                 val imageAdapter = CommunityImageAdapter(itemView.context, imageUrls)
                 gridView.adapter = imageAdapter
             } else {

@@ -51,13 +51,15 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
                 val title = communityItemBean.title
                 val content = communityItemBean.content
-                val createDate = communityItemBean.createdAt.substring(0, 10) + ' ' + communityItemBean.createdAt.substring(11, 19)
 
+                val createDate = communityItemBean.createdAt
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+                val formattedDate = dateFormat.format(createDate)
 
                 activity?.runOnUiThread {
                     binding.title.text = title
                     binding.text.text = content
-                    binding.date.text = createDate
+                    binding.date.text = "编辑于 $formattedDate"
                 }
 
 

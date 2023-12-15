@@ -70,6 +70,9 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     viewPager.adapter = imagePagerAdapter
                     pagerIndicator.setViewPager(viewPager)
                 }
+                val commentEditText:TextInputEditText = binding.commentEditText
+                commentEditText.setImeOptions(EditorInfo.IME_ACTION_SEND)
+                commentEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
                 activity?.runOnUiThread {
                     val recyclerView: RecyclerView = binding.commentDetailRecyclerView
                     val layoutManager = LinearLayoutManager(context)
@@ -78,7 +81,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     comments = communityItemBean.commentList as MutableList<CommentItemBean>?
                     commentDetailAdapter = comments?.let {
                         CommentDetailAdapter(
-                            it
+                            it,commentEditText
                         )
                     }!!
 
@@ -86,9 +89,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     commentDetailAdapter?.notifyDataSetChanged()
                 }
 
-                val commentEditText:TextInputEditText = binding.commentEditText
-                commentEditText.setImeOptions(EditorInfo.IME_ACTION_SEND)
-                commentEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
+
 
                 commentEditText.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_SEND) {
@@ -98,9 +99,13 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                                 0, -1, getCurrentTime(), getCurrentTime(), commentText, receivedAid.toInt(), 1, AccountViewModel.userInfo?.id!!.toInt(),
                                 AccountViewModel.userInfo?.username!!,  0, null, Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
                             )
-                            addComment(-1, commentItem)
+                            addComment(CommentViewModel.pid, commentItem)
+
                             comments?.add(commentItem)
                             commentEditText.text = null
+
+                            CommentViewModel.updatePid(-1)
+
                             activity?.runOnUiThread {
                                 commentDetailAdapter.notifyDataSetChanged()
                             }

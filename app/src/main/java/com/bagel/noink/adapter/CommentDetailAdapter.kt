@@ -1,13 +1,16 @@
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.bean.CommentItemBean
 import com.bagel.noink.viewholder.CommentViewHolder
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 
 
@@ -30,6 +33,10 @@ class CommentDetailAdapter:
         holder.usernameTextView.text = comment.username
         holder.commentTextView.text = comment.content
         // 设置其他评论的信息
+
+        Glide.with(holder.itemView.context)
+            .load(comment.avatar)
+            .into(holder.avatarImageView)
 
         // 设置子评论列表的适配器和数据
         val childCommentAdapter = ChildCommentAdapter(comment.commentList ?: emptyList())
@@ -56,7 +63,7 @@ class CommentDetailAdapter:
         inner class ChildCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
             val commentTextView: TextView = itemView.findViewById(R.id.commentTextView)
-
+            val avatarImageView: ImageView = itemView.findViewById(R.id.avatarImageView)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChildCommentViewHolder {
@@ -69,6 +76,9 @@ class CommentDetailAdapter:
 
             holder.usernameTextView.text = comment.username
             holder.commentTextView.text = comment.content
+            Glide.with(holder.itemView.context)
+                .load(comment.avatar)
+                .into(holder.avatarImageView)
 
             // 设置其他子评论的信息
 

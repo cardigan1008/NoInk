@@ -1,9 +1,6 @@
 package com.bagel.noink.ui.search
 
-import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,17 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
-import com.bagel.noink.activity.SearchActivity
-import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentSearchBinding
-import com.bagel.noink.ui.account.AccountViewModel
-import com.bagel.noink.utils.Contants
-import com.bagel.noink.utils.HttpRequest
-import okhttp3.RequestBody
-import org.json.JSONObject
-import java.net.URLEncoder
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 
 class SearchFragment : Fragment(R.layout.fragment_search) {

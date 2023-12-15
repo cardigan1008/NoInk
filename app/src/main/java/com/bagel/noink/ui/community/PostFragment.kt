@@ -53,13 +53,11 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                 val content = communityItemBean.content
 
                 val createDate = communityItemBean.createdAt
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-                val formattedDate = dateFormat.format(createDate)
 
                 activity?.runOnUiThread {
                     binding.title.text = title
                     binding.text.text = content
-                    binding.date.text = "编辑于 $formattedDate"
+                    binding.date.text = "编辑于 $createDate"
                 }
 
 
@@ -101,6 +99,8 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                                 AccountViewModel.userInfo?.username!!,  0, null, Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
                             )
                             addComment(CommentViewModel.pid, commentItem)
+
+                            for()
 
                             comments?.add(commentItem)
                             commentEditText.text = null

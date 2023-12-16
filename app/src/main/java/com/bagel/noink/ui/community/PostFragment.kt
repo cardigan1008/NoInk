@@ -205,7 +205,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         // temp avatar
         //val avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
         val avatar = Uri.parse(dataObject.optString("userprofile", ""))
-        val createdAt = dataObject.optString("createdAt", "")
+        val createdAt = dataObject.optString("createdAt", "").substring(0, 19)
         val updatedAt = dataObject.optString("updatedAt", "")
         val content = dataObject.optString("conte" +
                 "nt", "")

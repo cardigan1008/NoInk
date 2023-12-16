@@ -22,13 +22,13 @@
     <activity
             android:id="@+id/nav_history"
             android:name="com.bagel.noink.activity.HistoryActivity"
-            android:label="@string/menu_history"
+            android:label=""
             tools:layout="@layout/activity_history" />
 
     <activity
         android:id="@+id/nav_community"
         android:name="com.bagel.noink.activity.CommunityActivity"
-        android:label="社区"
+        android:label=""
         tools:layout="@layout/activity_community"/>
 
     <fragment
@@ -40,37 +40,37 @@
     <fragment
         android:id="@+id/nav_textGen"
         android:name="com.bagel.noink.ui.home.TextGenerationFragment"
-        android:label="Text Generation"
+        android:label=""
         tools:layout="@layout/fragment_textgeneration" />
 
     <fragment
         android:id="@+id/nav_textEdit"
         android:name="com.bagel.noink.ui.generate.TextEditFragment"
-        android:label="Text Edit"
+        android:label=""
         tools:layout="@layout/fragment_textedit"/>
 
     <fragment
         android:id="@+id/nav_mood"
         android:name="com.bagel.noink.ui.generate.MoodFragment"
-        android:label="Mood"
+        android:label=""
         tools:layout="@layout/fragment_mood"/>
 
     <fragment
         android:id="@+id/nav_event"
         android:name="com.bagel.noink.ui.generate.EventFragment"
-        android:label="Event"
+        android:label=""
         tools:layout="@layout/fragment_event"/>
 
     <fragment
         android:id="@+id/nav_length"
         android:name="com.bagel.noink.ui.generate.LengthFragment"
-        android:label="Length"
+        android:label=""
         tools:layout="@layout/length" />
 
     <fragment
         android:id="@+id/nav_card_details"
         android:name="com.bagel.noink.ui.history.DetailsFragment"
-        android:label="Card Details"
+        android:label=""
         tools:layout="@layout/fragment_details" />
 
 </navigation>

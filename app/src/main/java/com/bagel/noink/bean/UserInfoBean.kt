@@ -1,5 +1,7 @@
 package com.bagel.noink.bean
 
+import android.net.Uri
+
 data class UserInfoBean(
     var id : Long,
     var username: String,
@@ -7,5 +9,6 @@ data class UserInfoBean(
     var gender: Boolean,
     var age: Int,
     var wechatId: String,
-    var birthday: String
+    var birthday: String,
+    var userprofile: Uri
 )

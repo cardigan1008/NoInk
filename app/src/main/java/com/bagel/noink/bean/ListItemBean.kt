@@ -10,6 +10,8 @@ data class ListItemBean(
     val title: String,
     val text: String?,
     val coverUri: Uri,
+    val moodTags: List<String>,
+    val eventTag: String,
     val imagesUri: List<Uri>,
     val createDate: Date
 ) : Parcelable {
@@ -18,6 +20,8 @@ data class ListItemBean(
         parcel.readString() ?: "",
         parcel.readString(),
         parcel.readParcelable(Uri::class.java.classLoader) ?: Uri.EMPTY,
+        parcel.createStringArrayList() ?: emptyList(), // Read moodTags as String List
+        parcel.readString() ?:"",
         parcel.createTypedArrayList(Uri.CREATOR) ?: emptyList(),
         Date(parcel.readLong())
     )
@@ -27,6 +31,8 @@ data class ListItemBean(
         parcel.writeString(title)
         parcel.writeString(text)
         parcel.writeParcelable(coverUri, flags)
+        parcel.writeStringList(moodTags) // Write moodTags as String List
+        parcel.writeString(eventTag) // Write eventTags as String List
         parcel.writeTypedList(imagesUri)
         parcel.writeLong(createDate.time)
     }
@@ -45,4 +51,3 @@ data class ListItemBean(
         }
     }
 }
-

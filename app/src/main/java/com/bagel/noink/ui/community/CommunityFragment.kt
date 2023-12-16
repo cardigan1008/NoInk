@@ -138,7 +138,7 @@ class CommunityFragment : Fragment() {
                 val commentUser = commentObject?.optInt("commentUser", 0) ?: 0
                 val username = commentObject?.optString("username", "") ?: ""
                 val likes = commentObject?.optInt("likes", 0) ?: 0
-                val avatar = Uri.parse(dataObject.optString("userprofile", ""))
+                val avatar = Uri.parse(commentObject.optString("userprofile", ""))
 
 
                 val childCommentListObject = commentObject?.optJSONArray("commentList")
@@ -172,7 +172,6 @@ class CommunityFragment : Fragment() {
             }
             communityItem.commentList = commentList
         }
-
         return communityItem
     }
 

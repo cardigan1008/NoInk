@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.bean.CommentItemBean
 import com.bagel.noink.utils.CommunityHttpRequest
+import com.bumptech.glide.Glide
 import org.json.JSONObject
 
 class CommentAdapter(private val context: Context, private val commentList: List<CommentItemBean>) :
@@ -29,15 +30,19 @@ class CommentAdapter(private val context: Context, private val commentList: List
         val comment = commentList[position]
         holder.usernameTextView.text = comment.username
         holder.commentTextView.text = comment.content
+        Glide.with(context)
+            .load(comment.avatar)
+            .into(holder.avatarImageView)
         // 设置头像等操作，如果需要的话
         // 例如：holder.avatarImageView.setImageResource(R.drawable.avatar_placeholder)
 
+        holder.likeCountTextView.text = comment.likes.toString()
         // 处理点赞按钮的逻辑
         holder.likeButton.setOnCheckedChangeListener { buttonView, isChecked ->
             val cid = commentList[position].cid
             if (isChecked) {
                 // 处理点赞逻辑
-                communityHttpRequest.addLikes(
+                communityHttpRequest.addCommentLikes(
                     cid.toString(),
                     object : CommunityHttpRequest.CommunityCallbackListener {
                         override fun onSuccess(responseJson: JSONObject) {
@@ -49,8 +54,12 @@ class CommentAdapter(private val context: Context, private val commentList: List
                             Log.e(TAG, errorMessage)
                         }
                     })
+                holder.likeCountTextView.text = (comment.likes + 1).toString()
+                comment.likes = comment.likes + 1
             } else {
                 // 处理取消点赞逻辑
+                holder.likeCountTextView.text = (comment.likes - 1).toString()
+                comment.likes = comment.likes - 1
             }
         }
     }
@@ -64,5 +73,6 @@ class CommentAdapter(private val context: Context, private val commentList: List
         val commentTextView: TextView = itemView.findViewById(R.id.commentTextView)
         val likeButton: ToggleButton = itemView.findViewById(R.id.likeButton)
         val avatarImageView: ImageView = itemView.findViewById(R.id.avatarImageView)
+        val likeCountTextView: TextView = itemView.findViewById(R.id.likeCountTextView)
     }
 }

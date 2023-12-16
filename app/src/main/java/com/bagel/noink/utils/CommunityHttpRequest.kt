@@ -65,15 +65,14 @@ class CommunityHttpRequest {
             }
         })
     }
-    fun addCommentLikes(cid : String, callbackListener: CommunityCallbackListener){
-        val url = Contants.SERVER_ADDRESS + "/api/comment/like"
-        val headerName = "satoken";
-        val headerValue = AccountViewModel.token!!;
-        val jsonBody = JSONObject().apply {
-            put("cid", cid)
-        }
-        val mediaType = "application/json; charset=utf-8".toMediaType()
-        val requestBody = jsonBody.toString().toRequestBody(mediaType)
+    fun addCommentLikes(cid: String, callbackListener: CommunityCallbackListener) {
+        val url = Contants.SERVER_ADDRESS + "/api/comment/like?cid=$cid" // 将 cid 作为查询参数附加
+        val headerName = "satoken"
+        val headerValue = AccountViewModel.token!!
+
+        // 创建一个空的RequestBody实例，因为我们不发送请求体
+        val requestBody = "".toRequestBody(null)
+
         httpRequest.post(url, requestBody, headerName, headerValue, object : HttpRequest.CallbackListener {
             override fun onSuccess(responseJson: JSONObject) {
                 callbackListener.onSuccess(responseJson)
@@ -83,6 +82,7 @@ class CommunityHttpRequest {
             }
         })
     }
+
     fun addComment(pid:Int, itemBean: CommentItemBean, callbackListener: CommunityCallbackListener){
         val url = Contants.SERVER_ADDRESS + "/api/comment/save"
         val headerName = "satoken";
@@ -108,4 +108,5 @@ class CommunityHttpRequest {
             }
         })
     }
+
 }

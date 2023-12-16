@@ -102,6 +102,7 @@ class HttpRequest {
         })
     }
 
+
     fun patch(url: String, requestBody: RequestBody,  headerName: String, headerValue: String, callbackListener: CallbackListener) {
         val request = Request.Builder().url(url).patch(requestBody).addHeader(headerName,headerValue).build()
         val call = client.newCall(request)

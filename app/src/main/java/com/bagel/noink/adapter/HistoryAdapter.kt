@@ -79,7 +79,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
             val bundle = bundleOf(
                 "listItem" to historyItemBean
             )
-            navController.navigate(R.id.action_nav_history_to_nav_history_details, bundle)
+            navController.navigate(R.id.action_nav_history_list_to_nav_history_details, bundle)
         }
     }
 }

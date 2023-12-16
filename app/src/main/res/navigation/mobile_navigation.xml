@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.bagel.noink.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label=""
         tools:layout="@layout/fragment_home_cat" >
         <action
             android:id="@+id/action_nav_home_to_nav_card_details"
@@ -19,26 +19,11 @@
         </action>
     </fragment>
 
-<!--    <activity-->
-<!--            android:id="@+id/nav_history"-->
-<!--            android:name="com.bagel.noink.activity.HistoryActivity"-->
-<!--            android:label="@string/menu_history"-->
-<!--            tools:layout="@layout/activity_history" />-->
-
-    <fragment
-        android:id="@+id/nav_history"
-        android:name="com.bagel.noink.ui.history.HistoryFragment"
-        tools:layout="@layout/fragment_history" >
-        <action
-            android:id="@+id/action_nav_history_to_nav_history_details"
-            app:destination="@id/nav_history_details" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_history_details"
-        android:name="com.bagel.noink.ui.history.DetailsFragment"
-        android:label="History Details"
-        tools:layout="@layout/fragment_details" />
+    <activity
+            android:id="@+id/nav_history"
+            android:name="com.bagel.noink.activity.HistoryActivity"
+            android:label="@string/menu_history"
+            tools:layout="@layout/activity_history" />
 
     <activity
         android:id="@+id/nav_community"
@@ -49,7 +34,7 @@
     <fragment
         android:id="@+id/nav_personal_account"
         android:name="com.bagel.noink.ui.account.AccountFragment"
-        android:label="@string/menu_personal_account"
+        android:label=""
         tools:layout="@layout/fragment_account" />
 
     <fragment

@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.CompoundButton
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,15 +54,51 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
                 val title = communityItemBean.title
                 val content = communityItemBean.content
-
                 val createDate = communityItemBean.createdAt
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-                val formattedDate = dateFormat.format(createDate)
+                val likeCount = communityItemBean.likes
+                val commentCount = communityItemBean.comments
+
+                val commentCountTextView: TextView = binding.commentCountTextView
+                activity?.runOnUiThread {
+                    commentCountTextView.text = commentCount.toString()
+                }
+                val likeCountTextView: TextView = binding.likeCountTextView
+                activity?.runOnUiThread {
+                    likeCountTextView.text = likeCount.toString()
+                }
+                val likeButton : ToggleButton = binding.likeButton
+
+                likeButton.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        // 处理点赞逻辑
+                        communityHttpRequest.addCommentLikes(
+                            communityItemBean.aid.toString(),
+                            object : CommunityHttpRequest.CommunityCallbackListener {
+                                override fun onSuccess(responseJson: JSONObject) {
+                                    // 处理成功响应
+                                    val code = responseJson.getInt("code")
+                                }
+                                override fun onFailure(errorMessage: String) {
+                                    // 处理失败情况
+                                    Log.e(TAG, errorMessage)
+                                }
+                            })
+                        activity?.runOnUiThread {
+                            likeCountTextView.text = (likeCountTextView.text.toString().toInt()+1).toString()
+                        }
+                    } else {
+                        // 处理取消点赞逻辑
+                        activity?.runOnUiThread {
+                            likeCountTextView.text = (likeCountTextView.text.toString().toInt()-1).toString()
+                        }
+                    }
+                })
+
 
                 activity?.runOnUiThread {
                     binding.title.text = title
                     binding.text.text = content
-                    binding.date.text = "编辑于 $formattedDate"
+                    binding.date.text = "编辑于 $createDate"
                 }
 
 
@@ -82,7 +121,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     comments = communityItemBean.commentList as MutableList<CommentItemBean>?
                     commentDetailAdapter = comments?.let {
                         CommentDetailAdapter(
-                            it,commentEditText
+                            it,commentEditText,context!!
                         )
                     }!!
 
@@ -102,7 +141,9 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                             )
                             addComment(CommentViewModel.pid, commentItem)
 
-                            comments?.add(commentItem)
+                            CommentViewModel.commentItemBean?.commentList = CommentViewModel.commentItemBean?.commentList?.toMutableList()?.apply {
+                                add(commentItem)
+                            }
                             commentEditText.text = null
 
                             CommentViewModel.updatePid(-1)

@@ -11,8 +11,8 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class AliyunOSSManager {
@@ -31,13 +31,16 @@ public class AliyunOSSManager {
     private void initOSSClient() throws IOException {
         Properties configuration = new Properties();
 
-        FileInputStream inputStream = new FileInputStream("config.properties");
+        InputStream inputStream = context.getAssets().open("config.properties");
         configuration.load(inputStream);
 
         ossClient = new OSSClient(this.context,
                 ENDPOINT,
                 new OSSPlainTextAKSKCredentialProvider(configuration.getProperty("ACCESS_KEY_ID"), configuration.getProperty("ACCESS_KEY_SECRET")));
+
+        inputStream.close();
     }
+
 
     public String uploadImage(String localFilePath, String uploadImageName) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, uploadImageName, localFilePath);

@@ -28,3 +28,4 @@ replay_pid*
 
 # SDK paths
 local.properties
+app/config.properties

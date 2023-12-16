@@ -10,27 +10,33 @@ import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvide
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 public class AliyunOSSManager {
     private Context context;
     private static final String TAG = "AliyunOSSImageUploader";
     private static final String ENDPOINT = "https://oss-cn-hangzhou.aliyuncs.com"; // 例如："https://your_bucket_name.oss-cn-beijing.aliyuncs.com"
-    private static final String ACCESS_KEY_ID = "LTAI5tBstuvGxVcCfJojbXPn";
-    private static final String ACCESS_KEY_SECRET = "cQ2je0KFNFCbKBQhfJdH5cnjYO0gn8";
     private static final String BUCKET_NAME = "cardigan1008";
 
     private OSS ossClient;
 
-    public AliyunOSSManager(Context context) {
+    public AliyunOSSManager(Context context) throws IOException {
         this.context = context.getApplicationContext();
         initOSSClient();
     }
 
-    private void initOSSClient() {
+    private void initOSSClient() throws IOException {
+        Properties configuration = new Properties();
+
+        FileInputStream inputStream = new FileInputStream("config.properties");
+        configuration.load(inputStream);
+
         ossClient = new OSSClient(this.context,
                 ENDPOINT,
-                new OSSPlainTextAKSKCredentialProvider(ACCESS_KEY_ID, ACCESS_KEY_SECRET));
+                new OSSPlainTextAKSKCredentialProvider(configuration.getProperty("ACCESS_KEY_ID"), configuration.getProperty("ACCESS_KEY_SECRET")));
     }
 
     public String uploadImage(String localFilePath, String uploadImageName) {

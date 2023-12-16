@@ -132,6 +132,13 @@ class HomeFragment : Fragment() {
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 selectedCardPosition = position
+                if (selectedCardPosition != 0) {
+                    binding.moreCard.visibility = View.GONE
+                } else {
+                    if (homeViewModel.count_of_card.value!! > 1) {
+                        binding.moreCard.visibility = View.VISIBLE
+                    }
+                }
             }
         })
 
@@ -141,22 +148,16 @@ class HomeFragment : Fragment() {
             viewPager.post {
                 viewPager.setCurrentItem(selectedCardPosition, false)
             }
+        }
+        homeViewModel.updateCount(recordCardAdapter!!.itemCount)
 
+        homeViewModel.count_of_card.observe(viewLifecycleOwner) {
+            if (homeViewModel.count_of_card.value!! > 1 && selectedCardPosition == 1) {
+                binding.moreCard.visibility = View.VISIBLE
+            }
         }
         return root
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//
-//        val viewPager: ViewPager2 = requireView().findViewById(R.id.viewPager)
-//
-//        if (selectedCardPosition != -1) {
-//            viewPager.post {
-//                viewPager.currentItem = selectedCardPosition
-//            }
-//        }
-//    }
 
     fun generateRandomString(length: Int): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9') // 允许的字符集合

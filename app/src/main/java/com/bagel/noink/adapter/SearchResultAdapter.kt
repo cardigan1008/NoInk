@@ -1,6 +1,5 @@
 package com.bagel.noink.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,6 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
-import com.bagel.noink.activity.DetailsActivity
 import com.bagel.noink.viewholder.SearchResultViewHolder
 import com.bagel.noink.bean.ListItemBean
 import com.bumptech.glide.Glide

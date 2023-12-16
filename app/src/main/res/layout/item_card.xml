@@ -36,49 +36,21 @@
 
         </androidx.cardview.widget.CardView>
 
-
-
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView"-->
-<!--            android:layout_width="200dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_margin="5dp"-->
-<!--            android:src="@mipmap/ic_cat"-->
-<!--            app:layout_constraintHeight_percent="0.3"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            tools:layout_editor_absoluteX="0dp"-->
-
-<!--            />-->
-
-
-
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            >
 
-<!--            <View-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:background="@android:color/darker_gray"-->
-<!--                />-->
-
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:padding="@dimen/defaultPadding"
+                android:padding="10dp"
                 android:text="@string/title_demo_movie"
                 android:textColor="@color/black"
-                android:textSize="@dimen/bigTextSize"
-                />
+                android:textSize="@dimen/bigTextSize" />
 
             <TextView
                 android:id="@+id/yearMonth"
@@ -87,15 +59,53 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/date_demo_231211"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/smallTextSize"
-                />
-
-
+                android:textSize="@dimen/smallTextSize" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/tags"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center">
 
+            <TextView
+                android:id="@+id/tag_style"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:background="@drawable/tag_background_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="风格"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:gravity="center"/>
 
-
+            <TextView
+                android:id="@+id/tag_mood"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:background="@drawable/tag_background_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="心情"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:gravity="center"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/content"
@@ -103,8 +113,8 @@
             android:layout_height="wrap_content"
             android:text="@string/content_demo_movie"
             android:padding="@dimen/defaultPadding"
-            android:layout_weight="1"
-            />
+            android:maxLength="100"
+            android:layout_weight="1" />
 
 
 

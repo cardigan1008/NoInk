@@ -28,4 +28,4 @@ replay_pid*
 
 # SDK paths
 local.properties
-app/config.properties
+app/src/main/java/com/bagel/noink/utils/config.properties

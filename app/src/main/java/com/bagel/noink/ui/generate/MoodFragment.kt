@@ -16,8 +16,9 @@ import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentMoodBinding
 import com.bagel.noink.databinding.MoodBinding
+import com.bagel.noink.ui.NoBottomTabFragment
 
-class MoodFragment : Fragment() {
+class MoodFragment : NoBottomTabFragment() {
     private var _binding: FragmentMoodBinding? = null
     private val binding get() = _binding!!
 
@@ -31,6 +32,7 @@ class MoodFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentMoodBinding.inflate(inflater, container, false)
         val root: View = binding.root        // 找到 TextView
         defaultBackground = requireContext().resources.getDrawable(R.drawable.default_background)

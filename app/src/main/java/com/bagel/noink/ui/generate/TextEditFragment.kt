@@ -26,6 +26,7 @@ import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.databinding.FragmentTexteditBinding
 import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.AliyunOSSManager
+import com.bagel.noink.utils.LoadingDialog
 import com.bagel.noink.utils.TextGenHttpRequest
 import org.json.JSONObject
 import java.io.File
@@ -43,6 +44,7 @@ class TextEditFragment: Fragment() {
     }
     private var selectedImageUris = mutableListOf<Uri>()
     private lateinit var textGenHttpRequest: TextGenHttpRequest
+    private var dialog: LoadingDialog? = null
     // save vars
     private lateinit var createdAt: String
     private lateinit var updatedAt: String
@@ -211,7 +213,14 @@ class TextEditFragment: Fragment() {
             .map { allowedChars.random() }
             .joinToString("")
     }
-
+    private fun showLoadingDialog() {
+        dialog = LoadingDialog(requireActivity())
+        dialog?.show()
+    }
+    private fun hideLoadingDialog() {
+        dialog?.dismiss()
+        dialog = null
+    }
     private fun handleSelectedImages(imageUris: List<Uri>) {
         binding?.let { bound ->
             val recyclerView: RecyclerView = bound.recyclerView
@@ -233,6 +242,7 @@ class TextEditFragment: Fragment() {
     }
     private fun generateText() {
         // 实例化TextGenHttpRequest类
+        showLoadingDialog()
         val editText = binding.editText
         TextGenViewModel.updateOriginText(editText.text.toString())
         TextGenViewModel.updateInfoUrls(selectedImageUris)
@@ -256,7 +266,6 @@ class TextEditFragment: Fragment() {
                     Log.e("responseJson", responseJson.toString())
                     val taskId = responseJson.getString("taskId")!!
                     TextGenViewModel.updateTaskId(taskId)
-
                     Handler(Looper.getMainLooper()).postDelayed(Runnable {
                         // 在这里执行你的代码
                         textGenHttpRequest.sendGetTaskRequest(
@@ -271,6 +280,7 @@ class TextEditFragment: Fragment() {
                                     generatedText = responseJson.getString("generatedText");
                                     TextGenViewModel.updateOriginText(responseJson.getString("originText"))
                                     TextGenViewModel.updateType(responseJson.getString("type"))
+                                    hideLoadingDialog()
                                 }
                                 override fun onFailure(errorMessage: String) {
                                     // 处理请求失败
@@ -287,6 +297,8 @@ class TextEditFragment: Fragment() {
             }
         )
     }
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setSaveButton(){
         val saveButton = binding.buttonSave

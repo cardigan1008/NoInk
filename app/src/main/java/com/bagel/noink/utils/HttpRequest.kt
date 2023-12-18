@@ -120,15 +120,18 @@ class HttpRequest {
     }
 
     private fun handleResponse(response: Response, callbackListener: CallbackListener) {
+
+
         if (response.isSuccessful) {
             val responseBody = response.body?.string()
+
             if (responseBody != null) {
                 try {
                     val responseJson = JSONObject(responseBody)
                     callbackListener.onSuccess(responseJson)
                 } catch (e: Exception) {
                     val errorMessage = "Failed to parse JSON response"
-                    callbackListener.onFailure(errorMessage)
+                    callbackListener.onFailure(errorMessage + e.message)
                 }
             } else {
                 val errorMessage = "Empty response body"

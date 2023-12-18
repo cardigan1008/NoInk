@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentLengthBinding
+import com.bagel.noink.ui.account.AccountViewModel
 
 class LengthFragment: Fragment() {
     private var _binding: FragmentLengthBinding? = null
@@ -29,6 +30,9 @@ class LengthFragment: Fragment() {
         // 遍历 includedLayout 中的所有子视图
         val root = includedLayout.rootView
         // 遍历 GridLayout 中的每个 RelativeLayout，并获取其中的 TextView 引用
+        val textView = binding.textView
+        val userName = AccountViewModel.userInfo?.username ?: ""
+        textView.text = "${userName}\n想写多少字的日记呢"
         var length: String? = String()
         for (i in 0 until includedLayout.childCount) {
             val child = includedLayout.getChildAt(i)

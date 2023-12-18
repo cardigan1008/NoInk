@@ -57,11 +57,25 @@ class EventFragment : Fragment() {
                 for(j in 0 until child.childCount){
                     val textView = child.getChildAt(j)
                     if(textView is ToggleButton) {
-                        textView.setOnCheckedChangeListener { _, isChecked ->
+                        textView.setOnCheckedChangeListener { buttonView, isChecked ->
                             if (isChecked) {
                                 textView.background = pressedBackground
                                 val text:String = textView.text.toString()
                                 TextGenViewModel.updateType(text)
+
+                                // 遍历其他 ToggleButton 并将它们的状态设置为非选中
+                                for (k in 0 until gridLayout.childCount) {
+                                    val otherChild = gridLayout.getChildAt(k)
+                                    if (otherChild is RelativeLayout) {
+                                        for (l in 0 until otherChild.childCount) {
+                                            val otherTextView = otherChild.getChildAt(l)
+                                            if (otherTextView is ToggleButton && otherTextView != buttonView) {
+                                                otherTextView.isChecked = false
+                                                otherTextView.background = defaultBackground
+                                            }
+                                        }
+                                    }
+                                }
                             } else {
                                 textView.background = defaultBackground
                             }
@@ -71,6 +85,7 @@ class EventFragment : Fragment() {
             }
         }
     }
+
     private fun setNavButton(){
         val navButton: Button = binding.button
         navButton.setOnClickListener{

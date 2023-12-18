@@ -2,23 +2,33 @@ package com.bagel.noink.ui.account
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import com.bagel.noink.R
+import com.bagel.noink.activity.RegisterActivity
 import com.bagel.noink.databinding.FragmentLoginBinding
+import com.bagel.noink.ui.NoBottomTabFragment
 import com.bagel.noink.utils.UserHttpRequest
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class LoginFragment : Fragment() {
+class LoginFragment : NoBottomTabFragment() {
     private var _binding: FragmentLoginBinding? = null
 
     // 声明组件对象
@@ -34,6 +44,9 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+//        requireActivity().findViewById<Toolbar>(R.id.toolbar)?.visibility = View.GONE
+
         val loginViewModel =
             ViewModelProvider(this).get(LoginViewModel::class.java)
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -75,7 +88,7 @@ class LoginFragment : Fragment() {
                             editor?.apply()
 
                             // 登录成功，返回
-                            activity?.finish()
+                            requireActivity().onBackPressed()
                         }
                     }
 
@@ -85,6 +98,27 @@ class LoginFragment : Fragment() {
                 }
             )
         }
+
+        // 跳转到注册
+        binding.registerPrompt.setOnClickListener {
+            val navOptions = NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)   // 设置进入动画
+                .setExitAnim(R.anim.slide_out_left)   // 设置退出动画
+                .setPopEnterAnim(R.anim.slide_in_left)   // 设置返回动画
+                .setPopExitAnim(R.anim.slide_out_right)   // 设置返回退出动画
+                .build()
+
+            findNavController().navigate(
+                R.id.action_nav_login_to_nav_register,
+                null,
+                navOptions
+            )
+        }
+
         return root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

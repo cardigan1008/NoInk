@@ -4,12 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:padding="@dimen/defaultPadding"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_logo_login"
+        />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="0dp">
         <!-- 用户名输入框 -->
         <EditText
             android:id="@+id/username"
@@ -52,6 +61,7 @@
             android:layout_gravity="right"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="25dp"
+            android:visibility="invisible"
             android:text="@string/forget_password" />
     </LinearLayout>
 

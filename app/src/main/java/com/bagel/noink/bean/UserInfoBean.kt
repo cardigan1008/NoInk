@@ -10,5 +10,7 @@ data class UserInfoBean(
     var age: Int,
     var wechatId: String,
     var birthday: String,
-    var userprofile: Uri
+    var userprofile: Uri,
+    var recordNum: Int,
+    var articleNum: Int
 )

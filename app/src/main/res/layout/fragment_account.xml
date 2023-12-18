@@ -28,7 +28,7 @@
         android:layout_height="100dp"
         android:layout_margin="@dimen/defaultPadding"
         app:cardCornerRadius="@dimen/defaultPadding"
-        app:cardBackgroundColor="@color/teal_200"
+        app:cardBackgroundColor="@color/blue"
         android:layout_gravity="center"
         >
 
@@ -48,7 +48,7 @@
                 android:padding="@dimen/defaultPadding"
                 />
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/record_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -76,7 +76,7 @@
                 android:padding="@dimen/defaultPadding"
                 />
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/article_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -200,20 +200,12 @@
             android:text="退出登录" />
 
         <Button
-            android:id="@+id/loginButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:text="登录测试按钮" />
-
-        <Button
             android:id="@+id/testButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
             android:visibility="gone"
-            android:text="注册测试按钮" />
+            android:text="测试按钮" />
     </LinearLayout>
 </LinearLayout>

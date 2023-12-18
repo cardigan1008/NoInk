@@ -110,11 +110,6 @@ class HomeFragment : Fragment() {
 
         button.setOnClickListener {
             navController.navigate(R.id.nav_mood)
-
-//            val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
-//            galleryIntent.type = "image/*"
-//            galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // 允许多选图片
-//            startActivityForResult(galleryIntent, PICK_IMAGES_REQUEST_CODE)
         }
 
         val viewPager: ViewPager2 = binding.viewPager

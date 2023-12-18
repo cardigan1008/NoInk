@@ -24,6 +24,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentLoginBinding
 import com.bagel.noink.databinding.FragmentRegisterBinding
+import com.bagel.noink.ui.NoBottomTabFragment
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.InformationCalc
 import com.bagel.noink.utils.UserHttpRequest
@@ -209,8 +210,7 @@ class RegisterFragment: Fragment() {
 
         // 返回登录页面
         backToLoginPrompt!!.setOnClickListener {
-            // TODO: 修改成导航到上一级页面
-            // finish()
+            requireActivity().onBackPressed()
         }
 
         return root

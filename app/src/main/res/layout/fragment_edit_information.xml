@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
         <!-- 用户名输入框 -->
         <EditText
             android:id="@+id/updateEditText"
@@ -29,15 +35,15 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColor="#FF0000"
-            android:visibility="gone"
-            android:textSize="15dp"
+            android:drawableStart="@drawable/lonely"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
-            android:drawableStart="@drawable/lonely"
-            android:text="好听的用户名已经被人取走了" />
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="好听的用户名已经被人取走了"
+            android:textColor="#FF0000"
+            android:textSize="15dp"
+            android:visibility="gone" />
 
         <!-- 微信号输入框 -->
         <EditText
@@ -105,10 +111,10 @@
             android:layout_marginBottom="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:text="两次输入的密码不一致"
             android:textColor="#FF0000"
-            android:visibility="gone"
             android:textSize="15dp"
-            android:text="两次输入的密码不一致" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/saveButton"
@@ -121,7 +127,6 @@
             android:background="@drawable/round_button"
             android:text="保存修改"
             android:textColor="#FFFFFB"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

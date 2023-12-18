@@ -11,10 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
-import com.bagel.noink.activity.EditInformationActivity
 import com.bagel.noink.activity.LoginActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
 import com.bagel.noink.utils.UserHttpRequest
@@ -96,18 +98,10 @@ class AccountFragment : Fragment() {
         AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
 
         // 跳转到修改用户名界面
-        itemUsername?.setOnClickListener {
-            val intent = Intent(this.context, EditInformationActivity::class.java)
-            intent.putExtra("type", "username")
-            startActivity(intent)
-        }
+        itemUsername?.setOnClickListener {slideNavToEditInfo("username")}
 
         // 跳转到修改微信账号界面
-        itemWechatId?.setOnClickListener {
-            val intent = Intent(this.context, EditInformationActivity::class.java)
-            intent.putExtra("type", "wechat")
-            startActivity(intent)
-        }
+        itemWechatId?.setOnClickListener { slideNavToEditInfo("wechat") }
 
         // 弹出修改性别弹窗
         itemGender?.setOnClickListener {
@@ -183,11 +177,7 @@ class AccountFragment : Fragment() {
 
 
         // 跳转到修改用户密码界面
-        itemUpdatePassword?.setOnClickListener {
-            val intent = Intent(this.context, EditInformationActivity::class.java)
-            intent.putExtra("type", "password")
-            startActivity(intent)
-        }
+        itemUpdatePassword?.setOnClickListener {slideNavToEditInfo("password") }
 
         activity?.findViewById<Button>(R.id.exitButton)
             ?.setOnClickListener {
@@ -202,5 +192,24 @@ class AccountFragment : Fragment() {
                 val intent = Intent(this.context, LoginActivity::class.java)
                 startActivity(intent)
             }
+    }
+
+    private fun slideNavToEditInfo(type: String) {
+        val bundle = bundleOf(
+            "type" to type
+        )
+
+        val navOptions = NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_right)   // 设置进入动画
+            .setExitAnim(R.anim.slide_out_left)   // 设置退出动画
+            .setPopEnterAnim(R.anim.slide_in_left)   // 设置返回动画
+            .setPopExitAnim(R.anim.slide_out_right)   // 设置返回退出动画
+            .build()
+
+        findNavController().navigate(
+            R.id.action_nav_personal_account_to_nav_edit_information,
+            bundle,
+            navOptions
+        )
     }
 }

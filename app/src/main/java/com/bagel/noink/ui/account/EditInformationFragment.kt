@@ -1,25 +1,30 @@
-package com.bagel.noink.activity
+package com.bagel.noink.ui.account
 
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bagel.noink.R
-import com.bagel.noink.ui.account.AccountViewModel
+import com.bagel.noink.databinding.FragmentEditInformationBinding
+import com.bagel.noink.ui.NoBottomTabFragment
 import com.bagel.noink.utils.Contants
-import com.bagel.noink.utils.Contants.Companion.UPDATE_USERNAME_PROMPT
-import com.bagel.noink.utils.Contants.Companion.UPDATE_WECHATID_PROMPT
 import com.bagel.noink.utils.UserHttpRequest
 import org.json.JSONObject
 
-class EditInformationActivity : AppCompatActivity() {
+
+class EditInformationFragment: NoBottomTabFragment() {
+    private var _binding: FragmentEditInformationBinding? = null
+    private val binding get() = _binding!!
 
     // 组件对象
     var updateEditText: EditText? = null
@@ -31,26 +36,29 @@ class EditInformationActivity : AppCompatActivity() {
     var passwordRepErrMsg: TextView? = null
     var saveButton: Button? = null
 
-    // 页面参数类型(username, wechat or password)
-    var type: String? = null
-
-    // 成员变量
-    var usernameExist = false
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_information)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        val editInformationViewModel =
+            ViewModelProvider(this).get(EditInformationViewModel::class.java)
+        _binding = FragmentEditInformationBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
         // 绑定组件对象
-        updateEditText = findViewById(R.id.updateEditText)
-        wechatIdText = findViewById(R.id.wechatIdText)
-        originPasswordEditText = findViewById(R.id.origin_password)
-        newPasswordEditText = findViewById(R.id.new_password)
-        newPasswordAgainEditText = findViewById(R.id.new_password_again)
-        passwordRepErrMsg = findViewById(R.id.passwordRepErrMsg)
-        saveButton = findViewById(R.id.saveButton)
-        usernameMsg = findViewById(R.id.usernameMsg)
+        updateEditText = binding.updateEditText
+        wechatIdText = binding.wechatIdText
+        originPasswordEditText = binding.originPassword
+        newPasswordEditText = binding.newPassword
+        newPasswordAgainEditText = binding.newPasswordAgain
+        passwordRepErrMsg = binding.passwordRepErrMsg
+        saveButton = binding.saveButton
+        usernameMsg = binding.usernameMsg
 
-        type = intent.getStringExtra("type")
+        // TODO: 获取参数
+        val type = arguments?.getString("type")
 
         // 先默认全部不显示
         updateEditText?.visibility = View.GONE
@@ -61,10 +69,10 @@ class EditInformationActivity : AppCompatActivity() {
 
         // 调整显示的UI
         if (type.equals("username")) {
-            updateEditText?.hint = UPDATE_USERNAME_PROMPT
+            updateEditText?.hint = Contants.UPDATE_USERNAME_PROMPT
             updateEditText?.visibility = View.VISIBLE
         } else if (type.equals("wechat")) {
-            wechatIdText?.hint = UPDATE_WECHATID_PROMPT
+            wechatIdText?.hint = Contants.UPDATE_WECHATID_PROMPT
             wechatIdText?.visibility = View.VISIBLE
         } else if (type.equals("password")) {
             originPasswordEditText?.visibility = View.VISIBLE
@@ -97,14 +105,14 @@ class EditInformationActivity : AppCompatActivity() {
                         usernameMsg?.text = "好听的用户名已经被人取走了"
                         usernameMsg?.setTextColor(Color.RED)
                         val drawable =
-                            ContextCompat.getDrawable(this@EditInformationActivity, R.drawable.lonely)
+                            ContextCompat.getDrawable(requireContext(), R.drawable.lonely)
                         usernameMsg?.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             drawable,
                             null,
                             null,
                             null
                         )
-                        usernameExist = true
+                        editInformationViewModel.usernameExist = true
                     } else {
                         if (username != "") {
                             usernameMsg?.visibility = View.VISIBLE
@@ -114,14 +122,14 @@ class EditInformationActivity : AppCompatActivity() {
                         usernameMsg?.text = Contants.GOOD_USERNAME_PROMPT
                         usernameMsg?.setTextColor(Color.GREEN)
                         val drawable =
-                            ContextCompat.getDrawable(this@EditInformationActivity, R.drawable.happy)
+                            ContextCompat.getDrawable(requireContext(), R.drawable.happy)
                         usernameMsg?.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             drawable,
                             null,
                             null,
                             null
                         )
-                        usernameExist = false
+                        editInformationViewModel.usernameExist = false
                     }
                 }
             }
@@ -144,7 +152,7 @@ class EditInformationActivity : AppCompatActivity() {
 
         // 点击保存按钮
         saveButton!!.setOnClickListener {
-            if (type.equals("username") && !usernameExist) {
+            if (type.equals("username") && !editInformationViewModel.usernameExist) {
                 val username = updateEditText?.text.toString().trim { it <= ' ' }
                 AccountViewModel.updateUsername(username)
             }
@@ -165,9 +173,12 @@ class EditInformationActivity : AppCompatActivity() {
                 }
             })
 
-            finish()
+            // TODO: 导航到上一级
         }
+
+        return root
     }
+
     private fun validatePassword() {
         val password = newPasswordEditText?.text.toString().trim { it <= ' ' }
         val confirmPassword = newPasswordAgainEditText?.text.toString().trim { it <= ' ' }

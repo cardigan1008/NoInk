@@ -111,7 +111,7 @@ class RecordCardAdapter(
             dataView.text = format.format(card.createDate)
             titleTextView.text = card.title
             tag_style.text = card.eventTag
-            tag_style.text = card.moodTags[0]
+            tag_mood.text = card.moodTags[0]
             // 使用 Glide 加载并绑定 Uri 到 imageView
             Glide.with(itemView.context)
                 .load(card.coverUri)

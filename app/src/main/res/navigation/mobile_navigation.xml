@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_nav_personal_account_to_nav_edit_information"
             app:destination="@id/nav_edit_information" />
+        <action
+            android:id="@+id/action_nav_personal_account_to_nav_login"
+            app:destination="@id/nav_login" />
     </fragment>
 
     <fragment
@@ -82,5 +85,21 @@
         android:name="com.bagel.noink.ui.history.DetailsFragment"
         android:label=""
         tools:layout="@layout/fragment_details" />
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.bagel.noink.ui.account.LoginFragment"
+        android:label=""
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_nav_login_to_nav_register"
+            app:destination="@id/nav_register" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="com.bagel.noink.ui.account.RegisterFragment"
+        android:label=""
+        tools:layout="@layout/fragment_register" />
 
 </navigation>

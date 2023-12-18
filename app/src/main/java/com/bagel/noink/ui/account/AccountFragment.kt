@@ -66,6 +66,10 @@ class AccountFragment : Fragment() {
         slideshowViewModel._gender.observe(viewLifecycleOwner) { newData ->
             itemGender?.setData(if (newData) "男" else "女")
         }
+
+        binding.testButton.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_personal_account_to_nav_login)
+        }
         return root
     }
 

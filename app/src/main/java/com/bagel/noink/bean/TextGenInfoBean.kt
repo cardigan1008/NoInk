@@ -7,5 +7,6 @@ data class TextGenInfoBean(
     var originText: String?,
     var style: String?,
     var type: String?,
-    var length: String?
+    var length: String?,
+    var taskId: String?
 )

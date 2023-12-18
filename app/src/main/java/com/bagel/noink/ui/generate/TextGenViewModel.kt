@@ -12,6 +12,7 @@ class TextGenViewModel {
             null,
             null,
             "50",
+            null
         )
         fun updateInfoUrls(imageUrl: List<Uri>){
             textGenInfo?.imageUrls = imageUrl
@@ -28,6 +29,9 @@ class TextGenViewModel {
         fun updateLength(length: String){
             textGenInfo?.length = length
         }
+        fun updateTaskId(taskId: String){
+            textGenInfo?.taskId = taskId
+        }
         fun getInfoUrls(): List<Uri>? {
             return textGenInfo?.imageUrls
         }
@@ -42,6 +46,9 @@ class TextGenViewModel {
         }
         fun getLength(): String? {
             return textGenInfo?.length
+        }
+        fun getTaskId(): String? {
+            return textGenInfo?.taskId
         }
     }
 }

@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.LayoutInflater
@@ -68,6 +70,7 @@ class TextEditFragment: Fragment() {
         setPostUploadButton()
         return binding.root
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setPostUploadButton(){
         val postUploadButton:ImageButton = requireActivity().findViewById(R.id.toolbar_upload)
 
@@ -76,7 +79,7 @@ class TextEditFragment: Fragment() {
                 aid = 0,
                 title = title.text.toString(),
                 avatar = Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg"),
-                createdAt = createdAt,
+                createdAt = createdAt?:getCurrentTime(),
                 updatedAt = updatedAt,
                 content = content.text.toString(),
                 imageUrls = selectedImageUris,
@@ -250,13 +253,32 @@ class TextEditFragment: Fragment() {
                 override fun onSuccess(responseJson: JSONObject) {
                     // 处理请求成功的响应JSON对象
                     // 在这里使用responseJson
-                    editText.setText(responseJson.getString("generatedText"))
+                    Log.e("responseJson", responseJson.toString())
+                    val taskId = responseJson.getString("taskId")!!
+                    TextGenViewModel.updateTaskId(taskId)
 
-                    createdAt = responseJson.getString("createdAt")
-                    updatedAt = responseJson.getString("updatedAt")
-                    generatedText = responseJson.getString("generatedText");
-                    TextGenViewModel.updateOriginText(responseJson.getString("originText"))
-                    TextGenViewModel.updateType(responseJson.getString("type"))
+                    Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                        // 在这里执行你的代码
+                        textGenHttpRequest.sendGetTaskRequest(
+                            taskId = taskId,
+                            callbackListener = object : TextGenHttpRequest.TextGenCallbackListener {
+                                override fun onSuccess(responseJson: JSONObject) {
+                                    // 处理请求成功的响应JSON对象
+                                    // 在这里使用responseJson
+                                    editText.setText(responseJson.getString("generatedText"))
+                                    createdAt = responseJson.getString("createdAt")
+                                    updatedAt = responseJson.getString("updatedAt")
+                                    generatedText = responseJson.getString("generatedText");
+                                    TextGenViewModel.updateOriginText(responseJson.getString("originText"))
+                                    TextGenViewModel.updateType(responseJson.getString("type"))
+                                }
+                                override fun onFailure(errorMessage: String) {
+                                    // 处理请求失败
+                                    println("Request failed: $errorMessage")
+                                }
+                            }
+                        )
+                    }, 5000) // 2000毫秒后执行Runnable
                 }
                 override fun onFailure(errorMessage: String) {
                     // 处理请求失败
@@ -282,9 +304,10 @@ class TextEditFragment: Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveText(){
         textGenHttpRequest.sendSaveRequest(
-            createdAt = createdAt,
+            createdAt = createdAt?:getCurrentTime(),
             updatedAt = getCurrentTime(),
             originText = TextGenViewModel.getOriginText()!!,
+            title = title.text.toString()?:"this is a title",
             imageUrls = selectedImageUris,
             labels = TextGenViewModel.getStyle()!!,
             generatedText = content.text.toString(),

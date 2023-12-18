@@ -70,6 +70,7 @@ class TextGenHttpRequest {
         createdAt: String,
         updatedAt: String,
         originText: String,
+        title: String,
         imageUrls: List<Uri>,
         labels: String,
         generatedText: String,
@@ -88,6 +89,7 @@ class TextGenHttpRequest {
             put("createdAt", createdAt)
             put("updatedAt", updatedAt)
             put("originText", originText)
+            put("title", title)
             put("imageUrl", imageString)
             put("labels", labels)
             put("generatedText",generatedText)
@@ -145,7 +147,22 @@ class TextGenHttpRequest {
                 callbackListener.onFailure(errorMessage)
             }
         })
+    }
 
+    fun sendGetTaskRequest(
+        taskId: String,
+        callbackListener: TextGenCallbackListener
+    ){
+        val url = Contants.SERVER_ADDRESS + "/api/request/task/" + taskId // Replace with your server address
+        httpRequest.get(url, object : HttpRequest.CallbackListener {
+            override fun onSuccess(responseJson: JSONObject) {
+                callbackListener.onSuccess(responseJson)
+            }
+
+            override fun onFailure(errorMessage: String) {
+                callbackListener.onFailure(errorMessage)
+            }
+        })
     }
 }
 

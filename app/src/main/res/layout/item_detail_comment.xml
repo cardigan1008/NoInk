@@ -8,10 +8,9 @@
         android:id="@+id/avatarImageView"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:src="@mipmap/ic_cat"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="12dp"/>
+        android:layout_marginEnd="12dp"
+        android:src="@mipmap/ic_cat" />
 
     <!-- 用户名 -->
     <TextView
@@ -44,7 +43,7 @@
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:background="@drawable/heart_selector"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="21dp"
         android:textOn=""
         android:textOff=""
         android:layout_above="@id/commentTextView"

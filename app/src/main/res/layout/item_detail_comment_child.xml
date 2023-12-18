@@ -47,7 +47,7 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/heart_selector"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="9dp"
             android:textOn=""
             android:textOff=""
             android:layout_above="@id/commentTextView"

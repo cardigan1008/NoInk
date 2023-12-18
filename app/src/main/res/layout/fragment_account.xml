@@ -28,7 +28,7 @@
         android:layout_height="100dp"
         android:layout_margin="@dimen/defaultPadding"
         app:cardCornerRadius="@dimen/defaultPadding"
-        app:cardBackgroundColor="@color/teal_200"
+        app:cardBackgroundColor="@color/blue"
         android:layout_gravity="center"
         >
 

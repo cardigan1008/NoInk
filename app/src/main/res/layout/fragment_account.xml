@@ -48,7 +48,7 @@
                 android:padding="@dimen/defaultPadding"
                 />
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/record_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -76,7 +76,7 @@
                 android:padding="@dimen/defaultPadding"
                 />
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/article_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0"

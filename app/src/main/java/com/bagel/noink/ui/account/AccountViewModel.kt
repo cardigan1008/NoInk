@@ -27,7 +27,8 @@ class AccountViewModel : ViewModel() {
     val _birthday = MutableLiveData<String>()
     val _wechatId = MutableLiveData<String>()
     val _uid = MutableLiveData<Long>()
-
+    val _recordNum = MutableLiveData<Int>()
+    val _articleNum = MutableLiveData<Int>()
 
     companion object {
         var token: String? = ""
@@ -43,7 +44,9 @@ class AccountViewModel : ViewModel() {
             18,
             "13989884399",
             "2005-8-31",
-            Uri.parse("")
+            Uri.parse(""),
+            0,
+            0
         )
 
         var cardList: MutableList<RecordCardBean> = ArrayList()
@@ -57,7 +60,8 @@ class AccountViewModel : ViewModel() {
             userInfo?.birthday = data.getString("birthday")
             userInfo?.wechatId = data.getString("wechatId")
             userInfo?.userprofile = Uri.parse(data.getString("userprofile"))
-
+            userInfo?.recordNum = data.getInt("recordNum")
+            userInfo?.articleNum = data.getInt("articleNum")
             if (data.getString("tokenValue") != "null") {
                 token = data.getString("tokenValue")
             }
@@ -69,6 +73,8 @@ class AccountViewModel : ViewModel() {
                 instance!!._birthday.value = userInfo?.birthday
                 instance!!._wechatId.value = userInfo?.wechatId
                 instance!!._uid.value = userInfo?.id
+                instance!!._recordNum.value = userInfo?.recordNum
+                instance!!._articleNum.value = userInfo?.articleNum
             }
         }
 

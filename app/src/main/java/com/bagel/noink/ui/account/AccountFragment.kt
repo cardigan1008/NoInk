@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +37,8 @@ class AccountFragment : Fragment() {
     var itemBirthday: PersonalItemView? = null
     var itemUid: PersonalItemView? = null
     var itemUpdatePassword: PersonalItemView? = null
+    var recordNumText: TextView? = null
+    var articleNumText: TextView? = null
 
     var newGender: Boolean = true
     var newBirthday: String? = null
@@ -67,6 +70,14 @@ class AccountFragment : Fragment() {
             itemGender?.setData(if (newData) "男" else "女")
         }
 
+        slideshowViewModel._articleNum.observe(viewLifecycleOwner) { newData ->
+            articleNumText?.text = newData.toString()
+        }
+
+        slideshowViewModel._recordNum.observe(viewLifecycleOwner) { newData ->
+            recordNumText?.text = newData.toString()
+        }
+
         binding.testButton.setOnClickListener {
             findNavController().navigate(R.id.action_nav_personal_account_to_nav_login)
         }
@@ -89,6 +100,8 @@ class AccountFragment : Fragment() {
         itemBirthday = activity?.findViewById(R.id.item_birthday)
         itemUid = activity?.findViewById(R.id.item_uid)
         itemUpdatePassword = activity?.findViewById(R.id.item_update_password)
+        recordNumText = activity?.findViewById(R.id.record_num)
+        articleNumText = activity?.findViewById(R.id.article_num)
 
         // 显示用户信息
         AccountViewModel.userInfo?.let { itemUsername?.setData(it.username) }
@@ -100,9 +113,11 @@ class AccountFragment : Fragment() {
         }
         AccountViewModel.userInfo?.let { itemBirthday?.setData(it.birthday) }
         AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
+        recordNumText?.text = AccountViewModel.userInfo?.recordNum.toString()
+        articleNumText?.text = AccountViewModel.userInfo?.articleNum.toString()
 
         // 跳转到修改用户名界面
-        itemUsername?.setOnClickListener {slideNavToEditInfo("username")}
+        itemUsername?.setOnClickListener { slideNavToEditInfo("username") }
 
         // 跳转到修改微信账号界面
         itemWechatId?.setOnClickListener { slideNavToEditInfo("wechat") }
@@ -181,7 +196,7 @@ class AccountFragment : Fragment() {
 
 
         // 跳转到修改用户密码界面
-        itemUpdatePassword?.setOnClickListener {slideNavToEditInfo("password") }
+        itemUpdatePassword?.setOnClickListener { slideNavToEditInfo("password") }
 
         activity?.findViewById<Button>(R.id.exitButton)
             ?.setOnClickListener {

@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -35,7 +36,7 @@ class RegisterActivity : AppCompatActivity() {
     var passwordRepErrMsg: TextView? = null
     var backToLoginPrompt: TextView? = null
     var usernameMsg: TextView? = null
-
+    var backIcon: ImageView? = null
     // 有用的信息
     var birthday: String = ""
     var usernameExist: Boolean = false
@@ -55,6 +56,7 @@ class RegisterActivity : AppCompatActivity() {
         passwordRepErrMsg = findViewById(R.id.passwordRepErrMsg)
         backToLoginPrompt = findViewById(R.id.backToLoginPrompt)
         usernameMsg = findViewById(R.id.usernameMsg)
+        backIcon = findViewById(R.id.back_image)
         val genderRadioGroup: RadioGroup? = findViewById(R.id.radioGroup)
 
         // 从单选框中获得性别信息
@@ -193,6 +195,7 @@ class RegisterActivity : AppCompatActivity() {
 
         // 返回登录页面
         backToLoginPrompt!!.setOnClickListener { finish() }
+        backIcon!!.setOnClickListener { finish() }
     }
 
     private fun validatePassword() {

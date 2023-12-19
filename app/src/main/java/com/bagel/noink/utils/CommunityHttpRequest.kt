@@ -17,7 +17,7 @@ class CommunityHttpRequest {
 
 
     fun getCommunityList(callbackListener: CommunityCallbackListener) {
-        val url = Contants.SERVER_ADDRESS + "/api/article/data" // 请根据实际情况替换为正确的 API 地址
+        val url = Contants.SERVER_ADDRESS + "/api/article/datum" // 请根据实际情况替换为正确的 API 地址
         val headerName = "satoken";
         val headerValue = AccountViewModel.token!!
         httpRequest.get(url, headerName, headerValue, object : HttpRequest.CallbackListener {

@@ -36,7 +36,7 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="Your Name"
+                android:text=""
                 app:layout_constraintEnd_toStartOf="@+id/avatar"
                 app:layout_constraintTop_toTopOf="@+id/avatar"
                 android:layout_marginTop="40dp" />

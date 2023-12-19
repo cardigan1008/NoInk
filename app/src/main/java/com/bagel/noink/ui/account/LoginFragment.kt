@@ -46,7 +46,8 @@ class LoginFragment : NoBottomTabFragment() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
 //        requireActivity().findViewById<Toolbar>(R.id.toolbar)?.visibility = View.GONE
-
+//        setHasOptionsMenu(true)
+//        requireActivity().actionBar?.hide()
         val loginViewModel =
             ViewModelProvider(this).get(LoginViewModel::class.java)
         _binding = FragmentLoginBinding.inflate(inflater, container, false)

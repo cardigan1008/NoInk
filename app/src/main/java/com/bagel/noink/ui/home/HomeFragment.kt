@@ -1,41 +1,36 @@
 package com.bagel.noink.ui.home
 
 import RecordCardAdapter
-import kotlin.random.Random
+import ScaleInTransformer
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.bagel.noink.databinding.FragmentHomeBinding
 import android.content.Intent
 import android.database.Cursor
 import android.icu.util.Calendar
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
-import android.widget.GridLayout
-import androidx.lifecycle.lifecycleScope
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
-import com.bagel.noink.adapter.HistoryAdapter
 import com.bagel.noink.bean.ListItemBean
-import com.bagel.noink.bean.RecordCardBean
 import com.bagel.noink.databinding.FragmentHomeCatBinding
 import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.AliyunOSSManager
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.HttpRequest
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -118,6 +113,19 @@ class HomeFragment : Fragment() {
             selectedCardPosition = postion
         }
         viewPager.adapter = recordCardAdapter
+
+        viewPager.offscreenPageLimit = 3
+
+        val recyclerView= viewPager.getChildAt(0) as RecyclerView
+        val padding = 20
+        recyclerView.setPadding(padding, 0, padding, 0)
+        recyclerView.clipToPadding = false
+
+        val compositePageTransformer = CompositePageTransformer()
+        compositePageTransformer.addTransformer(ScaleInTransformer())
+        compositePageTransformer.addTransformer(MarginPageTransformer(10))
+        viewPager.setPageTransformer(compositePageTransformer)
+
         // cardsList 是包含卡片数据的列表
         if (cardCache == null) {
             cardCache = getCardList()

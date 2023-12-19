@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".ui.home.HomeCatFragment">
 
     <TextView
@@ -23,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:clipToPadding="false"
         tools:layout_editor_absoluteX="-152dp">
 
     </androidx.viewpager2.widget.ViewPager2>

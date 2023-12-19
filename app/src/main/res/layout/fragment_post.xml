@@ -27,6 +27,7 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="5dp"
                 app:vpi_indicatorType="CIRCLE"
+                app:vpi_selected_color="@color/teal_200"
                 app:layout_constraintTop_toBottomOf="@id/viewPager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,11 +41,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:textSize="@dimen/titleTextSize"
                 app:layout_constraintTop_toBottomOf="@+id/pagerIndicator"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textStyle="bold"
-                android:text="Your Title" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/text"
@@ -55,7 +56,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="Your long text goes here..."
                 android:layout_marginTop="10dp" />
 
             <TextView
@@ -64,10 +64,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:textSize="@dimen/dateTextSize"
                 app:layout_constraintTop_toBottomOf="@+id/text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="Your date"
                 android:width="363dp"
                 android:layout_marginTop="10dp" />
 

@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="@dimen/titleTextSize"
         android:text="Your Title" />
 
     <TextView
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:textSize="10sp"
+        android:textSize="@dimen/dateTextSize"
         app:layout_constraintTop_toBottomOf="@+id/tags"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

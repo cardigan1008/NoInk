@@ -1,5 +1,6 @@
 package com.bagel.noink.adapter
 
+import android.app.Activity
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bumptech.glide.Glide
 
-class ImageAdapter(private val imageUris: List<Uri>) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class ImageAdapter(private val imageUris: List<Uri>, private val activity: Activity) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false)
@@ -22,7 +23,12 @@ class ImageAdapter(private val imageUris: List<Uri>) : RecyclerView.Adapter<Imag
             .load(imageUri)
             .centerCrop()
             .into(holder.imageView)
-
+        holder.deleteView.setOnClickListener {
+            imageUris.toMutableList().removeAt(position)
+            activity?.runOnUiThread{
+                notifyDataSetChanged()
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -31,5 +37,6 @@ class ImageAdapter(private val imageUris: List<Uri>) : RecyclerView.Adapter<Imag
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val deleteView: ImageView = itemView.findViewById(R.id.deleteImageView)
     }
 }

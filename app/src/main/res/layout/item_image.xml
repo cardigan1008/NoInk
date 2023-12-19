@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -13,6 +13,12 @@
         android:layout_marginBottom="16dp"
         android:scaleType="centerCrop" />
 
-    <!-- 可以添加其他视图元素 -->
+    <ImageView
+        android:id="@+id/deleteImageView"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignTop="@id/imageView"
+        android:layout_alignEnd="@id/imageView"
+        android:src="@drawable/ic_delete" />
 
-</LinearLayout>
+</RelativeLayout>

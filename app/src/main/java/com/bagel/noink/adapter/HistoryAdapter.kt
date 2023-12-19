@@ -69,9 +69,16 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
                 // 设置到对应的 TextView 中
                 holder.tvDay.text = day
                 holder.tvMonth.text = month
+
+                if (position == 0) {
+                    holder.tvLine.visibility = View.GONE
+                } else {
+                    holder.tvLine.visibility = View.VISIBLE
+                }
             } else {
                 holder.tvDay.visibility = View.INVISIBLE
                 holder.tvMonth.visibility = View.INVISIBLE
+                holder.tvLine.visibility = View.GONE
             }
         }
 

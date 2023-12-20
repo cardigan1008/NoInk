@@ -18,9 +18,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
+import com.bagel.noink.activity.CommunityActivity
+import com.bagel.noink.activity.HistoryActivity
 import com.bagel.noink.adapter.ImageAdapter
 import com.bagel.noink.bean.CommunityItemBean
 import com.bagel.noink.databinding.FragmentTexteditBinding
@@ -62,8 +66,7 @@ class TextEditFragment: Fragment() {
         textGenHttpRequest = TextGenHttpRequest()
         title = binding.editTextTitle
         content = binding.editText
-        val toolbarImage: ImageButton = requireActivity().findViewById(R.id.toolbar_upload)
-        toolbarImage.visibility = View.VISIBLE
+
 
         setTags(inflater)
         setImageUploadButton()
@@ -75,7 +78,6 @@ class TextEditFragment: Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setPostUploadButton(){
         val postUploadButton:ImageButton = requireActivity().findViewById(R.id.toolbar_upload)
-
         postUploadButton.setOnClickListener {
             textGenHttpRequest.sendPostRequest(CommunityItemBean(
                 aid = 0,
@@ -96,9 +98,7 @@ class TextEditFragment: Fragment() {
                 commentList = emptyList()
             ), object : TextGenHttpRequest.TextGenCallbackListener {
                 override fun onSuccess(responseJson: JSONObject) {
-                    // 处理请求成功的响应JSON对象
-                    // 在这里使用responseJson
-                    Log.i("post succuss", responseJson.getString("code"));
+
                 }
                 override fun onFailure(errorMessage: String) {
                     // 处理请求失败
@@ -106,7 +106,12 @@ class TextEditFragment: Fragment() {
                 }
             })
 
+            activity?.runOnUiThread{
+                val navController: NavController = findNavController()
+                navController.navigate(R.id.nav_home)
+            }
         }
+
     }
 
     private fun setTags(inflater: LayoutInflater){
@@ -236,8 +241,12 @@ class TextEditFragment: Fragment() {
 
 
     private fun setGenButton(){
-        val genButton = binding.buttonRegenerate
+        val genButton = binding.buttonGenerate
         genButton.setOnClickListener {
+            generateText()
+        }
+        val regenerateButton = binding.buttonRegenerate
+        regenerateButton.setOnClickListener {
             generateText()
         }
     }
@@ -275,7 +284,14 @@ class TextEditFragment: Fragment() {
                     generatedText = responseJson.getString("generatedText");
                     TextGenViewModel.updateOriginText(responseJson.getString("originText"))
                     TextGenViewModel.updateType(responseJson.getString("type"))
-                     hideLoadingDialog()
+                    activity?.runOnUiThread{
+                        binding.buttonRegenerate.visibility = View.VISIBLE
+                        binding.buttonSave.visibility = View.VISIBLE
+                        binding.buttonGenerate.visibility = View.GONE
+                        val toolbarImage: ImageButton = requireActivity().findViewById(R.id.toolbar_upload)
+                        toolbarImage.visibility = View.VISIBLE
+                    }
+                    hideLoadingDialog()
                 }
                 override fun onFailure(errorMessage: String) {
                     // 处理请求失败
@@ -291,6 +307,8 @@ class TextEditFragment: Fragment() {
         val saveButton = binding.buttonSave
         saveButton.setOnClickListener {
             saveText()
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.nav_home)
         }
     }
 

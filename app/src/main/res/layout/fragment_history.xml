@@ -25,10 +25,12 @@
 
             <ImageView
                 android:id="@+id/avatar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginBottom="-50dp"
+                android:layout_marginEnd="10dp"
                 android:src="@mipmap/cat_background"
+                android:background="@drawable/round_avatar_backround"
                 app:layout_constraintBottom_toBottomOf="@id/background"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -37,9 +39,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text=""
+                android:gravity="center"
+                android:layout_marginEnd="7dp"
                 app:layout_constraintEnd_toStartOf="@+id/avatar"
                 app:layout_constraintTop_toTopOf="@+id/avatar"
-                android:layout_marginTop="40dp" />
+                android:layout_marginTop="7dp" />
 
             <!-- Add this TextView for empty state -->
             <TextView

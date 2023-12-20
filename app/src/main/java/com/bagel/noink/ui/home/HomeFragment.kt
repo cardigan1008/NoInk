@@ -88,22 +88,6 @@ class HomeFragment : Fragment() {
             textView.text = it
         }
 
-//        val imageResource = resources.getIdentifier("ic_button_ink_bottle", "mipmap", requireActivity().packageName)
-//        if (imageResource != 0) { // 检查资源是否存在
-//            val imageView = ImageView(requireContext())
-//            val params = GridLayout.LayoutParams()
-//            params.width = 200 // 设置图片宽度
-//            params.height = 200 // 设置图片高度
-//            imageView.layoutParams = params
-//
-//            // 设置 ImageView 的图片资源
-//            imageView.setImageResource(imageResource)
-//
-//        } else {
-//            // 如果资源不存在，进行相应的处理，如打印日志或其他操作
-//            Log.e("ImageView", "PNG image resource not found")
-//        }
-
         button.setOnClickListener {
             navController.navigate(R.id.nav_mood)
         }
@@ -127,11 +111,15 @@ class HomeFragment : Fragment() {
         compositePageTransformer.addTransformer(MarginPageTransformer(10))
         viewPager.setPageTransformer(compositePageTransformer)
 
-        // cardsList 是包含卡片数据的列表
-        if (cardCache == null) {
-            cardCache = getCardList()
+        (if (cardCache == null) {
+            getCardList()
+        } else {
+            cardCache
+        })?.let {
+            recordCardAdapter!!.updateData(
+                it
+            )
         }
-        recordCardAdapter!!.updateData(getCardList())
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -295,7 +283,7 @@ class HomeFragment : Fragment() {
                         )
                     )
                 }
-
+//                cardCache = cardList
                 // 在主线程上调用 notifyDataSetChanged()
                 activity?.runOnUiThread {
                     recordCardAdapter?.notifyDataSetChanged()

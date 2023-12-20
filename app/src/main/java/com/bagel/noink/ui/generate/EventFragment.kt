@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.EventBinding
@@ -90,7 +91,13 @@ class EventFragment : Fragment() {
         val navButton: Button = binding.button
         navButton.setOnClickListener{
             val navController = findNavController()
-            navController.navigate(R.id.nav_length)
+            val navOptions = NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)   // 设置进入动画
+                .setExitAnim(R.anim.slide_out_left)   // 设置退出动画
+                .setPopEnterAnim(R.anim.slide_in_left)   // 设置返回动画
+                .setPopExitAnim(R.anim.slide_out_right)   // 设置返回退出动画
+                .build()
+            navController.navigate(R.id.nav_length, null, navOptions)
         }
     }
     override fun onDestroyView() {

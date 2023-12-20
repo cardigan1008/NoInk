@@ -109,7 +109,7 @@ class TextGenerationFragment : Fragment() {
     private fun handleSelectedImages(imageUris: List<Uri>) {
         val recyclerView: RecyclerView = binding.recyclerView
 
-        val adapter = ImageAdapter(imageUris, activity  as Activity)
+        val adapter = ImageAdapter(imageUris.toMutableList(), activity  as Activity)
         recyclerView.adapter = adapter
 
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

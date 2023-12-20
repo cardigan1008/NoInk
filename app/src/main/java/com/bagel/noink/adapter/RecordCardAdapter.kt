@@ -92,7 +92,13 @@ class RecordCardAdapter(
 
             text_home.text = "记录下今天干的事情"
             uploadButton.setOnClickListener {
-                itemView.findNavController().navigate(R.id.nav_mood)
+                val navOptions = NavOptions.Builder()
+                    .setEnterAnim(R.anim.slide_in_right)   // 设置进入动画
+                    .setExitAnim(R.anim.slide_out_left)   // 设置退出动画
+                    .setPopEnterAnim(R.anim.slide_in_left)   // 设置返回动画
+                    .setPopExitAnim(R.anim.slide_out_right)   // 设置返回退出动画
+                    .build()
+                itemView.findNavController().navigate(R.id.nav_mood, null, navOptions)
             }
         }
     }

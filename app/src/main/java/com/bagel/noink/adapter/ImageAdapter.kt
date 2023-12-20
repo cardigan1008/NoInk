@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bumptech.glide.Glide
 
-class ImageAdapter(private val imageUris: List<Uri>, private val activity: Activity) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class ImageAdapter(private var imageUris: MutableList<Uri>, private val activity: Activity) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false)
@@ -23,9 +23,11 @@ class ImageAdapter(private val imageUris: List<Uri>, private val activity: Activ
             .load(imageUri)
             .centerCrop()
             .into(holder.imageView)
+
         holder.deleteView.setOnClickListener {
-            imageUris.toMutableList().removeAt(position)
+            imageUris.removeAt(position)
             activity?.runOnUiThread{
+                notifyItemRemoved(position)
                 notifyDataSetChanged()
             }
         }

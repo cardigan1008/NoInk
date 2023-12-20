@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
 import com.bagel.noink.databinding.FragmentLengthBinding
@@ -49,7 +50,13 @@ class LengthFragment: Fragment() {
         val navButton = binding.button
         navButton.setOnClickListener {
             val navController = findNavController()
-            navController.navigate(R.id.nav_textEdit)
+            val navOptions = NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)   // 设置进入动画
+                .setExitAnim(R.anim.slide_out_left)   // 设置退出动画
+                .setPopEnterAnim(R.anim.slide_in_left)   // 设置返回动画
+                .setPopExitAnim(R.anim.slide_out_right)   // 设置返回退出动画
+                .build()
+            navController.navigate(R.id.nav_textEdit, null, navOptions)
         }
     }
     override fun onDestroyView() {

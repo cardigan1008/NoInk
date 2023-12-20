@@ -70,7 +70,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private fun getHistory(): ArrayList<ListItemBean> {
         val historyList = ArrayList<ListItemBean>()
-
+        binding.bottomLine.text = "加载中……"
         val callbackListener = object : HttpRequest.CallbackListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onSuccess(responseJson: JSONObject) {
@@ -111,6 +111,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                     adapter?.notifyDataSetChanged()
                     binding.tvEmptyState.visibility =
                         if (historyList.isEmpty()) View.VISIBLE else View.GONE
+                    binding.bottomLine.text = "——我也是有底线的——"
                 }
             }
 

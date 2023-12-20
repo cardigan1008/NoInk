@@ -59,7 +59,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/avatar"/>
+
+            <TextView
+                android:id="@+id/bottomLine"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:layout_constraintTop_toBottomOf="@id/history_recycle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="——我也是有底线的——"
+                android:textColor="@color/gray"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.core.widget.NestedScrollView>
 

@@ -225,7 +225,7 @@ class TextEditFragment: Fragment() {
         binding?.let { bound ->
             val recyclerView: RecyclerView = bound.recyclerView
 
-            val adapter = ImageAdapter(imageUris, activity as Activity)
+            val adapter = ImageAdapter(imageUris.toMutableList(), activity as Activity)
             recyclerView.adapter = adapter
 
             val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

@@ -35,7 +35,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="270dp"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/defaultPadding"
                 app:cardCornerRadius="15dp"
@@ -127,10 +127,11 @@
             <TextView
                 android:id="@+id/content"
                 android:layout_width="260dp"
+                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
                 android:text="@string/content_demo_movie"
                 android:padding="@dimen/defaultPadding"
-                android:maxLength="100"
+                android:maxLines="3"
                 android:layout_weight="1" />
 
 

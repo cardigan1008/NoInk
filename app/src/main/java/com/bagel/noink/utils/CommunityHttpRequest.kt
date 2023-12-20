@@ -31,7 +31,7 @@ class CommunityHttpRequest {
         })
     }
     fun getCommunityDetail(aid: String, callbackListener: CommunityCallbackListener){
-        val url = Contants.SERVER_ADDRESS + "/api/article/detail"
+        val url = Contants.SERVER_ADDRESS + "/api/article/details"
         val headerName = "satoken";
         val headerValue = AccountViewModel.token!!
         val params = mapOf(

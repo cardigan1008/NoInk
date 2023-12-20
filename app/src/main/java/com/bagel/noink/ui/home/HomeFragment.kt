@@ -20,10 +20,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentHomeCatBinding
@@ -31,6 +31,7 @@ import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.AliyunOSSManager
 import com.bagel.noink.utils.Contants
 import com.bagel.noink.utils.HttpRequest
+import me.relex.circleindicator.CircleIndicator3
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -139,11 +140,15 @@ class HomeFragment : Fragment() {
                     binding.moreCard.visibility = View.GONE
                 } else {
                     if (homeViewModel.count_of_card.value!! > 1) {
-                        binding.moreCard.visibility = View.VISIBLE
+                        binding.moreCard.visibility = View.GONE
                     }
                 }
             }
         })
+
+        val indicator: CircleIndicator3 = binding.indicator
+        indicator.setViewPager(viewPager)
+        viewPager.adapter?.registerAdapterDataObserver(indicator.getAdapterDataObserver());
 
         // Restore selected card position if available
         if (selectedCardPosition != -1) {
@@ -156,7 +161,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.count_of_card.observe(viewLifecycleOwner) {
             if (homeViewModel.count_of_card.value!! > 1 && selectedCardPosition == 1) {
-                binding.moreCard.visibility = View.VISIBLE
+                binding.moreCard.visibility = View.GONE
             }
         }
         return root

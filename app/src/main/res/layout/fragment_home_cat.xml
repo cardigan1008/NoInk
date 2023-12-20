@@ -17,7 +17,21 @@
         app:layout_constraintStart_toStartOf="@+id/viewPager"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.85"
+        android:visibility="gone"
         android:textColor="@color/gray"/>
+
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:ci_drawable="@drawable/green_radius"
+        app:ci_drawable_unselected="@drawable/green_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/viewPager"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8"
+        />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

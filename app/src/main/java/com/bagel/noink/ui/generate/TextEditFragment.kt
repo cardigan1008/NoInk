@@ -215,7 +215,8 @@ class TextEditFragment: Fragment() {
     }
     private fun showLoadingDialog() {
         dialog = LoadingDialog(requireActivity())
-        dialog?.show()
+        dialog?.showWithLock("Loading ...")
+
     }
     private fun hideLoadingDialog() {
         dialog?.dismiss()
@@ -242,7 +243,9 @@ class TextEditFragment: Fragment() {
     }
     private fun generateText() {
         // 实例化TextGenHttpRequest类
-        // showLoadingDialog()
+
+
+        showLoadingDialog()
         val editText = binding.editText
         TextGenViewModel.updateOriginText(editText.text.toString())
         TextGenViewModel.updateInfoUrls(selectedImageUris)
@@ -272,7 +275,7 @@ class TextEditFragment: Fragment() {
                     generatedText = responseJson.getString("generatedText");
                     TextGenViewModel.updateOriginText(responseJson.getString("originText"))
                     TextGenViewModel.updateType(responseJson.getString("type"))
-                    // hideLoadingDialog()
+                     hideLoadingDialog()
                 }
                 override fun onFailure(errorMessage: String) {
                     // 处理请求失败

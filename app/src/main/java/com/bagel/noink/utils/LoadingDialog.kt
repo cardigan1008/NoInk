@@ -13,61 +13,55 @@ import android.view.animation.Animation
 import androidx.appcompat.widget.AppCompatImageView
 import com.bagel.noink.R
 import org.jetbrains.annotations.Nullable
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.View
+import android.view.Window
+import android.widget.ProgressBar
+import android.widget.TextView
 
 
-class LoadingDialog : Dialog {
-    private var objectAnimator: ObjectAnimator? = null
-    private var circle: AppCompatImageView? = null
-    private val duration: Long = 5000
-    private lateinit var context: Context
-    constructor(context: Context) : super(context){
-        this.context = context
-    }
-    constructor(context: Context, themeResId: Int) : super(context, themeResId){
-        this.context = context
-    }
-    protected constructor(
-        context: Context,
-        cancelable: Boolean,
-        @Nullable cancelListener: DialogInterface.OnCancelListener?
-    ) : super(context, cancelable, cancelListener){
-        this.context = context
-    }
+class LoadingDialog(context: Context) : Dialog(context) {
+    private val progressBar: ProgressBar
+    private val messageTextView: TextView
+    private var overlay: View? = null
+    init {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        setContentView(R.layout.loading_dialog)
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        setCancelable(false)
 
-    override fun onCreate(savedInstanceState: Bundle) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_loading)
-
+        progressBar = findViewById(R.id.progress_bar)
+        messageTextView = findViewById(R.id.loading_message)
+        overlay = findViewById(R.id.loading_layout)
     }
 
-    override fun show() {
-        super.show()
-        startAnim()
-        setOnDismissListener { dialog: DialogInterface? -> endAnim() }
+    fun setMessage(message: String) {
+        messageTextView.text = message
     }
 
-    /**
-     * 启动动画
-     */
-    private fun startAnim() {
-        setCanceledOnTouchOutside(false)
-        circle = (context as Activity).findViewById(R.id.loading)
-        var objectAnimator = ObjectAnimator.ofFloat(circle, "rotation", 0f, 360f)
-        //设置动画时间
-        objectAnimator.setDuration(duration)
-        //设置动画重复次数，这里-1代表无限
-        objectAnimator.setRepeatCount(Animation.INFINITE)
-        //设置动画循环模式。
-        objectAnimator.setRepeatMode(ValueAnimator.RESTART)
-        objectAnimator.start()
+    fun show(message: String) {
+        setMessage(message)
+        show()
+    }
+    fun showWithLock(message: String) {
+        setMessage(message)
+        lockScreen()
+        show()
     }
 
-    /**
-     * 结束动画
-     */
-    private fun endAnim() {
-        objectAnimator!!.end()
-        objectAnimator = null
-        circle = null
+    override fun dismiss() {
+        super.dismiss()
+        unlockScreen()
+    }
+
+    private fun lockScreen() {
+        overlay?.visibility = View.VISIBLE
+        // 禁用触摸事件
+        overlay?.setOnTouchListener { _, _ -> true }
+    }
+
+    private fun unlockScreen() {
+        overlay?.visibility = View.GONE
     }
 }

@@ -5,10 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="40dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_margin="45dp"
+        android:layout_height="580dp"
         android:background="@drawable/border_background"
         android:gravity="center"
         android:orientation="vertical"
@@ -84,4 +101,5 @@
 
 
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

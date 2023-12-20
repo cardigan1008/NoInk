@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.size
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
@@ -123,7 +124,15 @@ class RecordCardAdapter(
                 val bundle = bundleOf(
                     "listItem" to card
                 )
-                navController.navigate(R.id.action_nav_home_to_nav_card_details, bundle)
+
+                val navOptions = NavOptions.Builder()
+                    .setEnterAnim(R.anim.scale_up)   // 设置进入动画
+//                    .setExitAnim(R.anim.slide_out_left)   // 设置退出动画
+                    .setPopEnterAnim(R.anim.fade_in)   // 设置返回动画
+                    .setPopExitAnim(R.anim.scale_down)   // 设置返回退出动画
+                    .build()
+
+                navController.navigate(R.id.action_nav_home_to_nav_card_details, bundle, navOptions)
             }
         }
     }

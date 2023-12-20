@@ -46,7 +46,8 @@ class AccountViewModel : ViewModel() {
             "2005-8-31",
             Uri.parse(""),
             0,
-            0
+            0,
+            ""
         )
 
         var cardList: MutableList<RecordCardBean> = ArrayList()
@@ -62,6 +63,7 @@ class AccountViewModel : ViewModel() {
             userInfo?.userprofile = Uri.parse(data.getString("userprofile"))
             userInfo?.recordNum = data.getInt("recordNum")
             userInfo?.articleNum = data.getInt("articleNum")
+            userInfo?.avatar = data.getString("userprofile")
             if (data.getString("tokenValue") != "null") {
                 token = data.getString("tokenValue")
             }

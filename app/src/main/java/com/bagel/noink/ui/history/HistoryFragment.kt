@@ -28,6 +28,9 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     private var _binding: FragmentHistoryBinding? = null
     private var recyclerView: RecyclerView? = null
     private var adapter: HistoryAdapter? = null
+    private var historyList: List<ListItemBean>? = null
+    private var avatar: Uri? = null
+    private var username: String? = null
 
     private val binding get() = _binding!!
 
@@ -51,7 +54,16 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private fun addRecycleView(view: View) {
         recyclerView = view.findViewById(R.id.history_recycle)
-        adapter = HistoryAdapter(getHistory(), findNavController())
+        adapter = (if (historyList == null) {
+            historyList = getHistory()
+            historyList
+        } else {
+            historyList
+        })?.let {
+            HistoryAdapter(
+                it, findNavController()
+            )
+        }
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(context)
     }
@@ -97,7 +109,8 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 // 在主线程上调用 notifyDataSetChanged()
                 activity?.runOnUiThread {
                     adapter?.notifyDataSetChanged()
-                    binding.tvEmptyState.visibility = if (historyList.isEmpty()) View.VISIBLE else View.GONE
+                    binding.tvEmptyState.visibility =
+                        if (historyList.isEmpty()) View.VISIBLE else View.GONE
                 }
             }
 
@@ -112,38 +125,24 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
             AccountViewModel.token = sharedPreferences?.getString("token", "")
         }
-        httpRequest.get(Contants.SERVER_ADDRESS + "/api/record/allRecord", "satoken", AccountViewModel.token!!,callbackListener)
+        httpRequest.get(
+            Contants.SERVER_ADDRESS + "/api/record/allRecord",
+            "satoken",
+            AccountViewModel.token!!,
+            callbackListener
+        )
 
         return historyList
     }
 
     private fun bindingUserInfo() {
-        val callbackListener = object : HttpRequest.CallbackListener {
-            override fun onSuccess(responseJson: JSONObject) {
-                val data = responseJson.getJSONObject("data")
-                val avatar= Uri.parse(data.getString("userprofile"))
-                val username = data.getString("username")
-
-                activity?.runOnUiThread {
-                    Glide.with(this@HistoryFragment)
-                        .load(avatar)
-                        .into(binding.avatar)
-                    binding.username.text = username
-                }
-            }
-
-            override fun onFailure(errorMessage: String) {
-                print(errorMessage)
-            }
+        if (avatar == null) {
+            avatar = Uri.parse(AccountViewModel.userInfo?.avatar)
         }
-
-        if (AccountViewModel.token == "" || AccountViewModel.token == null || AccountViewModel.token == "null") {
-            val sharedPreferences =
-                activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-            AccountViewModel.token = sharedPreferences?.getString("token", "")
-        }
-
-        val httpRequest = HttpRequest()
-        httpRequest.get(Contants.SERVER_ADDRESS + "/api/user/userInfo", "satoken", AccountViewModel.token!!, callbackListener)
+        username = AccountViewModel.userInfo?.username
+        Glide.with(this@HistoryFragment)
+            .load(avatar)
+            .into(binding.avatar)
+        binding.username.text = username
     }
 }

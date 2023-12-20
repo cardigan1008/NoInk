@@ -12,5 +12,6 @@ data class UserInfoBean(
     var birthday: String,
     var userprofile: Uri,
     var recordNum: Int,
-    var articleNum: Int
+    var articleNum: Int,
+    var avatar: String
 )

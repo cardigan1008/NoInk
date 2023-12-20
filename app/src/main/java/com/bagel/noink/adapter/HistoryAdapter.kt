@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
 import com.bagel.noink.bean.ListItemBean
@@ -25,7 +26,8 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.history_recycleview_item, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.history_recycleview_item, parent, false)
         return HistoryViewHolder(view)
     }
 
@@ -86,7 +88,19 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder> {
             val bundle = bundleOf(
                 "listItem" to historyItemBean
             )
-            navController.navigate(R.id.action_nav_history_list_to_nav_history_details, bundle)
+
+            val navOptions = NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)   // 设置进入动画
+                .setExitAnim(R.anim.slide_out_left)   // 设置退出动画
+                .setPopEnterAnim(R.anim.slide_in_left)   // 设置返回动画
+                .setPopExitAnim(R.anim.slide_out_right)   // 设置返回退出动画
+                .build()
+
+            navController.navigate(
+                R.id.action_nav_history_list_to_nav_history_details,
+                bundle,
+                navOptions
+            )
         }
     }
 }

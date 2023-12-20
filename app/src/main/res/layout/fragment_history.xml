@@ -18,10 +18,10 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="410dp"
                 android:id="@+id/background"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@mipmap/cat_background"/>
+                android:src="@mipmap/ic_background_text"/>
 
             <ImageView
                 android:id="@+id/avatar"

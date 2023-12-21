@@ -82,7 +82,6 @@ class AccountFragment : Fragment() {
             findNavController().navigate(R.id.action_nav_personal_account_to_nav_login)
         }
 
-        binding.avatarImageViewContainer.bringToFront()
         return root
     }
 

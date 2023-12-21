@@ -84,7 +84,7 @@ class CommunityFragment : Fragment() {
                     val errorMessage = "Failed to fetch community list"
                     Log.e(TAG, errorMessage)
                 }
-
+                Log.i(TAG, "check")
                 activity?.runOnUiThread {
                     adapter?.notifyDataSetChanged()
                 }
@@ -119,7 +119,7 @@ class CommunityFragment : Fragment() {
 
         val communityItem = CommunityItemBean(
             aid, title, avatar, createdAt, updatedAt, content, imageUrl,
-            moods, events, pv, likes, state, comments, uid, username, listOf()
+            moods, events, pv, likes, comments, state , uid, username, listOf()
         )
 
         val commentsArray = dataObject.optJSONArray("commentList")

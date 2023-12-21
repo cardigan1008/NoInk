@@ -1,19 +1,28 @@
 package com.bagel.noink.ui.history
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.PagerAdapter
 import com.bagel.noink.R
+import com.bagel.noink.activity.SearchActivity
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentDetailsBinding
+import com.bagel.noink.ui.account.AccountViewModel
+import com.bagel.noink.utils.Contants
+import com.bagel.noink.utils.HttpRequest
 import com.bumptech.glide.Glide
+import okhttp3.RequestBody
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -57,6 +66,31 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         val viewPager = binding.viewPager
         val pagerIndicator = binding.pagerIndicator
 
+        val delete = requireActivity().findViewById<ImageView>(R.id.search)
+        delete?.setImageResource(R.drawable.ic_delete_rubbish)
+
+        delete?.setOnClickListener {
+            val rid = arguments?.getParcelable<ListItemBean>("listItem")?.id
+
+            val callbackListener = object : HttpRequest.CallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    findNavController().navigate(R.id.nav_history_list)
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    Log.i("HttpRequest", "onFailure: $errorMessage")
+                }
+
+            }
+
+            val httpRequest = HttpRequest()
+            httpRequest.post(
+                Contants.SERVER_ADDRESS + "/api/record/delete?rid=${rid.toString()}", RequestBody.create(null, byteArrayOf()),
+                "satoken", AccountViewModel.token!!, callbackListener
+            )
+            Log.i("HttpRequest", "/api/record/delete?rid=${rid.toString()}")
+        }
+
         // Set up ViewPager2 and CirclePageIndicator
         val imagePagerAdapter = ImagePagerAdapter(imageURIs)
         viewPager.adapter = imagePagerAdapter
@@ -86,6 +120,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
             container.removeView(`object` as View)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val searchButton = requireActivity().findViewById<ImageView>(R.id.search)
+        searchButton?.setImageResource(R.drawable.ic_search_teal)
+
+        searchButton.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
         }
     }
 

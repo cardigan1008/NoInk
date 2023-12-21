@@ -27,6 +27,7 @@ import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.math.log
 
 class PostFragment : Fragment(R.layout.fragment_post) {
     private val TAG: String = "PostFragment"
@@ -221,7 +222,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
         val communityItem = CommunityItemBean(
             aid, title, avatar, createdAt, updatedAt, content, imageUrl,
-            moods, events, pv, likes, state, comments, uid, username, listOf()
+            moods, events, pv, likes, comments, state, uid, username, listOf()
         )
 
         val commentsArray = dataObject.optJSONArray("commentList")
@@ -235,6 +236,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
             }
             communityItem.commentList = commentList
         }
+
 
         return communityItem
     }

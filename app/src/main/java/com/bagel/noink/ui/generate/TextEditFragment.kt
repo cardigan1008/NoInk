@@ -307,8 +307,10 @@ class TextEditFragment: Fragment() {
         val saveButton = binding.buttonSave
         saveButton.setOnClickListener {
             saveText()
-            val navController: NavController = findNavController()
-            navController.navigate(R.id.nav_home)
+            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 

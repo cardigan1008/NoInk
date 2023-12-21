@@ -22,7 +22,7 @@ import org.json.JSONObject
 
 class CommunityFragment : Fragment() {
     private val TAG = "CommunityFragment"
-    private var communityList:MutableList<CommunityItemBean> = mutableListOf()
+    private lateinit var communityList:MutableList<CommunityItemBean>
 
     private var _binding: FragmentCommunityBinding? = null // View Binding 的实例
     private val binding get() = _binding!! // 非空的 View Binding 引用
@@ -38,7 +38,7 @@ class CommunityFragment : Fragment() {
     ): View {
         _binding = FragmentCommunityBinding.inflate(inflater, container, false)
         val view = binding.root
-
+        communityList = mutableListOf()
         // 初始化
         communityHttpRequest = CommunityHttpRequest()
 

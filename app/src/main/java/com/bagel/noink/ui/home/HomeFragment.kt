@@ -297,7 +297,7 @@ class HomeFragment : Fragment() {
 
         val httpRequest = HttpRequest()
         httpRequest.get(
-            Contants.SERVER_ADDRESS + "/api/record/allRecord",
+            Contants.SERVER_ADDRESS + "/api/record/threeRecord",
             "satoken",
             AccountViewModel.token!!,
             callbackListener

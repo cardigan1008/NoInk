@@ -7,15 +7,23 @@
     android:layout_marginBottom="10dp"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/avatar"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/avatar_container"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_cat"/>
+        app:cardCornerRadius="24dp">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/ic_cat"/>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/username"
@@ -27,8 +35,8 @@
         android:textSize="16dp"
         android:textStyle="bold"
         android:textColor="#6C6CD5"
-        app:layout_constraintStart_toEndOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
+        app:layout_constraintStart_toEndOf="@+id/avatar_container"
+        app:layout_constraintTop_toTopOf="@+id/avatar_container" />
 
     <TextView
         android:id="@+id/content"
@@ -58,8 +66,8 @@
 
     <ToggleButton
         android:id="@+id/likeButton"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="16dp"
@@ -72,9 +80,9 @@
 
     <ToggleButton
         android:id="@+id/commentButton"
-        android:layout_marginLeft="50dp"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_marginLeft="80dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:layout_marginTop="10dp"
         android:background="@mipmap/ic_comment"
         android:text="评论"
@@ -88,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2145"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0dp"
         android:layout_marginLeft="5dp"
         app:layout_constraintStart_toEndOf="@+id/likeButton"
         app:layout_constraintTop_toTopOf="@+id/likeButton" />
@@ -98,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="4399"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0dp"
         android:layout_marginLeft="5dp"
         app:layout_constraintStart_toEndOf="@+id/commentButton"
         app:layout_constraintTop_toTopOf="@+id/commentButton" />

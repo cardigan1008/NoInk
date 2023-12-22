@@ -7,7 +7,7 @@
     android:layout_marginBottom="10dp"
     android:background="@color/white">
 
-    <androidx.cardview.widget.CardView
+<!--    <androidx.cardview.widget.CardView
         android:id="@+id/avatar_container"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -23,7 +23,61 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             app:srcCompat="@mipmap/ic_cat"/>
+    </androidx.cardview.widget.CardView>-->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/avatar_container"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="36dp">
+
+        <io.getstream.avatarview.AvatarView
+            android:scaleType="centerCrop"
+            android:id="@+id/avatar"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:avatarViewBorderColor="@color/teal_200"
+            app:avatarViewBorderWidth="2dp"
+            app:avatarViewIndicatorBorderColor="@color/white"
+            app:avatarViewIndicatorBorderSizeCriteria="10"
+            app:avatarViewIndicatorColor="@color/teal_200"
+            app:avatarViewIndicatorEnabled="true"
+            app:avatarViewBorderRadius="36dp"
+            app:avatarViewIndicatorPosition="bottomRight"
+            app:avatarViewIndicatorSizeCriteria="8"
+            app:avatarViewShape="circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_cat"
+            />
     </androidx.cardview.widget.CardView>
+
+<!--    <io.getstream.avatarview.AvatarView
+        android:scaleType="center"
+        android:id="@+id/avatar_container"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        app:avatarViewBorderColor="@color/teal_200"
+        app:avatarViewBorderWidth="2dp"
+        app:avatarViewIndicatorBorderColor="@color/white"
+        app:avatarViewIndicatorBorderSizeCriteria="10"
+        app:avatarViewIndicatorColor="@color/teal_200"
+        app:avatarViewIndicatorEnabled="true"
+        app:avatarViewBorderRadius="36dp"
+        app:avatarViewIndicatorPosition="bottomRight"
+        app:avatarViewIndicatorSizeCriteria="8"
+        app:avatarViewShape="circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_cat"
+        />-->
+
 
     <TextView
         android:id="@+id/username"

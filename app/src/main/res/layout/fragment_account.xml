@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F3F3"
+    android:background="@drawable/bg_account"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".ui.account.AccountFragment">
@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="340dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/avatarImageViewContainer"

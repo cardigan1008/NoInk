@@ -51,6 +51,7 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         commentCountTextView.text = item.comments.toString()
         usernameTextView.text = item.username.toString()
 
+        gridView.visibility = View.VISIBLE
         // 如果可用，显示 imageUrls 列表中的第一个图像
         item.imageUrls?.let { imageUrls ->
             if (imageUrls.isNotEmpty()) {

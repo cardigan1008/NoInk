@@ -151,4 +151,9 @@ class MoodFragment : NoBottomTabFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 解除绑定
+        _binding = null
+    }
 }

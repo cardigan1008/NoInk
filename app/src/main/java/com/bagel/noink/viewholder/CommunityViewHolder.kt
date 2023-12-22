@@ -64,7 +64,7 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } ?: run {
             gridView.visibility = View.GONE // 如果 imageUrls 为空，则隐藏 GridView
         }
-
+        recyclerView.visibility = View.VISIBLE
         item.commentList?.let { commentItemBeans: List<CommentItemBean> ->
             if(commentItemBeans.isNotEmpty()){
                 // 在适当的地方初始化 RecyclerView，设置其布局管理器和适配器

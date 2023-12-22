@@ -43,7 +43,7 @@ class CommunitySingleImageAdapter (private val context: Context, private val ima
         }
 
         assert(position <= 9)
-        val imageView: ImageView? = positionToImageViewMap[position]?.let { view.findViewById(it) }
+        val imageView: ImageView? = positionToImageViewMap[0]?.let { view.findViewById(it) }
         Glide.with(context)
             .load(images[position]) // 加载 Uri
             .into(imageView!!) // 设置图像到 ImageView

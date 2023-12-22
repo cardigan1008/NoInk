@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.bagel.noink.R
 import com.bagel.noink.activity.LoginActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
 import com.bagel.noink.utils.UserHttpRequest
+import com.bumptech.glide.Glide
 import org.json.JSONObject
 
 class AccountFragment : Fragment() {
@@ -39,10 +41,10 @@ class AccountFragment : Fragment() {
     var itemUpdatePassword: PersonalItemView? = null
     var recordNumText: TextView? = null
     var articleNumText: TextView? = null
-
+    var topUsername: TextView? = null
     var newGender: Boolean = true
     var newBirthday: String? = null
-
+    private var avatar: Uri? = null
     val userHttpRequest = UserHttpRequest()
 
     override fun onCreateView(
@@ -56,9 +58,18 @@ class AccountFragment : Fragment() {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        if (avatar == null) {
+            avatar = Uri.parse(AccountViewModel.userInfo?.avatar)
+        }
+
+        Glide.with(this@AccountFragment)
+            .load(avatar)
+            .into(binding.avatarImageView)
+
         // 实时更新用户信息显示UI
         slideshowViewModel._username.observe(viewLifecycleOwner) { newData ->
             itemUsername?.setData(newData)
+            topUsername?.text = AccountViewModel.userInfo?.username
         }
         slideshowViewModel._wechatId.observe(viewLifecycleOwner) { newData ->
             itemWechatId?.setData(newData)
@@ -103,6 +114,7 @@ class AccountFragment : Fragment() {
         itemUpdatePassword = activity?.findViewById(R.id.item_update_password)
         recordNumText = activity?.findViewById(R.id.record_num)
         articleNumText = activity?.findViewById(R.id.article_num)
+        topUsername = activity?.findViewById(R.id.top_username)
 
         // 显示用户信息
         AccountViewModel.userInfo?.let { itemUsername?.setData(it.username) }
@@ -116,6 +128,7 @@ class AccountFragment : Fragment() {
         AccountViewModel.userInfo?.let { itemUid?.setData(it.id.toString()) }
         recordNumText?.text = AccountViewModel.userInfo?.recordNum.toString()
         articleNumText?.text = AccountViewModel.userInfo?.articleNum.toString()
+        topUsername?.text = AccountViewModel.userInfo?.username
 
         // 跳转到修改用户名界面
         itemUsername?.setOnClickListener { slideNavToEditInfo("username") }

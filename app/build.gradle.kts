@@ -76,4 +76,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
 
+    implementation ("io.getstream:avatarview-coil:1.0.7")
+
 }

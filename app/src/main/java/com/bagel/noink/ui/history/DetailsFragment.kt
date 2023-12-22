@@ -66,31 +66,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         val viewPager = binding.viewPager
         val pagerIndicator = binding.pagerIndicator
 
-        val delete = requireActivity().findViewById<ImageView>(R.id.search)
-        delete?.setImageResource(R.drawable.ic_delete_rubbish)
-
-        delete?.setOnClickListener {
-            val rid = arguments?.getParcelable<ListItemBean>("listItem")?.id
-
-            val callbackListener = object : HttpRequest.CallbackListener {
-                override fun onSuccess(responseJson: JSONObject) {
-                    findNavController().navigate(R.id.nav_history_list)
-                }
-
-                override fun onFailure(errorMessage: String) {
-                    Log.i("HttpRequest", "onFailure: $errorMessage")
-                }
-
-            }
-
-            val httpRequest = HttpRequest()
-            httpRequest.post(
-                Contants.SERVER_ADDRESS + "/api/record/delete?rid=${rid.toString()}", RequestBody.create(null, byteArrayOf()),
-                "satoken", AccountViewModel.token!!, callbackListener
-            )
-            Log.i("HttpRequest", "/api/record/delete?rid=${rid.toString()}")
-        }
-
         // Set up ViewPager2 and CirclePageIndicator
         val imagePagerAdapter = ImagePagerAdapter(imageURIs)
         viewPager.adapter = imagePagerAdapter
@@ -123,16 +98,35 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        val searchButton = requireActivity().findViewById<ImageView>(R.id.search)
-        searchButton?.setImageResource(R.drawable.ic_search_teal)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        searchButton.setOnClickListener {
-            val intent = Intent(requireContext(), SearchActivity::class.java)
-            startActivity(intent)
+        val delete = requireActivity().findViewById<ImageView>(R.id.search)
+        delete?.setImageResource(R.drawable.ic_delete_rubbish)
+
+        delete?.setOnClickListener {
+            val rid = arguments?.getParcelable<ListItemBean>("listItem")?.id
+
+            val callbackListener = object : HttpRequest.CallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    findNavController().popBackStack()
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    Log.i("HttpRequest", "onFailure: $errorMessage")
+                }
+
+            }
+
+            val httpRequest = HttpRequest()
+            httpRequest.post(
+                Contants.SERVER_ADDRESS + "/api/record/delete?rid=${rid.toString()}", RequestBody.create(null, byteArrayOf()),
+                "satoken", AccountViewModel.token!!, callbackListener
+            )
+            Log.i("HttpRequest", "/api/record/delete?rid=${rid.toString()}")
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

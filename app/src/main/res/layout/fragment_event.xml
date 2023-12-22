@@ -16,6 +16,7 @@
         android:textSize="18sp"
         android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView

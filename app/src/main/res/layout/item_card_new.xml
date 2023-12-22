@@ -82,7 +82,7 @@
             android:layout_margin="5dp"
             android:layout_weight="2"
             android:padding="@dimen/defaultPadding"
-            android:src="@mipmap/ic_cat_work"
+            android:src="@drawable/ic_rabbit_work"
             app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp" />

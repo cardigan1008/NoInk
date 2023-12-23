@@ -307,6 +307,7 @@ class TextEditFragment: Fragment() {
         val saveButton = binding.buttonSave
         saveButton.setOnClickListener {
             saveText()
+            AccountViewModel.needToUpdateHistory = true
             requireActivity().supportFragmentManager.popBackStack()
             requireActivity().supportFragmentManager.popBackStack()
             requireActivity().supportFragmentManager.popBackStack()

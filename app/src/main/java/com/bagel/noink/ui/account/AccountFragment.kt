@@ -89,6 +89,12 @@ class AccountFragment : Fragment() {
             recordNumText?.text = newData.toString()
         }
 
+        slideshowViewModel._avatar.observe(viewLifecycleOwner) { newData ->
+            Glide.with(this@AccountFragment)
+                .load(newData)
+                .into(binding.avatarImageView)
+        }
+
         binding.testButton.setOnClickListener {
             findNavController().navigate(R.id.action_nav_personal_account_to_nav_login)
         }
@@ -220,6 +226,8 @@ class AccountFragment : Fragment() {
                 val editor = sharedPreferences?.edit()
                 editor?.putString("token", "")
                 editor?.apply()
+
+                AccountViewModel.needToUpdateHistory = true
 
                 // 跳转到LoginActivity
                 val intent = Intent(this.context, LoginActivity::class.java)

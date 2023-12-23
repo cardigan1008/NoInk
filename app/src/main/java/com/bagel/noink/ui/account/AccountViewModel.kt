@@ -29,12 +29,13 @@ class AccountViewModel : ViewModel() {
     val _uid = MutableLiveData<Long>()
     val _recordNum = MutableLiveData<Int>()
     val _articleNum = MutableLiveData<Int>()
+    val _avatar = MutableLiveData<String>()
 
     companion object {
         var token: String? = ""
         var instance: AccountViewModel? = null
 
-
+        var needToUpdateHistory = true
         // 用户信息
         var userInfo: UserInfoBean? = UserInfoBean(
             1,
@@ -77,6 +78,7 @@ class AccountViewModel : ViewModel() {
                 instance!!._uid.value = userInfo?.id
                 instance!!._recordNum.value = userInfo?.recordNum
                 instance!!._articleNum.value = userInfo?.articleNum
+                instance!!._avatar.value = userInfo?.avatar
             }
         }
 

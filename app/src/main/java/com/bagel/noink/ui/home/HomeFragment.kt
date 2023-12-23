@@ -111,7 +111,7 @@ class HomeFragment : Fragment() {
         compositePageTransformer.addTransformer(MarginPageTransformer(10))
         viewPager.setPageTransformer(compositePageTransformer)
 
-        (if (cardCache == null) {
+        (if (cardCache == null || AccountViewModel.needToUpdateHistory) {
             getCardList()
         } else {
             cardCache
@@ -283,7 +283,9 @@ class HomeFragment : Fragment() {
                         )
                     )
                 }
-//                cardCache = cardList
+                cardCache = cardList
+                AccountViewModel.needToUpdateHistory = false
+
                 // 在主线程上调用 notifyDataSetChanged()
                 activity?.runOnUiThread {
                     recordCardAdapter?.notifyDataSetChanged()

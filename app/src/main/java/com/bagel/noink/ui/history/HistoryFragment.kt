@@ -2,16 +2,19 @@ package com.bagel.noink.ui.history
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bagel.noink.R
+import com.bagel.noink.activity.SearchActivity
 import com.bagel.noink.adapter.HistoryAdapter
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentHistoryBinding
@@ -28,7 +31,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     private var _binding: FragmentHistoryBinding? = null
     private var recyclerView: RecyclerView? = null
     private var adapter: HistoryAdapter? = null
-    private var historyList: List<ListItemBean>? = null
+    private var historyList: ArrayList<ListItemBean>? = ArrayList()
     private var avatar: Uri? = null
     private var username: String? = null
 
@@ -45,6 +48,27 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         addRecycleView(root)
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshHistoryData()
+
+        val searchButton = requireActivity().findViewById<ImageView>(R.id.search)
+        searchButton?.setImageResource(R.drawable.ic_search_teal)
+        searchButton?.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun refreshHistoryData() {
+        historyList?.clear()
+        getHistory()?.let { historyList?.addAll(it) }
+        activity?.runOnUiThread {
+            adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onDestroyView() {
@@ -68,8 +92,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         recyclerView?.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun getHistory(): ArrayList<ListItemBean> {
-        val historyList = ArrayList<ListItemBean>()
+    private fun getHistory(): ArrayList<ListItemBean>? {
         binding.bottomLine.text = "加载中……"
         val callbackListener = object : HttpRequest.CallbackListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -92,7 +115,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
                     val date = dateFormat.parse(dateString)
 
-                    historyList.add(
+                    historyList?.add(
                         ListItemBean(
                             item.getInt("rid"),
                             item.getString("title"),
@@ -110,7 +133,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 activity?.runOnUiThread {
                     adapter?.notifyDataSetChanged()
                     binding.tvEmptyState.visibility =
-                        if (historyList.isEmpty()) View.VISIBLE else View.GONE
+                        if (historyList?.isEmpty() == true) View.VISIBLE else View.GONE
                     binding.bottomLine.text = "——我也是有底线的——"
                 }
             }

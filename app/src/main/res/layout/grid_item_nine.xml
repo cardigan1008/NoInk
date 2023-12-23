@@ -20,8 +20,7 @@
             android:layout_width="@dimen/nine_pic_height"
             android:layout_height="@dimen/nine_pic_width"
             android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="1:1"
-            app:srcCompat="@mipmap/ic_cat" />
+            app:layout_constraintDimensionRatio="1:1"/>
 
 
         <ImageView

@@ -16,6 +16,7 @@
         android:layout_margin="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
+        android:textColor="@color/black"
         android:text="那么User114514\n这一天的心情是怎样的呢"
         android:textSize="@dimen/defaultTextSize"
         app:layout_constraintStart_toStartOf="parent"

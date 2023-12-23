@@ -51,6 +51,7 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         commentCountTextView.text = item.comments.toString()
         usernameTextView.text = item.username.toString()
 
+        gridView.visibility = View.VISIBLE
         // 如果可用，显示 imageUrls 列表中的第一个图像
         item.imageUrls?.let { imageUrls ->
             if (imageUrls.isNotEmpty()) {
@@ -63,7 +64,7 @@ class CommunityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } ?: run {
             gridView.visibility = View.GONE // 如果 imageUrls 为空，则隐藏 GridView
         }
-
+        recyclerView.visibility = View.VISIBLE
         item.commentList?.let { commentItemBeans: List<CommentItemBean> ->
             if(commentItemBeans.isNotEmpty()){
                 // 在适当的地方初始化 RecyclerView，设置其布局管理器和适配器

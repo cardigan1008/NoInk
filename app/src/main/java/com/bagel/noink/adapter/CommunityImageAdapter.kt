@@ -10,19 +10,8 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bagel.noink.R
 
-class CommunityImageAdapter(private val context: Context, private val images: List<Uri>) : BaseAdapter() {
 
-    private val positionToImageViewMap = mapOf(
-        0 to R.id.photo1,
-        1 to R.id.photo2,
-        2 to R.id.photo3,
-        3 to R.id.photo4,
-        4 to R.id.photo5,
-        5 to R.id.photo6,
-        6 to R.id.photo7,
-        7 to R.id.photo8,
-        8 to R.id.photo9,
-    )
+class CommunityImageAdapter(private val context: Context, private val images:List<Uri>) : BaseAdapter() {
 
     override fun getCount(): Int {
         return images.size
@@ -43,23 +32,17 @@ class CommunityImageAdapter(private val context: Context, private val images: Li
             convertView
         }
 
-        assert(position <= 9)
-        val imageView: ImageView? = positionToImageViewMap[0]?.let { view.findViewById(it) }
+        val imageView: ImageView? = view.findViewById(R.id.photo1)
+
+        // 使用Glide加载图片
         Glide.with(context)
-            .load(images[position]) // 加载 Uri
-            .into(imageView!!) // 设置图像到 ImageView
+            .load(images[position])
+            .into(imageView!!)
 
         return view
     }
 
     private fun getLayoutResource(): Int {
-        return R.layout.grid_item_one
-        /*return if(images.size == 1){
-            R.layout.grid_item_one
-        } else if (images.size in 2..4) {
-            R.layout.grid_item_four
-        } else {
-            R.layout.grid_item_nine
-        }*/
+        return R.layout.grid_item_one // 这里选择使用R.layout.grid_item_one，你可以根据需要更改布局资源
     }
 }

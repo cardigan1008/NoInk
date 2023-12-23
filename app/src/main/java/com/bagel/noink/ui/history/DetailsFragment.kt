@@ -1,7 +1,8 @@
 package com.bagel.noink.ui.history
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.PagerAdapter
 import com.bagel.noink.R
-import com.bagel.noink.activity.SearchActivity
 import com.bagel.noink.bean.ListItemBean
 import com.bagel.noink.databinding.FragmentDetailsBinding
 import com.bagel.noink.ui.account.AccountViewModel
@@ -25,6 +25,7 @@ import okhttp3.RequestBody
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
@@ -118,12 +119,21 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
             }
 
-            val httpRequest = HttpRequest()
-            httpRequest.post(
-                Contants.SERVER_ADDRESS + "/api/record/delete?rid=${rid.toString()}", RequestBody.create(null, byteArrayOf()),
-                "satoken", AccountViewModel.token!!, callbackListener
-            )
-            Log.i("HttpRequest", "/api/record/delete?rid=${rid.toString()}")
+            AlertDialog.Builder(context)
+                .setTitle("确认删除")
+                .setMessage("确认要删除这条历史记录吗？")
+                .setPositiveButton("确认") { dialog, which ->
+                    val httpRequest = HttpRequest()
+                    httpRequest.post(
+                        Contants.SERVER_ADDRESS + "/api/record/delete?rid=${rid.toString()}", RequestBody.create(null, byteArrayOf()),
+                        "satoken", AccountViewModel.token!!, callbackListener
+                    )
+                    Log.i("HttpRequest", "/api/record/delete?rid=${rid.toString()}")
+                }
+                .setNegativeButton("取消") { dialog, which ->
+                    // Do nothing
+                }
+                .show()
         }
     }
 

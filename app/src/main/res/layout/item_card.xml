@@ -19,6 +19,7 @@
         app:cardCornerRadius="30dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
+        android:alpha="0.95"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

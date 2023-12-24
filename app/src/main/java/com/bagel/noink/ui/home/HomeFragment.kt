@@ -162,65 +162,6 @@ class HomeFragment : Fragment() {
             .joinToString("")
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == PICK_IMAGES_REQUEST_CODE && resultCode == RESULT_OK) {
-            // 清空已选图片列表，以便重新添加选择的图片
-            selectedImageUris.clear()
-
-            // 获取从系统图片选择器返回的所有 Uri
-            val clipData = data?.clipData
-            if (clipData != null) {
-                for (i in 0 until clipData.itemCount) {
-                    val uri = clipData.getItemAt(i).uri
-                    val projection = arrayOf(MediaStore.Images.Media.DATA)
-                    val cursor: Cursor? =
-                        requireActivity().contentResolver.query(uri, projection, null, null, null)
-                    var filePath: String
-                    cursor?.use {
-                        if (it.moveToFirst()) {
-                            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                            filePath = it.getString(columnIndex)
-                            // filePath 变量包含实际的本地文件路径
-//                            val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test"+ generateRandomString(6));
-                            val aliyunOSSUrl =
-                                "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
-                            if (aliyunOSSUrl != null) {
-                                selectedImageUris.add(Uri.parse(aliyunOSSUrl))
-                            }
-                            // 将选择的图片 Uri 添加到列表中
-                        }
-                    }
-                }
-            } else {
-                // 单选图片时处理
-                val uri = data?.data!!
-                val projection = arrayOf(MediaStore.Images.Media.DATA)
-                val cursor: Cursor? =
-                    requireActivity().contentResolver.query(uri, projection, null, null, null)
-                var filePath: String
-                cursor?.use {
-                    if (it.moveToFirst()) {
-                        val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                        filePath = it.getString(columnIndex)
-                        // filePath 变量包含实际的本地文件路径
-
-//                        val aliyunOSSUrl = aliyunOSSManager.uploadImage(filePath,"test");
-                        val aliyunOSSUrl = "https://cardigan1008.oss-cn-hangzhou.aliyuncs.com/test"
-                        if (aliyunOSSUrl != null) {
-                            selectedImageUris.add(Uri.parse(aliyunOSSUrl))
-                        }
-                        // 将选择的图片 Uri 添加到列表中
-                    }
-                }
-            }
-
-            val textGenerationFragment = TextGenerationFragment.newInstance(selectedImageUris)
-            navController.navigate(R.id.nav_textGen, textGenerationFragment.arguments)
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

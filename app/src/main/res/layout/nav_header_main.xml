@@ -17,7 +17,8 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:paddingTop="8dp"
+        android:padding="4dp"
         android:background="@drawable/circle_background"
         app:srcCompat="@mipmap/ic_cat" />
 
@@ -41,6 +42,7 @@
 <!--    </FrameLayout>-->
 
     <TextView
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -51,5 +53,5 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="你还没有写过自我介绍~" />
+        android:text="你还有没有写自我介绍~" />
 </LinearLayout>

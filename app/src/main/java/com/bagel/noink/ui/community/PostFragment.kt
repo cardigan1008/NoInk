@@ -1,4 +1,5 @@
 package com.bagel.noink.ui.community
+
 import CommentDetailAdapter
 import android.net.Uri
 import android.os.Bundle
@@ -44,157 +45,182 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPostBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val receivedAid = arguments?.getString("aid") ?: "" // 获取传递的 aid 数据
         var comments: MutableList<CommentItemBean>? = null
-        communityHttpRequest.getCommunityDetail(receivedAid, object : CommunityHttpRequest.CommunityCallbackListener{
-            override fun onSuccess(responseJson: JSONObject) {
-                communityItemBean = createCommunityItem(responseJson) ?: return
+        communityHttpRequest.getCommunityDetail(
+            receivedAid,
+            object : CommunityHttpRequest.CommunityCallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    communityItemBean = createCommunityItem(responseJson) ?: return
+                    CommentViewModel.updateCommunityItemBean(communityItemBean)
+                    val title = communityItemBean.title
+                    val content = communityItemBean.content
+                    val createDate = communityItemBean.createdAt
+                    val likeCount = communityItemBean.likes
+                    val commentCount = communityItemBean.comments
 
-                val title = communityItemBean.title
-                val content = communityItemBean.content
-                val createDate = communityItemBean.createdAt
-                val likeCount = communityItemBean.likes
-                val commentCount = communityItemBean.comments
-
-                val commentCountTextView: TextView = binding.commentCountTextView
-                activity?.runOnUiThread {
-                    commentCountTextView.text = commentCount.toString()
-                }
-                val likeCountTextView: TextView = binding.likeCountTextView
-                activity?.runOnUiThread {
-                    likeCountTextView.text = likeCount.toString()
-                }
-                val likeButton : ToggleButton = binding.likeButton
-
-                likeButton.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-                    if (isChecked) {
-                        // 处理点赞逻辑
-                        communityHttpRequest.addCommentLikes(
-                            communityItemBean.aid.toString(),
-                            object : CommunityHttpRequest.CommunityCallbackListener {
-                                override fun onSuccess(responseJson: JSONObject) {
-                                    // 处理成功响应
-                                    val code = responseJson.getInt("code")
-                                }
-                                override fun onFailure(errorMessage: String) {
-                                    // 处理失败情况
-                                    Log.e(TAG, errorMessage)
-                                }
-                            })
-                        activity?.runOnUiThread {
-                            likeCountTextView.text = (likeCountTextView.text.toString().toInt()+1).toString()
-                        }
-                    } else {
-                        // 处理取消点赞逻辑
-                        activity?.runOnUiThread {
-                            likeCountTextView.text = (likeCountTextView.text.toString().toInt()-1).toString()
-                        }
+                    val commentCountTextView: TextView = binding.commentCountTextView
+                    activity?.runOnUiThread {
+                        commentCountTextView.text = commentCount.toString()
                     }
-                })
+                    val likeCountTextView: TextView = binding.likeCountTextView
+                    activity?.runOnUiThread {
+                        likeCountTextView.text = likeCount.toString()
+                    }
+                    val likeButton: ToggleButton = binding.likeButton
 
+                    likeButton.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+                        if (isChecked) {
+                            // 处理点赞逻辑
+                            communityHttpRequest.addCommentLikes(
+                                communityItemBean.aid.toString(),
+                                object : CommunityHttpRequest.CommunityCallbackListener {
+                                    override fun onSuccess(responseJson: JSONObject) {
+                                        // 处理成功响应
+                                        val code = responseJson.getInt("code")
+                                    }
 
-                activity?.runOnUiThread {
-                    binding.title.text = title
-                    binding.text.text = content
-                    binding.date.text = "编辑于 $createDate"
-                }
-
-
-                val imageUris: List<Uri>? = communityItemBean.imageUrls
-                val viewPager = binding.viewPager
-                val pagerIndicator = binding.pagerIndicator
-                imagePagerAdapter = imageUris?.let { ImagePagerAdapter(it) }!!
-                activity?.runOnUiThread {
-                    viewPager.adapter = imagePagerAdapter
-                    pagerIndicator.setViewPager(viewPager)
-                }
-                val commentEditText:TextInputEditText = binding.commentEditText
-                commentEditText.setImeOptions(EditorInfo.IME_ACTION_SEND)
-                commentEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
-                activity?.runOnUiThread {
-                    val recyclerView: RecyclerView = binding.commentDetailRecyclerView
-                    val layoutManager = LinearLayoutManager(context)
-                    recyclerView.layoutManager = layoutManager
-
-                    comments = communityItemBean.commentList as MutableList<CommentItemBean>?
-                    commentDetailAdapter = comments?.let {
-                        CommentDetailAdapter(
-                            it,commentEditText,context!!
-                        )
-                    }!!
-
-                    recyclerView.adapter = commentDetailAdapter
-                    commentDetailAdapter?.notifyDataSetChanged()
-                }
-
-
-
-                commentEditText.setOnEditorActionListener { _, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_SEND) {
-                        val commentText = commentEditText.text.toString().trim()
-                        if (commentText.isNotEmpty()) {
-                            val commentItem = CommentItemBean(
-                                0, -1, getCurrentTime(), getCurrentTime(), commentText, receivedAid.toInt(), 1, AccountViewModel.userInfo?.id!!.toInt(),
-                                AccountViewModel.userInfo?.username!!,  0, null, Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
-                            )
-                            addComment(CommentViewModel.pid, commentItem)
-
-                            CommentViewModel.commentItemBean?.commentList = CommentViewModel.commentItemBean?.commentList?.toMutableList()?.apply {
-                                add(commentItem)
-                            }
-                            commentEditText.text = null
-
-                            CommentViewModel.updatePid(-1)
-
+                                    override fun onFailure(errorMessage: String) {
+                                        // 处理失败情况
+                                        Log.e(TAG, errorMessage)
+                                    }
+                                })
                             activity?.runOnUiThread {
-                                commentDetailAdapter.notifyDataSetChanged()
+                                likeCountTextView.text =
+                                    (likeCountTextView.text.toString().toInt() + 1).toString()
+                            }
+                        } else {
+                            // 处理取消点赞逻辑
+                            activity?.runOnUiThread {
+                                likeCountTextView.text =
+                                    (likeCountTextView.text.toString().toInt() - 1).toString()
                             }
                         }
-                        true
-                    } else {
-                        false
+                    })
+
+
+                    activity?.runOnUiThread {
+                        binding.title.text = title
+                        binding.text.text = content
+                        binding.date.text = "编辑于 $createDate"
                     }
+
+
+                    val imageUris: List<Uri>? = communityItemBean.imageUrls
+                    val viewPager = binding.viewPager
+                    val pagerIndicator = binding.pagerIndicator
+                    imagePagerAdapter = imageUris?.let { ImagePagerAdapter(it) }!!
+                    activity?.runOnUiThread {
+                        viewPager.adapter = imagePagerAdapter
+                        pagerIndicator.setViewPager(viewPager)
+                    }
+                    val commentEditText: TextInputEditText = binding.commentEditText
+                    commentEditText.imeOptions = EditorInfo.IME_ACTION_SEND
+                    commentEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
+                    activity?.runOnUiThread {
+                        val recyclerView: RecyclerView = binding.commentDetailRecyclerView
+                        val layoutManager = LinearLayoutManager(context)
+                        recyclerView.layoutManager = layoutManager
+
+                        comments = communityItemBean.commentList as MutableList<CommentItemBean>?
+                        commentDetailAdapter = comments?.let {
+                            CommentDetailAdapter(
+                                it, commentEditText, context!!
+                            )
+                        }!!
+
+                        recyclerView.adapter = commentDetailAdapter
+                        commentDetailAdapter.notifyDataSetChanged()
+                    }
+
+
+
+                    commentEditText.setOnEditorActionListener { _, actionId, _ ->
+                        if (actionId == EditorInfo.IME_ACTION_SEND) {
+                            val commentText = commentEditText.text.toString().trim()
+                            if (commentText.isNotEmpty()) {
+                                val commentItem = CommentItemBean(
+                                    0,
+                                    -1,
+                                    getCurrentTime(),
+                                    getCurrentTime(),
+                                    commentText,
+                                    receivedAid.toInt(),
+                                    1,
+                                    AccountViewModel.userInfo?.id!!.toInt(),
+                                    AccountViewModel.userInfo?.username!!,
+                                    0,
+                                    null,
+                                    Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
+                                )
+                                addComment(CommentViewModel.pid, commentItem)
+                                if (CommentViewModel.pid != -1) {
+                                    CommentViewModel.commentItemBean?.commentList =
+                                        CommentViewModel.commentItemBean?.commentList?.toMutableList()
+                                            ?.apply {
+                                                add(commentItem)
+                                            }
+                                } else {
+                                    comments?.add(commentItem)
+                                }
+
+                                commentEditText.text = null
+
+                                CommentViewModel.updatePid(-1)
+
+                                activity?.runOnUiThread {
+                                    commentDetailAdapter.notifyDataSetChanged()
+                                }
+                            }
+                            true
+                        } else {
+                            false
+                        }
+                    }
+
+
                 }
 
-
-            }
-
-            override fun onFailure(errorMessage: String) {
-                Log.e(TAG, "Failed to fetch community detail: $errorMessage")
-                // Handle failure appropriately
-            }
-        })
+                override fun onFailure(errorMessage: String) {
+                    Log.e(TAG, "Failed to fetch community detail: $errorMessage")
+                    // Handle failure appropriately
+                }
+            })
 
 
 
 
         return root
     }
+
     private fun getCurrentTime(): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return dateFormat.format(System.currentTimeMillis())
     }
-    private fun addComment(pid:Int, itemBean: CommentItemBean){
-        communityHttpRequest.addComment(pid, itemBean, object : CommunityHttpRequest.CommunityCallbackListener{
-            override fun onSuccess(responseJson: JSONObject) {
-                Log.e(TAG, "add comment success")
 
-            }
+    private fun addComment(pid: Int, itemBean: CommentItemBean) {
+        communityHttpRequest.addComment(
+            pid,
+            itemBean,
+            object : CommunityHttpRequest.CommunityCallbackListener {
+                override fun onSuccess(responseJson: JSONObject) {
+                    Log.e(TAG, "add comment success")
 
-            override fun onFailure(errorMessage: String) {
-                Log.e(TAG, "Failed to add comment: $errorMessage")
-            }
-        })
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    Log.e(TAG, "Failed to add comment: $errorMessage")
+                }
+            })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
     private fun createCommunityItem(dataObjectOrigin: JSONObject?): CommunityItemBean? {
@@ -208,8 +234,10 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         val avatar = Uri.parse(dataObject.optString("userprofile", ""))
         val createdAt = dataObject.optString("createdAt", "").substring(0, 19)
         val updatedAt = dataObject.optString("updatedAt", "")
-        val content = dataObject.optString("conte" +
-                "nt", "")
+        val content = dataObject.optString(
+            "conte" +
+                    "nt", ""
+        )
         val imageUrl = stringToUriList(dataObject.optString("imageUrl", ""))
         val moods = dataObject.optString("moods", "")
         val events = dataObject.optString("events", "")
@@ -218,7 +246,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         val comments = dataObject.optInt("comments", 0)
         val state = dataObject.optInt("state", 0)
         val uid = dataObject.optInt("uid", 0)
-        val username = dataObject.optString("username","")
+        val username = dataObject.optString("username", "")
 
         val communityItem = CommunityItemBean(
             aid, title, avatar, createdAt, updatedAt, content, imageUrl,

@@ -2,8 +2,11 @@ package com.bagel.noink.activity
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import android.widget.ImageView
+import android.widget.TextView
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,6 +22,7 @@ import com.bagel.noink.databinding.ActivityMainBinding
 import com.bagel.noink.ui.account.AccountViewModel
 import com.bagel.noink.utils.HttpRequest
 import com.bagel.noink.utils.UserHttpRequest
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -65,6 +69,15 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     AccountViewModel.updateUserInfoByJson(data)
                     AccountViewModel.saveToken(this@MainActivity)
+                    var avatarView:ImageView = navView.getHeaderView(0).findViewById<ImageView>(R.id.imageView)
+
+                    Glide.with(navView.context)
+                        .load(AccountViewModel.userInfo?.avatar)
+                        .override(70, 70)
+                        .into(avatarView)
+
+                    navView.getHeaderView(0).findViewById<TextView>(R.id.username)
+                        .text = AccountViewModel.userInfo?.username
                 }
             }
 

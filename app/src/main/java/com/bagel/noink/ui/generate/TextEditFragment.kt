@@ -81,6 +81,7 @@ class TextEditFragment: Fragment() {
         postUploadButton.setOnClickListener {
             // 在分享到社区前先保存
             saveText()
+            AccountViewModel.userInfo?.articleNum = AccountViewModel.userInfo?.articleNum!! + 1
             textGenHttpRequest.sendPostRequest(CommunityItemBean(
                 aid = 0,
                 title = title.text.toString(),
@@ -328,6 +329,8 @@ class TextEditFragment: Fragment() {
     }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveText(){
+        AccountViewModel.userInfo?.recordNum = AccountViewModel.userInfo?.recordNum!! + 1
+
         textGenHttpRequest.sendSaveRequest(
             createdAt = createdAt?:getCurrentTime(),
             updatedAt = getCurrentTime(),

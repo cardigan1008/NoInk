@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
                     Glide.with(navView.context)
                         .load(AccountViewModel.userInfo?.avatar)
-                        .override(75, 75)
+                        .override(70, 70)
                         .into(avatarView)
 
                     navView.getHeaderView(0).findViewById<TextView>(R.id.username)

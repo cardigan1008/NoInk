@@ -79,6 +79,8 @@ class TextEditFragment: Fragment() {
     private fun setPostUploadButton(){
         val postUploadButton:ImageButton = requireActivity().findViewById(R.id.toolbar_upload)
         postUploadButton.setOnClickListener {
+            // 在分享到社区前先保存
+            saveText()
             textGenHttpRequest.sendPostRequest(CommunityItemBean(
                 aid = 0,
                 title = title.text.toString(),
@@ -107,8 +109,11 @@ class TextEditFragment: Fragment() {
             })
 
             activity?.runOnUiThread{
-                val navController: NavController = findNavController()
-                navController.navigate(R.id.nav_home)
+                // 返回到home界面
+                requireActivity().supportFragmentManager.popBackStack()
+                requireActivity().supportFragmentManager.popBackStack()
+                requireActivity().supportFragmentManager.popBackStack()
+                requireActivity().supportFragmentManager.popBackStack()
             }
         }
 

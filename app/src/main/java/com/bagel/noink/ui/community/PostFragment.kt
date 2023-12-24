@@ -52,7 +52,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         communityHttpRequest.getCommunityDetail(receivedAid, object : CommunityHttpRequest.CommunityCallbackListener{
             override fun onSuccess(responseJson: JSONObject) {
                 communityItemBean = createCommunityItem(responseJson) ?: return
-
+                CommentViewModel.updateCommunityItemBean(communityItemBean)
                 val title = communityItemBean.title
                 val content = communityItemBean.content
                 val createDate = communityItemBean.createdAt
@@ -141,10 +141,14 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                                 AccountViewModel.userInfo?.username!!,  0, null, Uri.parse("https://i.postimg.cc/cJW9nd6s/image.jpg")
                             )
                             addComment(CommentViewModel.pid, commentItem)
-
-                            CommentViewModel.commentItemBean?.commentList = CommentViewModel.commentItemBean?.commentList?.toMutableList()?.apply {
-                                add(commentItem)
+                            if(CommentViewModel.pid != -1){
+                                CommentViewModel.commentItemBean?.commentList = CommentViewModel.commentItemBean?.commentList?.toMutableList()?.apply {
+                                    add(commentItem)
+                                }
+                            }else{
+                                comments?.add(commentItem)
                             }
+
                             commentEditText.text = null
 
                             CommentViewModel.updatePid(-1)

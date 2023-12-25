@@ -29,3 +29,7 @@ replay_pid*
 # SDK paths
 local.properties
 app/src/main/assets/config.properties
+
+app/build
+*.apk
+app/release/output-metadata.json

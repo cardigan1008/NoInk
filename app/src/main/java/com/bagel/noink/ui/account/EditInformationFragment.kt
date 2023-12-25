@@ -173,7 +173,7 @@ class EditInformationFragment: NoBottomTabFragment() {
                 }
             })
 
-            // TODO: 导航到上一级
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
         return root

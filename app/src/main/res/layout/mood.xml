@@ -205,12 +205,12 @@
             android:layout_height="50dp"
             android:textAlignment="center"
             android:padding="@dimen/defaultPadding"
-            android:text="不知道"
+            android:text="迷茫"
             android:drawableStart="@drawable/neutral"
             android:background="@drawable/default_background"
             android:drawablePadding="5dp"
-            android:textOn="不知道"
-            android:textOff="不知道"
+            android:textOn="迷茫"
+            android:textOff="迷茫"
             />
     </RelativeLayout>
 

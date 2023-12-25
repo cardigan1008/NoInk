@@ -19,7 +19,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bagel.noink.R
+import com.bagel.noink.activity.CommunityActivity
+import com.bagel.noink.activity.HistoryActivity
 import com.bagel.noink.activity.LoginActivity
+import com.bagel.noink.activity.SearchActivity
 import com.bagel.noink.databinding.FragmentAccountBinding
 import com.bagel.noink.utils.UserHttpRequest
 import com.bumptech.glide.Glide
@@ -99,6 +102,15 @@ class AccountFragment : Fragment() {
             findNavController().navigate(R.id.action_nav_personal_account_to_nav_login)
         }
 
+        binding.recordContainer.setOnClickListener {
+            val intent = Intent(requireContext(), HistoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.postContainer.setOnClickListener {
+            val intent = Intent(requireContext(), CommunityActivity::class.java)
+            startActivity(intent)
+        }
         return root
     }
 

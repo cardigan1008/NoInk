@@ -70,6 +70,7 @@
         >
 
         <RelativeLayout
+            android:id="@+id/recordContainer"
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -102,6 +103,7 @@
 
         <RelativeLayout
             android:layout_width="130dp"
+            android:id="@+id/postContainer"
             android:layout_height="match_parent"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="20dp"

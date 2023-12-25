@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
@@ -140,6 +142,29 @@ class MoodFragment : NoBottomTabFragment() {
     private fun setNavButton(){
         val navButton: Button = binding.button
         navButton.setOnClickListener{
+            val gridLayout = binding.includedLayout.root.findViewById<GridLayout>(R.id.mood_gridlayout)
+            var isChecked = false // 标记是否至少有一个 ToggleButton 被选中
+
+            for (i in 0 until gridLayout.childCount) {
+                val child = gridLayout.getChildAt(i)
+                if (child is RelativeLayout) {
+                    for (j in 0 until child.childCount) {
+                        val textView = child.getChildAt(j)
+                        if (textView is ToggleButton && textView.isChecked) {
+                            isChecked = true
+                            break
+                        }
+                    }
+                }
+                if (isChecked) {
+                    break
+                }
+            }
+
+            if (!isChecked) {
+                Toast.makeText(requireContext(), "请选择一个心情～", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val navController = findNavController()
             val navOptions = NavOptions.Builder()
                 .setEnterAnim(R.anim.slide_in_right)   // 设置进入动画
